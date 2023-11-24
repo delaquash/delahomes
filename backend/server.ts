@@ -7,7 +7,7 @@ import connectDB from "./config/db";
 dotenv.config();
 
 // route
-import signUpRoute from "./route/authRoute";
+import signup from "./route/authRoute";
 // import registerRoute from "./routes/userRoutes";
 // import orderRoute from "./routes/OrderRoute";
 connectDB();
@@ -33,7 +33,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-app.use("/api/auth", signUpRoute);
+app.use("/api/auth", signup);
 // app.use("/", orderRoute);
 
 // error
