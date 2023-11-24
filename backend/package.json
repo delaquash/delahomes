@@ -2,11 +2,12 @@
   "name": "delahomes",
   "version": "1.0.0",
   "description": "Typescript Express backend for delahomes",
-  "main": "server.ts",
   "type": "commonjs",
+  "main": "server.ts",
   "scripts": {
     "dev": "nodemon server.ts",
-    "start": "node server.ts",
+    "start": "npx ts-node server.ts",
+    "compile": "tsc",
     "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "author": "Olaide Emmanuel",
@@ -29,6 +30,6 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mongoose": "^5.11.97",
     "@types/nodemon": "^1.19.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   }
 }
