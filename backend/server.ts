@@ -40,7 +40,7 @@ app.use("/api/auth", signup);
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || "Something went wrong";
-  return res.status(status).json({ message });
+  return res.status(status).json({ message, status, success: false });
 });
 
 const PORT = process.env.PORT || 5000;
