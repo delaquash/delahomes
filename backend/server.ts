@@ -1,4 +1,4 @@
-// import bodyParser from "body-parser";
+import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 // import mongoose from "mongoose";
 import cors from "cors";
@@ -7,13 +7,14 @@ import connectDB from "./config/db";
 dotenv.config();
 
 // route
+import signUpRoute from "./route/authRoute";
 // import registerRoute from "./routes/userRoutes";
 // import orderRoute from "./routes/OrderRoute";
 connectDB();
 const app = express();
 app.use(cors());
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -32,7 +33,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-// app.use("/", registerRoute);
+app.use("/api/auth", signUpRoute);
 // app.use("/", orderRoute);
 
 // error

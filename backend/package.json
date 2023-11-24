@@ -6,7 +6,7 @@
   "main": "server.ts",
   "scripts": {
     "dev": "nodemon server.ts",
-    "start": "npx ts-node server.ts",
+    "start": "nodemon server.ts",
     "compile": "tsc",
     "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
