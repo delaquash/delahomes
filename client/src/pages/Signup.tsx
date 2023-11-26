@@ -62,6 +62,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(false);
   }
 };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-center font-semibold text-4xl my-7">Sign Up</h1>
