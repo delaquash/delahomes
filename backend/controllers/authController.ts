@@ -27,10 +27,9 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
       throw new Error("Secret key is not defined");
     }
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
-    res
-      .cookie("access_toke", token, { httpOnly: true })
-      .status(200)
-      .json(validUser);
+    // destructured password from the other attribute so we wont be seein password in DB
+    const { password: pass, ...rest } = validUser._doc;
+    res.cookie("access_toke", token, { httpOnly: true }).status(200).json(rest);
   } catch (error) {
     next(errorHandler(500, "Server Error.."));
   }

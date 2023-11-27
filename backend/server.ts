@@ -8,6 +8,7 @@ dotenv.config();
 
 // route
 import signup from "./route/authRoute";
+import signin from "./route/authRoute";
 
 connectDB();
 const app = express();
@@ -33,7 +34,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", signup);
-// app.use("/", orderRoute);
+app.use("/api/auth", signin);
 
 // error
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
