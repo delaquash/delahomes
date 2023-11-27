@@ -28,14 +28,16 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Set loading state to true while waiting for the response
     setLoading(true);
     // Make the signup request to the server
-    const res =await axios.post("http://localhost:5000/api/auth/signup", {
-      Headers: {
-        "Content-Type": "application/json"
-      }
-    },formData);
+    const res = await axios.post("http://localhost:5000/api/auth/signup",
+    //   {
+    //   Headers: {
+    //     "Content-Type": "application/json"
+    //   }
+    // } ,
+      formData);
 
     // Assuming the response is JSON and you want the data property
-    const data = await res.data;
+    const data = res.data;
 
     // Check if the signup was not successful
     if (!data.success) {

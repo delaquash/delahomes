@@ -8,8 +8,7 @@ dotenv.config();
 
 // route
 import signup from "./route/authRoute";
-// import registerRoute from "./routes/userRoutes";
-// import orderRoute from "./routes/OrderRoute";
+
 connectDB();
 const app = express();
 app.use(cors());
