@@ -18,7 +18,7 @@ interface MyChangeEvent {
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state: RootState) => state.user);
+  const {  error } = useSelector((state: RootState) => state.user);
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
 
   // Create a mutation for sign-in using React Query
@@ -98,7 +98,7 @@ function SignIn() {
           <span className="text-xl text-blue-500 font-semibold cursor-pointer">Sign Up.</span>
         </Link>
       </div>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
+      {signInMutation.error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 }
