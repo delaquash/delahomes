@@ -1,4 +1,5 @@
 // import axios from "axios";
+import Oauth from "../components/Oauth";
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -89,6 +90,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         >
           {loading ? "Loading...": "Sign In"}
         </button>
+        <Oauth />
       </form>
       <div className="mt-7 gap-4">
         <p className="font-semibold text-2xl">Dont have an account?</p>
