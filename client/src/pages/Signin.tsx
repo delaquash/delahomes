@@ -2,6 +2,9 @@
 import Oauth from "../components/Oauth";
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
+import {signInFail, signInStart, signInSuccess, } from "../state/reducers/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface MyChangeEvent {
   target: {
@@ -11,10 +14,10 @@ interface MyChangeEvent {
 }
 
 function SignIn() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state:RootState) => state.user);
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
 
   const handleChange = (e: MyChangeEvent) => {
     setFormData({
@@ -27,7 +30,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   try {
     // Set loading state to true while waiting for the response
-    setLoading(true);
+    dispatch(signInStart());
     // Make the signup request to the server
     const res = await fetch("http://localhost:5000/api/auth/signin",{
         method: "POST",
@@ -43,27 +46,20 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Check if the signup was not successful
     if (!data.success) {
       // Set error state and stop further execution
-      setLoading(false)
-      setError(data.message);
+      dispatch(signInStart())
+      dispatch(signInFail(data.message));
       return;
     }
     // Reset error state and navigate to the signin page
-    setLoading(false)
-    setError(null);
+    dispatch(signInSuccess(data))
     navigate("/");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    // Handle errors here
-    setLoading(false);
+  
     
     // Check if the error has a specific message, otherwise provide a generic one
-    setError(error.message || "An error occurred.");
-    
-    console.error("Error:", error);
-  } finally {
-    // Ensure that loading state is set to false regardless of success or failure
-    setLoading(false);
-  }
+    dispatch(signInFail(error.message));
+  } 
 };
 
   return (
