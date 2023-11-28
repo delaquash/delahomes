@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type UserProps = {
+    avatar: string;
+}
+
 interface StateProps {
-    currentUser: string | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    currentUser: UserProps | null;
     error:string | null;
     loading: boolean 
 }
