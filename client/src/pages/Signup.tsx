@@ -20,13 +20,6 @@ function Signup() {
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
   const { error } = useSelector((state: RootState)=>state.user)
 
-  const handleChange = (e: MyChangeEvent): void => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
-  
  // Create a mutation for sign-in using React Query
   const signInMutation = useMutation(
     async (formData: { [key: string]: string }) => {
@@ -52,6 +45,14 @@ function Signup() {
       },
     }
   );
+
+    const handleChange = (e: MyChangeEvent)=> {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
