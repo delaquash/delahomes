@@ -5,12 +5,12 @@ import { RootState } from "../../store";
 
 function Header() {
   const { currentUser } = useSelector((state: RootState) => state.user);
-  console.log(currentUser);
+  
   return (
     <header className="shadow-md bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
-          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
+          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap gap-4">
             <span className="text-slate-500">Delahomes</span>
             <span className="text-slate-700">Estate</span>
           </h1>

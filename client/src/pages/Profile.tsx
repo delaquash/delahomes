@@ -6,7 +6,7 @@ function Profile() {
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
-      <form className="flex-col col gap-4">
+      <form className="flex-col flex gap-4">
         <img
           src={currentUser}
           alt="Profile_Picture"
@@ -23,7 +23,6 @@ function Profile() {
         <span className="cursor-pointer text-red-700">Delete Account</span>
         <span className="cursor-pointer text-red-700">Sign Out</span>
       </div>
-      
     </div>
   )
 }
