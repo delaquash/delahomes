@@ -1,0 +1,40 @@
+import { createSlice } from "@reduxjs/toolkit";
+interface StateProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    currentUser: {
+        email: string;
+        password: string;
+        avatar: string;
+    } | null
+    error:string | null | undefined;
+    loading: boolean 
+}
+
+const initialState: StateProps = {
+    currentUser: null,
+    error: null,
+    loading: false,
+}
+
+export const userSlice = createSlice({
+    name: "user",
+    initialState,
+    reducers: {
+        signInStart: (state) => {
+            state.error = null;
+            state.loading = true;
+        },
+        signInSuccess: (state, action) => {
+            state.currentUser = action.payload;
+            state.loading = false;
+            state.error = null;      
+        }, 
+        signInFail: (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+        }
+    }
+})
+
+export const { signInStart, signInFail, signInSuccess } = userSlice.actions
+export default userSlice.reducer;

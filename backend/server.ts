@@ -1,4 +1,4 @@
-// import bodyParser from "body-parser";
+import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 // import mongoose from "mongoose";
 import cors from "cors";
@@ -7,13 +7,14 @@ import connectDB from "./config/db";
 dotenv.config();
 
 // route
-// import registerRoute from "./routes/userRoutes";
-// import orderRoute from "./routes/OrderRoute";
+import signup from "./route/authRoute";
+import signin from "./route/authRoute";
+
 connectDB();
 const app = express();
 app.use(cors());
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -32,14 +33,14 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-// app.use("/", registerRoute);
-// app.use("/", orderRoute);
+app.use("/api/auth", signup);
+app.use("/api/auth", signin);
 
 // error
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || "Something went wrong";
-  return res.status(status).json({ message });
+  return res.status(status).json({ message, status, success: false });
 });
 
 const PORT = process.env.PORT || 5000;
