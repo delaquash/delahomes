@@ -4,6 +4,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 // route
@@ -15,6 +16,7 @@ const app = express();
 app.use(cors());
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

@@ -29,7 +29,10 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     // destructured password from the other attribute so we wont be seein password in DB
     const { password: pass, ...rest } = validUser._doc;
-    res.cookie("access_toke", token, { httpOnly: true }).status(200).json(rest);
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
   } catch (error) {
     next(errorHandler(500, "Server Error.."));
   }
@@ -46,7 +49,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
       // destructured password from the other attribute so we wont be seein password in DB
       const { password: pass, ...rest } = user._doc;
       res
-        .cookie("access_toke", token, { httpOnly: true })
+        .cookie("access_token", token, { httpOnly: true })
         .status(200)
         .json(rest);
     } else {
