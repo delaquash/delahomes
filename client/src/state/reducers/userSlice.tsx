@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-// type UserProps = {
-//     avatar: string;
-// }
-
 interface StateProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    currentUser: string | null;
-    error:string | null;
+    currentUser: {
+        email: string;
+        password: string;
+        avatar: string;
+    } | null
+    error:string | null | undefined;
     loading: boolean 
 }
+
 const initialState: StateProps = {
     currentUser: null,
     error: null,
