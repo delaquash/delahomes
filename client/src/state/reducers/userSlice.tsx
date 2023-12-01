@@ -6,7 +6,7 @@ interface StateProps {
         password: string;
         avatar: string;
     } | null
-    error:string | null;
+    error:string | null | undefined;
     loading: boolean 
 }
 

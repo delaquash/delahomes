@@ -5,7 +5,6 @@ import { RootState } from "../../store";
 
 function Header() {
   const { currentUser } = useSelector((state: RootState) => state.user);
-  
   return (
     <header className="shadow-md bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">

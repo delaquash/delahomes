@@ -55,7 +55,6 @@ function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     try {
       // Call the mutation to sign in
       await signInMutation.mutateAsync(formData);
