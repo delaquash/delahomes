@@ -27,8 +27,10 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
       throw new Error("Secret key is not defined");
     }
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    // console.log(token);
     // destructured password from the other attribute so we wont be seein password in DB
     const { password: pass, ...rest } = validUser._doc;
+    // console.log(validUser._doc);
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
@@ -90,6 +92,8 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
         .status(200)
         .json(rest);
     }
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 export { signup, signin, google };

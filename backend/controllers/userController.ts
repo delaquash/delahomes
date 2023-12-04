@@ -10,32 +10,8 @@ declare module "express" {
   }
 }
 
-// const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-//   if (req.user?.id !== req.params.id)
-//     return next(errorHandler(401, "You can only update your account..."));
-//   try {
-//     if (req.body.password) {
-//       req.body.password = bcrypt.hashSync(req.body.password, 10);
-//     }
-//     const updatedUser = await User.findByIdAndUpdate(
-//       req.params.id,
-//       {
-//         $set: {
-//           email: req.body.email,
-//           username: req.body.username,
-//           avatar: req.body.avatar,
-//           password: req.body.password,
-//         },
-//       },
-//       { new: true }
-//     );
-
-//     const { password, ...rest } = updatedUser?._doc;
-//     res.status(200).json(rest);
-//   } catch (error) {}
-// };
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user?.id !== req.params.id) {
+  if (req.user.id !== req.params.id) {
     console.log("Unauthorized update attempt");
     return next(errorHandler(401, "You can only update your account..."));
   }

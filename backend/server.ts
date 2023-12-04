@@ -12,13 +12,16 @@ import signup from "./route/authRoute";
 import signin from "./route/authRoute";
 import updatedUser from "./route/userRoute";
 
-
 connectDB();
 const app = express();
+/* `app.use(cookieParser());` is a middleware function that parses cookies attached to the incoming
+request object. It adds a `cookies` property to the `req` object, which contains the parsed cookies.
+This allows you to access and manipulate cookies in your application. */
+app.use(cookieParser());
+
 app.use(cors());
 
 app.use(bodyParser.json());
-app.use(cookieParser());
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
