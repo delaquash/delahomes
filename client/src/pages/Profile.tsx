@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+// import { RootState } from "../../store";
 import { useRef, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
+import { StateProps, MyChangeEvent } from "../../types/dataTypes";
+
+export type RootState = {
+  user: StateProps;
+  // Add other slices if you have more reducers
+};
 
 function Profile() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fileRef = useRef<any>(null);
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false)
@@ -65,10 +71,27 @@ function Profile() {
       }
     );
   };
+
+  const handleChange = (e: MyChangeEvent) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
-      <form className="flex-col flex gap-4">
+      <form className="flex-col flex gap-4" onSubmit={handleSubmit}>
         <input
           onChange={fileChange}
           type="file"
@@ -77,7 +100,7 @@ function Profile() {
           accept="image/*"
         />
         <img
-          src={formData.avatar || currentUser.avatar}
+          src={formData.avatar || currentUser?.avatar}
           onClick={() => fileRef.current.onClick()}
           alt="Profile_Picture"
           className="rouded-full object-cover cursor-pointer h-24 w-24 self-center mt-2"
@@ -97,16 +120,21 @@ function Profile() {
           type="text"
           placeholder="Username"
           className="border p-3 rounded-lg"
+          
         />
         <input
           type="email"
           placeholder="Email"
           className="border p-3 rounded-lg"
+          defaultValue={currentUser?.email}
+          onChange={handleChange}
         />
         <input
           type="text"
           placeholder="Password"
           className="border p-3 rounded-lg"
+          defaultValue={currentUser?.password}
+          onChange={handleChange}
         />
         <button className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
           Update

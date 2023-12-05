@@ -1,14 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-interface StateProps {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    currentUser: {
-        email: string;
-        password: string;
-        avatar: string;
-    } | null
-    error:string | null | undefined;
-    loading: boolean 
-}
+import { StateProps } from "../../../types/dataTypes";
 
 const initialState: StateProps = {
     currentUser: null,
@@ -32,9 +23,21 @@ export const userSlice = createSlice({
         signInFail: (state, action) => {
             state.error = action.payload;
             state.loading = false;
+        },
+        updateUserStart: (state) => {
+            state.loading = true;
+        }, 
+        updateUserSuccess: (state, action) => {
+            state.currentUser = action.payload;
+            state.error = null;
+            state.loading = false;
+        },
+        updateUserFailure: (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
         }
     }
 })
 
-export const { signInStart, signInFail, signInSuccess } = userSlice.actions
+export const { signInStart, signInFail, signInSuccess,updateUserFailure,updateUserStart,updateUserSuccess} = userSlice.actions
 export default userSlice.reducer;

@@ -6,13 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signInFail, signInStart, signInSuccess } from '../state/reducers/userSlice';
 import { RootState } from '../../store';
 import Oauth from '../components/Oauth';
+import { MyChangeEvent } from "../../types/dataTypes";
 
-interface MyChangeEvent {
-  target: {
-    id: string;
-    value: string;
-  };
-}
+
 
 function SignIn() {
   const navigate = useNavigate();
