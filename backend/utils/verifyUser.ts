@@ -10,8 +10,13 @@ declare module "express" {
 }
 
 export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.body.access_token;
-  console.log(req.body, token);
+  const tokenFromBody = req.body.access_token;
+
+  // Check if token is in cookies
+  const tokenFromCookie = req.cookies.access_token;
+
+  const token = tokenFromCookie;
+  console.log(token);
   if (!token) return next(errorHandler(401, "User not authenticated."));
   if (!process.env.JWT_SECRET) {
     throw new Error("Secret key is not defined");
