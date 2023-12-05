@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { RootState } from "../../store";
 import { useRef, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
 import { StateProps, MyChangeEvent } from "../../types/dataTypes";
+import { updateUserFailure,updateUserStart,updateUserSuccess } from "../state/reducers/userSlice";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 export type RootState = {
   user: StateProps;
@@ -12,6 +15,7 @@ export type RootState = {
 };
 
 function Profile() {
+  const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fileRef = useRef<any>(null);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -79,12 +83,34 @@ function Profile() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const signMutation = useMutation(
+    async (formData: { [key: string]: string }) => {
+      const response = await axios.put(`http://localhost:5000/api/user/update/${currentUser?._id}`, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      return response.data;
+    },
+    {
+      onSuccess: (data) => {
+        dispatch(updateUserSuccess(data))
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onError: (error: any) => {
+        dispatch(updateUserStart());
+        dispatch(updateUserFailure(error.message))
+
+      },
+    }
+  )
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      
+      await signMutation.mutateAsync(formData)
     } catch (error) {
-      
+      console.log("Error", error);
     }
   }
 
@@ -130,7 +156,7 @@ function Profile() {
           onChange={handleChange}
         />
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           className="border p-3 rounded-lg"
           defaultValue={currentUser?.password}

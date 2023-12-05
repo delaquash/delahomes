@@ -7,6 +7,7 @@ export interface MyChangeEvent {
 
 export interface StateProps {
   currentUser: {
+    _id?: string;
     email: string;
     password: string;
     avatar: string;

@@ -8,8 +8,6 @@ import { RootState } from '../../store';
 import Oauth from '../components/Oauth';
 import { MyChangeEvent } from "../../types/dataTypes";
 
-
-
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
