@@ -6,24 +6,28 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { app } from "../firebase";
 import { StateProps, MyChangeEvent } from "../../types/dataTypes";
 import { updateUserFailure,updateUserStart,updateUserSuccess } from "../state/reducers/userSlice";
-import { useMutation } from "react-query";
-import axios from "axios";
+// import { useMutation } from "react-query";
+// import axios from "axios";
 
 export type RootState = {
   user: StateProps;
   // Add other slices if you have more reducers
 };
 
+const authTokenHere = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQ0NzU1ZjliYjAxY2IzMDUwMzQ0MSIsImlhdCI6MTcwMTg1MTg2Nn0.AHqhLVpNZ-HrYP70tIhU_xT2MFEEYr3DkuwCez70qMk; Path=/; HttpOnly";
+
 function Profile() {
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fileRef = useRef<any>(null);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const {error,loading } = useSelector((state: RootState) => state.user);
   const [file, setFile] = useState<File | undefined>(undefined);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false)
   const [formData, setFormData] = useState<{ [key: string]: string }>({})
-  console.log(file);
+  console.log(formData);
   const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     setFile(e.target.files[0]);
@@ -83,36 +87,62 @@ function Profile() {
     });
   };
 
-  const signMutation = useMutation(
-    async (formData: { [key: string]: string }) => {
-      const response = await axios.put(`http://localhost:5000/api/user/update/${currentUser?._id}`, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-      return response.data;
-    },
-    {
-      onSuccess: (data) => {
-        dispatch(updateUserSuccess(data))
-      },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onError: (error: any) => {
-        dispatch(updateUserStart());
-        dispatch(updateUserFailure(error.message))
+  // const signMutation = useMutation(
+  //   async (formData: { [key: string]: string }) => {
+  //     const response = await axios.put(`http://localhost:5000/api/user/update/${currentUser?._id}`, {
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       }
+  //     });
+  //     return response.data;
+  //   },
+  //   {
+  //     onSuccess: (data) => {
+  //       dispatch(updateUserSuccess(data))
+  //     },
+  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //     onError: (error: any) => {
+  //       dispatch(updateUserStart());
+  //       dispatch(updateUserFailure(error.message))
+  //     },
+  //   }
+  // )
 
-      },
-    }
-  )
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   try {
+  //     await signMutation.mutateAsync(formData)
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //   }
+  // }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await signMutation.mutateAsync(formData)
-    } catch (error) {
-      console.log("Error", error);
+      dispatch(updateUserStart());
+      const res = await fetch(`http://localhost:5000/api/user/update/${currentUser?._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authTokenHere}`
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      dispatch(updateUserFailure(error.message));
     }
-  }
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -146,7 +176,7 @@ function Profile() {
           type="text"
           placeholder="Username"
           className="border p-3 rounded-lg"
-          
+          onChange={handleChange}
         />
         <input
           type="email"
@@ -162,16 +192,20 @@ function Profile() {
           defaultValue={currentUser?.password}
           onChange={handleChange}
         />
-        <button className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
-          Update
+        <button disabled={loading} className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
+          {loading ? "Loading..." : "Update..."}
         </button>
       </form>
       <div className="flex mt-5 justify-between">
         <span className="cursor-pointer text-red-700">Delete Account</span>
         <span className="cursor-pointer text-red-700">Sign Out</span>
       </div>
+      <p className="mt-5 text-red-700">{ error ? "Error.." : ""}</p>
+      <p className="mt-5 text-green-700">{ updateSuccess ? "User updated successfully" : ""}</p>
     </div>
   );
 }
 
 export default Profile
+
+
