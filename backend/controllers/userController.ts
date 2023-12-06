@@ -15,8 +15,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Unauthorized update attempt");
     return next(errorHandler(401, "You can only update your account..."));
   }
-  console.log("Authenticated User ID:", req.user?.id);
-  console.log("Requested User ID:", req.params.id);
+
   try {
     if (req.body.password) {
       req.body.password = bcrypt.hashSync(req.body.password, 10);
@@ -48,4 +47,17 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { updateUser };
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.user.id !== req.params.id) {
+    console.log("Unauthorized update attempt");
+    return next(errorHandler(401, "You can only delete your account..."));
+  }
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User deleted successfully...");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { updateUser, deleteUser };
