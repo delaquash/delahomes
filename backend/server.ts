@@ -8,9 +8,9 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 // route
-import signup from "./route/authRoute";
-import signin from "./route/authRoute";
-import updatedUser from "./route/userRoute";
+import authRoute from "./route/authRoute";
+import userRoute from "./route/userRoute";
+import listRoute from "./route/listRoute";
 
 connectDB();
 const app = express();
@@ -39,9 +39,9 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-app.use("/api/auth", signup);
-app.use("/api/auth", signin);
-app.use("/api/user", updatedUser);
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
+app.use("/api/list", listRoute);
 
 // error
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
