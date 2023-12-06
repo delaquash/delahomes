@@ -5,9 +5,9 @@ import { useRef, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
 import { StateProps, MyChangeEvent } from "../../types/dataTypes";
-import { updateUserFailure,updateUserStart,updateUserSuccess } from "../state/reducers/userSlice";
+import { deleteUserFail, deleteUserStart, deleteUserSuccess, updateUserFailure,updateUserStart,updateUserSuccess } from "../state/reducers/userSlice";
 // import { useMutation } from "react-query";
-// import axios from "axios";
+import axios from "axios";
 
 export type RootState = {
   user: StateProps;
@@ -144,6 +144,22 @@ function Profile() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await axios.delete(`http://localhost:5000/api/user/delete/${currentUser?._id}`);
+      const data = res.data
+      if (data === false) {
+        dispatch(deleteUserFail(data.message))
+        return;
+      }
+      dispatch(deleteUserSuccess(data))
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      dispatch(deleteUserFail(error.nessage))
+    }
+  }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
@@ -197,7 +213,7 @@ function Profile() {
         </button>
       </form>
       <div className="flex mt-5 justify-between">
-        <span className="cursor-pointer text-red-700">Delete Account</span>
+        <span onClick={handleDelete} className="cursor-pointer text-red-700">Delete Account</span>
         <span className="cursor-pointer text-red-700">Sign Out</span>
       </div>
       <p className="mt-5 text-red-700">{ error ? "Error.." : ""}</p>
