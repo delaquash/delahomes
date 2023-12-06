@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 // import { RootState } from "../../store";
@@ -5,7 +6,7 @@ import { useRef, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
 import { StateProps, MyChangeEvent } from "../../types/dataTypes";
-import { deleteUserFail, deleteUserStart, deleteUserSuccess, updateUserFailure,updateUserStart,updateUserSuccess } from "../state/reducers/userSlice";
+import { deleteUserFail, deleteUserStart, deleteUserSuccess, signoutUserStart, updateUserFailure,updateUserStart,updateUserSuccess } from "../state/reducers/userSlice";
 // import { useMutation } from "react-query";
 import axios from "axios";
 
@@ -147,19 +148,33 @@ function Profile() {
   const handleDelete = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await axios.delete(`http://localhost:5000/api/user/delete/${currentUser?._id}`);
-      const data = res.data
+      const { data }= await axios.delete(`http://localhost:5000/api/user/delete/${currentUser?._id}`);
+     
       if (data === false) {
         dispatch(deleteUserFail(data.message))
         return;
       }
       dispatch(deleteUserSuccess(data))
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
     } catch (error: any) {
       dispatch(deleteUserFail(error.nessage))
     }
   }
 
+  const handleSignOut = async () => {
+    try {
+      dispatch(signoutUserStart());
+      const { data } = await axios.post('http://localhost:5000/api/auth/signout/');
+      // const data = await res.data
+      if (data.success === false) {
+        dispatch(deleteUserFail(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error: any) {
+      dispatch(deleteUserFail(error.message));
+    }
+  }
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
@@ -214,7 +229,7 @@ function Profile() {
       </form>
       <div className="flex mt-5 justify-between">
         <span onClick={handleDelete} className="cursor-pointer text-red-700">Delete Account</span>
-        <span className="cursor-pointer text-red-700">Sign Out</span>
+        <span onClick={handleSignOut} className="cursor-pointer text-red-700">Sign Out</span>
       </div>
       <p className="mt-5 text-red-700">{ error ? "Error.." : ""}</p>
       <p className="mt-5 text-green-700">{ updateSuccess ? "User updated successfully" : ""}</p>
@@ -223,5 +238,7 @@ function Profile() {
 }
 
 export default Profile;
+
+
 
 
