@@ -128,7 +128,31 @@ function CreateListing() {
               </div>
             </div>
           </div>
-          
+          <div className="flex flex-col flex-1 gap-4">
+            <p className="semi-bold">
+              Images
+              <span className="font-bold text-gray-600 ml-2">
+                The first image will be the cover(max 6MB)
+              </span>
+            </p>
+            <div className="flex gap-4">
+            <input
+                type="file"
+                id="images"
+                accept="image/*"
+                multiple
+                className="p-3 border border-gray-300 rounded w-full"
+            />
+            <button className="p-3 text-white
+                    border bg-black
+                    rounded  hover:shadow-lg 
+                    uppercase disabled:opacity-80"
+            >
+                Upload
+            </button>
+                    
+            </div>
+          </div>
         </form>
       </main>
     );
