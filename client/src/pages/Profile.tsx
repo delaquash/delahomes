@@ -29,7 +29,6 @@ function Profile() {
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false)
   const [formData, setFormData] = useState<{ [key: string]: string }>({})
-  console.log(formData);
   const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     setFile(e.target.files[0]);
