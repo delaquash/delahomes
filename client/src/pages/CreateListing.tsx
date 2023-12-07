@@ -5,7 +5,7 @@ function CreateListing() {
         <h1 className="text-3xl font-semibold text-center my-7">
           Create a Listing
         </h1>
-        <form className="flex flex-col gap-4 flex-1 outline-none">
+        <form className="flex flex-col gap-4 flex-1 sm:flex-row outline-none">
           <div className="flex flex-col gap-4 flex-1">
             <input
               type="text"
@@ -151,7 +151,14 @@ function CreateListing() {
                 Upload
             </button>
                     
-            </div>
+                    </div>
+                    <button
+                        className="p-3 bg-black rounded-lg 
+                         text-white hover:opacity-95
+                          uppercase disabled:opacity-80"
+                        >
+                        Create Listing
+                    </button>
           </div>
         </form>
       </main>
