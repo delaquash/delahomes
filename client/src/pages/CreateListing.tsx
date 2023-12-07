@@ -15,78 +15,77 @@ function CreateListing() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-//     imageUrls: [],
-    // name: "",
-    // description: "",
-    // address: "",
-    // type: "rent",
-    // bedrooms: 1,
-    // bathrooms: 1,
-    // regularPrice: 50,
-    // discountPrice: 0,
-    // offer: false,
-    // parking: false,
-    // furnished: false,
-//   });
+  //     imageUrls: [],
+  // name: "",
+  // description: "",
+  // address: "",
+  // type: "rent",
+  // bedrooms: 1,
+  // bathrooms: 1,
+  // regularPrice: 50,
+  // discountPrice: 0,
+  // offer: false,
+  // parking: false,
+  // furnished: false,
+  //   });
 
-//   const handleFileChange = (e: any) => {
-//     const selectedFiles = e.target.files;
-//     setFiles(selectedFiles);
-//   };
+  //   const handleFileChange = (e: any) => {
+  //     const selectedFiles = e.target.files;
+  //     setFiles(selectedFiles);
+  //   };
 
-//   const handleImageSubmit = (e: any) => {
-//     if (files.length > 0 && files.length < 7) {
-//       const promises: [] = [];
-//       for (let i = 0; i < files.length; i++) {
-//         promises.push(storeImage[files[i]]);
-//       }
-//       Promise.all(promises).then((urls) => {
-//         setFormData({
-//           ...formData,
-//           imageUrls: formData.imageUrls.concat(urls),
-//         });
-//       });
-//     }
-//   };
-//   const storeImage = async (file: any) => {
-//     return new Promise((resolve, reject) => {
-//       const storage = getStorage(app);
-//       const fileName = new Date().getTime() + file.name;
-//       const storageRef = ref(storage, fileName);
-//       const uploadTask = uploadBytesResumable(storageRef, file);
-//       uploadTask.on(
-//           "state_changed",
-//           (snapshot) => {
-//               const progress =(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//               console.log(`Upload ${progress}`);
-//           },
-//         (error) => {
-//           reject(error);
-//         },
-//         () => {
-//           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-//             resolve(downloadURL);
-//           });
-//         }
-//       );
-//     });
-//   };
+  //   const handleImageSubmit = (e: any) => {
+  //     if (files.length > 0 && files.length < 7) {
+  //       const promises: [] = [];
+  //       for (let i = 0; i < files.length; i++) {
+  //         promises.push(storeImage[files[i]]);
+  //       }
+  //       Promise.all(promises).then((urls) => {
+  //         setFormData({
+  //           ...formData,
+  //           imageUrls: formData.imageUrls.concat(urls),
+  //         });
+  //       });
+  //     }
+  //   };
+  //   const storeImage = async (file: any) => {
+  //     return new Promise((resolve, reject) => {
+  //       const storage = getStorage(app);
+  //       const fileName = new Date().getTime() + file.name;
+  //       const storageRef = ref(storage, fileName);
+  //       const uploadTask = uploadBytesResumable(storageRef, file);
+  //       uploadTask.on(
+  //           "state_changed",
+  //           (snapshot) => {
+  //               const progress =(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //               console.log(`Upload ${progress}`);
+  //           },
+  //         (error) => {
+  //           reject(error);
+  //         },
+  //         () => {
+  //           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //             resolve(downloadURL);
+  //           });
+  //         }
+  //       );
+  //     });
+  //   };
 
-     const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [formData, setFormData] = useState<ListDataProps>({
-        imageUrls: [],
-        name: "",
-        description: "",
-        address: "",
-        type: "rent",
-        bedrooms: 1,
-        bathrooms: 1,
-        regularPrice: 50,
-        discountPrice: 0,
-        offer: false,
-        parking: false,
-        furnished: false,
-    
+    imageUrls: [],
+    name: "",
+    description: "",
+    address: "",
+    type: "rent",
+    bedrooms: 1,
+    bathrooms: 1,
+    regularPrice: 50,
+    discountPrice: 0,
+    offer: false,
+    parking: false,
+    furnished: false,
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,9 +96,10 @@ function CreateListing() {
   };
 
   const handleImageSubmit = async () => {
-    if (files.length > 0 && files.length < 7) {
-      const promises: Promise<string>[] = [];
-
+    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+      setUploading(true)
+      setImageUploadError(false)
+        const promises: Promise<string>[] = [];
       for (let i = 0; i < files.length; i++) {
         promises.push(storeImage(files[i]));
       }
@@ -110,8 +110,11 @@ function CreateListing() {
           ...formData,
           imageUrls: formData.imageUrls.concat(urls),
         });
+          setImageUploadError(false);
+          setUploading(false)
       } catch (error) {
-        console.error('Error uploading images:', error);
+        console.error("Error uploading images:", error);
+        setImageUploadError(true);
       }
     }
   };
@@ -124,24 +127,33 @@ function CreateListing() {
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
-        'state_changed',
+        "state_changed",
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Upload ${progress}%`);
         },
         (error) => {
           reject(error);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
-          }).catch((downloadError) => {
-            reject(downloadError);
-          });
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              resolve(downloadURL);
+            })
+            .catch((downloadError) => {
+              reject(downloadError);
+            });
         }
       );
     });
   };
+
+    const handleRemoveImage = (index) => {
+      setFormData({...formData,
+        imageUrls: formData.imageUrls.filter((_, i)=> i !== index)
+      })
+  }
 
   return (
     <main className="p-3 max-w-4xl mx-auto">
@@ -305,6 +317,36 @@ function CreateListing() {
           >
             Create Listing
           </button>
+          <p className="text-red-700 text-sm">
+            {imageUploadError && imageUploadError}
+          </p>
+          {formData.imageUrls.length > 0 &&
+            formData.imageUrls.map((url, index) => (
+              <div
+                key={url}
+                className="flex justify-between p-3 border items-center"
+              >
+                <img
+                  src={url}
+                  alt="listing image"
+                  className="w-20 h-20 object-contain rounded-lg"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(index)}
+                  className="p-3 text-red-700 rounded-lg uppercase hover:opacity-75"
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          <button
+            disabled={loading || uploading}
+            className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          >
+            {loading ? "Creating..." : "Create listing"}
+          </button>
+          {error && <p className="text-red-700 text-sm">{error}</p>}
         </div>
       </form>
     </main>
