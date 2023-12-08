@@ -9,69 +9,20 @@ import {
 import { useState } from "react";
 import { app } from "../firebase";
 import { ListDataProps } from "../../types/dataTypes";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "./Profile"
+const authTokenHere = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQ0NzU1ZjliYjAxY2IzMDUwMzQ0MSIsImlhdCI6MTcwMTg1MTg2Nn0.AHqhLVpNZ-HrYP70tIhU_xT2MFEEYr3DkuwCez70qMk; Path=/; HttpOnly";
 
 function CreateListing() {
+    const navigate = useNavigate();
+    const  currentUser = useSelector((state: RootState)=> state.user.currentUser)
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState< string | boolean >(false);
   const [loading, setLoading] = useState(false);
-  //     imageUrls: [],
-  // name: "",
-  // description: "",
-  // address: "",
-  // type: "rent",
-  // bedrooms: 1,
-  // bathrooms: 1,
-  // regularPrice: 50,
-  // discountPrice: 0,
-  // offer: false,
-  // parking: false,
-  // furnished: false,
-  //   });
-
-  //   const handleFileChange = (e: any) => {
-  //     const selectedFiles = e.target.files;
-  //     setFiles(selectedFiles);
-  //   };
-
-  //   const handleImageSubmit = (e: any) => {
-  //     if (files.length > 0 && files.length < 7) {
-  //       const promises: [] = [];
-  //       for (let i = 0; i < files.length; i++) {
-  //         promises.push(storeImage[files[i]]);
-  //       }
-  //       Promise.all(promises).then((urls) => {
-  //         setFormData({
-  //           ...formData,
-  //           imageUrls: formData.imageUrls.concat(urls),
-  //         });
-  //       });
-  //     }
-  //   };
-  //   const storeImage = async (file: any) => {
-  //     return new Promise((resolve, reject) => {
-  //       const storage = getStorage(app);
-  //       const fileName = new Date().getTime() + file.name;
-  //       const storageRef = ref(storage, fileName);
-  //       const uploadTask = uploadBytesResumable(storageRef, file);
-  //       uploadTask.on(
-  //           "state_changed",
-  //           (snapshot) => {
-  //               const progress =(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //               console.log(`Upload ${progress}`);
-  //           },
-  //         (error) => {
-  //           reject(error);
-  //         },
-  //         () => {
-  //           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //             resolve(downloadURL);
-  //           });
-  //         }
-  //       );
-  //     });
-  //   };
-
   const [files, setFiles] = useState<File[]>([]);
   const [formData, setFormData] = useState<ListDataProps>({
     imageUrls: [],
@@ -87,7 +38,7 @@ function CreateListing() {
     parking: false,
     furnished: false,
   });
-
+  console.log(formData)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
@@ -149,29 +100,104 @@ function CreateListing() {
     });
   };
 
-    const handleRemoveImage = (index) => {
+    const handleRemoveImage = (index: number) => {
       setFormData({...formData,
         imageUrls: formData.imageUrls.filter((_, i)=> i !== index)
       })
     }
     
-    const handleChange = () => {
-        
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.target.id === "sale" || e.target.id === "rent") {
+            setFormData({
+                ...formData,
+                type: e.target.id
+            });
+        } else if (e.target.id === "furniture" || e.target.id === "offer" || e.target.id === "parking") {
+            setFormData({
+                ...formData,
+                [e.target.id]: (e.target as HTMLInputElement).checked
+            });
+        } else {
+            // Handle number, text, and textarea inputs
+            setFormData({
+                ...formData,
+                [e.target.id]: e.target.value
+            });
+        }
+    };
+
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     try {
+    //         setLoading(true);
+    //         setError(false);
+    //         const { data } = await axios.post('http://localhost:5000/api/list/create');
+    //         console.log(data)
+    //         setLoading(false)
+    //         if (data === false) {
+    //             setError(data.message);
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //         setError(true)
+    //         setLoading(false)
+    //     }
+    // }
+
+  const createListMutation = useMutation(() =>
+    axios.post('http://localhost:5000/api/list/create', {}, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authTokenHere}`, // Replace with your actual access token
+      },
+    })
+  );
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      if (formData.imageUrls.length < 1)
+        return setError('You must upload at least one image');
+      if (+formData.regularPrice < +formData.discountPrice)
+        return setError('Discount price must be lower than regular price');
+      setLoading(true);
+      setError(false);
+      const res = await fetch('/api/listing/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser?._id,
+        }),
+      });
+      const data = await res.json();
+      setLoading(false);
+      if (data.success === false) {
+        setError(data.message);
+      }
+      navigate(`/listing/${data._id}`);
+    } catch (error: any) {
+      setError(error.message);
+      setLoading(false);
     }
+  };
 
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
         Create a Listing
       </h1>
-      <form className="flex flex-col gap-4 flex-1 sm:flex-row outline-none">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1 sm:flex-row outline-none">
         <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
             placeholder="Name"
             className="border p-3 rounded-lg outline-none"
             id="name"
-            maxLength={62}
+            maxLength={80}
             minLength={10}
             required
             onChange={handleChange}
