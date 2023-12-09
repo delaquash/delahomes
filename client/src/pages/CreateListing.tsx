@@ -38,7 +38,6 @@ function CreateListing() {
     parking: false,
     furnished: false,
   });
-  console.log(formData)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
