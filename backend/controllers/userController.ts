@@ -60,5 +60,9 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const listUser = async (req: Request, res: Response, next: NextFunction) => {};
-export { updateUser, deleteUser, listUser };
+const getUserList = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
+export { updateUser, deleteUser, getUserList };
