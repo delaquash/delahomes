@@ -60,9 +60,14 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getUserList = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {};
+const getUserList = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.user.id !== req.params.id) {
+    try {
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    return next(errorHandler(401, "You can only view your own listing.."));
+  }
+};
 export { updateUser, deleteUser, getUserList };
