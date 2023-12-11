@@ -175,6 +175,14 @@ function Profile() {
       dispatch(deleteUserFail(error.message));
     }
   }
+
+  const handleShowListing = aysnc() => {
+    try {
+      const { data } = axios.get()
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
@@ -235,7 +243,13 @@ function Profile() {
         <span onClick={handleSignOut} className="cursor-pointer text-red-700">Sign Out</span>
       </div>
       <p className="mt-5 text-red-700">{ error ? "Error.." : ""}</p>
-      <p className="mt-5 text-green-700">{ updateSuccess ? "User updated successfully" : ""}</p>
+      <p className="mt-5 text-green-700">{updateSuccess ? "User updated successfully" : ""}</p>
+      <button
+        onClick={handleShowListing}
+        className="text-green-700 w-full"
+      >
+        Show Listing
+      </button>
     </div>
   );
 }
