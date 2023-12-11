@@ -1,11 +1,11 @@
 import express from "express";
-import { createListing } from "../controllers/listController";
+import { createListing, deleteListing } from "../controllers/listController";
 import { verifyUser } from "../utils/verifyUser";
 
 const router = express.Router();
 
 router.post("/create", verifyUser, createListing);
-// router.post();
+router.delete("/delete/:id", verifyUser, deleteListing);
 // router.post();
 // router.post();
 
