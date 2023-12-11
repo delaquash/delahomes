@@ -36,4 +36,10 @@ const deleteListing = async (
   }
 };
 
-export { createListing, deleteListing };
+const updateListing = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
+
+export { createListing, deleteListing, updateListing };
