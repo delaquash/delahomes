@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import { errorHandler } from "../utils/errorHandler";
 import bcrypt from "bcryptjs";
+import Listing from "../models/listModel";
 
 // Extend the Express Request interface to include the user property
 declare module "express" {
@@ -61,8 +62,10 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getUserList = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user.id !== req.params.id) {
+  if (req.user.id === req.params.id) {
     try {
+      const listing = await Listing.find({ userRef: req.params.id });
+      res.status(200).json(listing);
     } catch (error) {
       next(error);
     }
