@@ -11,5 +11,5 @@ export interface listModelProps {
   type: string;
   offer: boolean;
   imageUrls: string[];
-  useRef: string;
+  userRef: string;
 }
