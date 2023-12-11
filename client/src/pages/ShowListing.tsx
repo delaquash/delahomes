@@ -29,6 +29,22 @@ const ShowListing = () => {
       setShowListingError(true);
     }
   };
+  
+  const handleDelete = async (listingId: string | undefined) => {
+      try {
+        const { data } =await axios.delete(`http://localhost:5000/api/list/delete/${listingId}`);
+        if (data.success === false) {
+          console.log(data.message);
+          return
+        }
+      setUserListing((prev) =>
+        prev.filter((listing)=> listing._id !== listingId)
+      );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
   return (
     <>
       <button onClick={handleShowListing} className="text-green-700 w-full">
@@ -61,6 +77,10 @@ const ShowListing = () => {
               >
                 <p className="text-slate-700">{listing.name}</p>
               </Link>
+              <div className="flex flex-col items-center">
+                <button onClick={()=>handleDelete(listing._id)} className="text-red-700">Delete</button>
+                <button className="text-green-700">Edit</button>
+              </div>
             </div>
           ))}
         </div>
