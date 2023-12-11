@@ -31,3 +31,20 @@ export interface ListDataProps {
   imageUrls: string[];
   useRef?: string;
 }
+
+export interface UserListProps {
+  name?: string;
+  _id?: string;
+  imageUrls: string[];
+  description?: string;
+  address?: string;
+  regularPrice?: number;
+  discountPrice?: number;
+  bathrooms?: number;
+  bedrooms?: number;
+  furnished?: boolean;
+  parking?: boolean;
+  type?: string;
+  offer?: boolean;
+}
+[];

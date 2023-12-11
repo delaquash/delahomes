@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
-import { StateProps, MyChangeEvent } from "../../types/dataTypes";
+import { StateProps, MyChangeEvent, UserListProps} from "../../types/dataTypes";
 import { deleteUserFail, deleteUserStart, deleteUserSuccess, signoutUserStart, updateUserFailure,updateUserStart,updateUserSuccess } from "../state/reducers/userSlice";
 // import { useMutation } from "react-query";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ShowListing from "./ShowListing";
 
 export type RootState = {
   user: StateProps;
@@ -26,8 +27,9 @@ function Profile() {
   const {error,loading } = useSelector((state: RootState) => state.user);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [updateSuccess, setUpdateSuccess] = useState(false);
+
   const [filePercentage, setFilePercentage] = useState(0);
-  const [fileUploadError, setFileUploadError] = useState(false)
+  const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState<{ [key: string]: string }>({})
   const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -176,13 +178,7 @@ function Profile() {
     }
   }
 
-  const handleShowListing = aysnc() => {
-    try {
-      const { data } = axios.get()
-    } catch (error) {
-      
-    }
-  }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Profile</h1>
@@ -244,12 +240,7 @@ function Profile() {
       </div>
       <p className="mt-5 text-red-700">{ error ? "Error.." : ""}</p>
       <p className="mt-5 text-green-700">{updateSuccess ? "User updated successfully" : ""}</p>
-      <button
-        onClick={handleShowListing}
-        className="text-green-700 w-full"
-      >
-        Show Listing
-      </button>
+        <ShowListing />
     </div>
   );
 }
