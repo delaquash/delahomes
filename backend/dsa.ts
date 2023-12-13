@@ -22,3 +22,15 @@
 // type UniversalForces = combinedForces & newCombinedforces;
 
 // const forces: UniversalForces = 80;
+
+// interface OlaideDetails {
+//   [props: string]: number;
+// }
+
+// const detail: OlaideDetails = {
+//   name: 70,
+//   age: 590,
+//   sex: "male",
+//   hair: "black",
+//   shortness: false,
+// };

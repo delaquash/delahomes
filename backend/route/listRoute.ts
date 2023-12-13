@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/create", verifyUser, createListing);
 router.delete("/delete/:id", verifyUser, deleteListing);
-router.post("/update/:id", verifyUser, updateListing);
+router.put("/update/:id", verifyUser, updateListing);
 // router.post();
 
 export default router;
