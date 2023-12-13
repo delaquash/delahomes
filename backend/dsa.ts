@@ -15,3 +15,10 @@
 //   swap(arr, start, swapIndex);
 //   return swapIndex;
 // };
+
+// type combinedForces = string | number;
+// type newCombinedforces = number | boolean;
+
+// type UniversalForces = combinedForces & newCombinedforces;
+
+// const forces: UniversalForces = 80;
