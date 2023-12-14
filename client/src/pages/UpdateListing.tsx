@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { StateProps } from "../../types/dataTypes";
 import axios from "axios";
+import { FaTruckMonster } from "react-icons/fa";
 
 export type RootState = {
   user: StateProps;
@@ -80,7 +81,8 @@ const UpdateListing = () => {
       setImageUploadError(false);
       setUploading(false);
     }
-  };
+    };
+    
   const storeImage = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
@@ -110,6 +112,8 @@ const UpdateListing = () => {
       );
     });
   };
+
+    
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (e.target.id === "sale" || e.target.id === "rent") {
             setFormData({
@@ -130,23 +134,23 @@ const UpdateListing = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (formData.imageUrls.length < 1)
-        return setError('You must upload at least one image');
+        return setError(FaTruckMonster);
       if (+formData.regularPrice < +formData.discountPrice)
-        return setError('Discount price must be lower than regular price');
+        return setError(true);
       setLoading(true);
       setError(false);
-      const res = await fetch(`/api/listing/update/${params.listingId}`, {
+      const res = await fetch(`http://localhost:5000/api/list/update/${params.listingId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...formData,
-          userRef: currentUser._id,
+          userRef: currentUser?._id,
         }),
       });
       const data = await res.json();
@@ -155,7 +159,8 @@ const UpdateListing = () => {
         setError(data.message);
       }
       navigate(`/listing/${data._id}`);
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
       setError(error.message);
       setLoading(false);
     }
