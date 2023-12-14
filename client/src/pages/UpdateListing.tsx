@@ -55,30 +55,29 @@ const UpdateListing = () => {
     fetchListing();
   }, []);
 
-    const handleImageSubmit = (e) => {
+   const handleImageSubmit = async () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-      setUploading(true);
-      setImageUploadError(false);
-      const promises = [];
-
+      setUploading(true)
+      setImageUploadError(false)
+        const promises: Promise<string>[] = [];
       for (let i = 0; i < files.length; i++) {
         promises.push(storeImage(files[i]));
       }
-      Promise.all(promises)
-        .then((urls) => {
-          setFormData({
-            ...formData,
-            imageUrls: formData.imageUrls.concat(urls),
-          });
-          setImageUploadError(false);
-          setUploading(false);
-        })
-        .catch((err) => {
-          setImageUploadError('Image upload failed (2 mb max per image)');
-          setUploading(false);
+
+      try {
+        const urls = await Promise.all(promises);
+        setFormData({
+          ...formData,
+          imageUrls: formData.imageUrls.concat(urls),
         });
-    } else {
-      setImageUploadError('You can only upload 6 images per listing');
+          setImageUploadError(false);
+          setUploading(false)
+      } catch (error) {
+        console.error("Error uploading images:", error);
+        setImageUploadError(true);
+      }
+    }  else {
+      setImageUploadError(false);
       setUploading(false);
     }
   };
@@ -111,6 +110,25 @@ const UpdateListing = () => {
       );
     });
   };
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.target.id === "sale" || e.target.id === "rent") {
+            setFormData({
+                ...formData,
+                type: e.target.id
+            });
+        } else if (e.target.id === "furniture" || e.target.id === "offer" || e.target.id === "parking") {
+            setFormData({
+                ...formData,
+                [e.target.id]: (e.target as HTMLInputElement).checked
+            });
+        } else {
+            // Handle number, text, and textarea inputs
+            setFormData({
+                ...formData,
+                [e.target.id]: e.target.value
+            });
+        }
+    };
 
   return (
     <main className="p-3 max-w-4xl mx-auto">
