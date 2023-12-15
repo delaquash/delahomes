@@ -162,7 +162,7 @@ function CreateListing() {
         return setError('Discount price must be lower than regular price');
       setLoading(true);
       setError(false);
-      const res = await fetch('/api/listing/create', {
+      const res = await fetch('http://localhost:5000/api/listing/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ function CreateListing() {
           userRef: currentUser?._id,
         }),
       });
-      
+
       const data = await res.json();
       setLoading(false);
       if (data.success === false) {

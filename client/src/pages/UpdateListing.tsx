@@ -181,7 +181,7 @@ const UpdateListing = () => {
             maxLength={62}
             minLength={10}
             required
-            // onChange={handleChange}
+            onChange={handleChange}
             value={formData.name}
           />
           <textarea
@@ -189,7 +189,7 @@ const UpdateListing = () => {
             className="border p-3 rounded-lg outline-none"
             id="description"
             required
-            // onChange={handleChange}
+            onChange={handleChange}
             value={formData.description}
           />
           <input
@@ -198,7 +198,7 @@ const UpdateListing = () => {
             className="border p-3 rounded-lg outline-none"
             id="address"
             required
-            // onChange={handleChange}
+            onChange={handleChange}
             value={formData.address}
           />
            <div className="flex flex-wrap gap-6">
@@ -207,7 +207,7 @@ const UpdateListing = () => {
                 type="checkbox"
                 id="sale"
                 className="w-5"
-                // onChange={handleChange}
+                onChange={handleChange}
                 checked={formData.type === "sale"}
               />
               <span>Sell</span>
@@ -217,7 +217,7 @@ const UpdateListing = () => {
                 type="checkbox"
                 id="rent"
                 className="w-5"
-                // onChange={handleChange}
+                onChange={handleChange}
                 checked={formData.type === 'rent'}
               />
               <span>Rent</span>
@@ -227,7 +227,7 @@ const UpdateListing = () => {
                 type="checkbox"
                 id="parking"
                 className="w-5"
-                // onChange={handleChange}
+                onChange={handleChange}
                 checked={formData.parking}
               />
               <span>Parking spot</span>
@@ -237,7 +237,7 @@ const UpdateListing = () => {
                 type="checkbox"
                 id="furnished"
                 className="w-5"
-                // onChange={handleChange}
+                onChange={handleChange}
                 checked={formData.furnished}
               />
               <span>Furnished</span>
@@ -247,7 +247,7 @@ const UpdateListing = () => {
                 type="checkbox"
                 id="offer"
                 className="w-5"
-                // onChange={handleChange}
+                onChange={handleChange}
                 checked={formData.offer}
               />
               <span>Offer</span>
@@ -262,7 +262,7 @@ const UpdateListing = () => {
                 max="10"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
-                // onChange={handleChange}
+                onChange={handleChange}
                 value={formData.bedrooms}
               />
               <p>Beds</p>
@@ -275,7 +275,7 @@ const UpdateListing = () => {
                 max="10"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
-                // onChange={handleChange}
+                onChange={handleChange}
                 value={formData.bathrooms}
               />
               <p>Baths</p>
@@ -288,7 +288,7 @@ const UpdateListing = () => {
                 max="10000000"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
-                // onChange={handleChange}
+                onChange={handleChange}
                 value={formData.regularPrice}
               />
               <div className="flex flex-col items-center">
