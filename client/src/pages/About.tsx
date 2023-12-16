@@ -12,6 +12,9 @@ function About() {
         exceptional service and making the buying and selling process as smooth
         as possible.
       </p>
+      <p className='mb-4 text-slate-700'>
+      Our mission is to help our clients achieve their real estate goals by providing expert advice, personalized service, and a deep understanding of the local market. Whether you are looking to buy, sell, or rent a property, we are here to help you every step of the way.
+      </p>
     </div>
   );
 }
