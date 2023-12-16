@@ -55,64 +55,6 @@ const UpdateListing = () => {
 
     fetchListing();
   }, []);
-
-//    const handleImageSubmit = async () => {
-
-    const handleImageSubmit = async () => {
-  if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-    setUploading(true);
-    setImageUploadError(false);
-
-    const promises: Promise<string>[] = [];
-    for (let i = 0; i < files.length; i++) {
-      promises.push(storeImage(files[i]));
-    }
-
-    try {
-      const urls = await Promise.all(promises);
-
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        imageUrls: [...prevFormData.imageUrls, ...urls],
-      }));
-
-      setImageUploadError(false);
-      setUploading(false);
-    } catch (error) {
-      console.error("Error uploading images:", error);
-      setImageUploadError(true);
-    }
-  } else {
-    setImageUploadError(false);
-    setUploading(false);
-  }
-};
-
-//     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-//       setUploading(true)
-//       setImageUploadError(false)
-//         const promises: Promise<string>[] = [];
-//       for (let i = 0; i < files.length; i++) {
-//         promises.push(storeImage(files[i]));
-//       }
-
-//       try {
-//         const urls = await Promise.all(promises);
-//         setFormData({
-//           ...formData,
-//           imageUrls: formData.imageUrls.concat(urls),
-//         });
-//           setImageUploadError(false);
-//           setUploading(false)
-//       } catch (error) {
-//         console.error("Error uploading images:", error);
-//         setImageUploadError(true);
-//       }
-//     }  else {
-//       setImageUploadError(false);
-//       setUploading(false);
-//     }
-//     };
     
   const storeImage = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -145,6 +87,8 @@ const UpdateListing = () => {
   };
 
     
+
+    
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (e.target.id === "sale" || e.target.id === "rent") {
             setFormData({
@@ -164,6 +108,40 @@ const UpdateListing = () => {
             });
         }
     };
+
+    const handleImageSubmit = async () => {
+  if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+    setUploading(true);
+    setImageUploadError(false);
+
+    const promises: Promise<string>[] = [];
+    for (let i = 0; i < files.length; i++) {
+      promises.push(storeImage(files[i]));
+    }
+
+    try {
+      const urls = await Promise.all(promises);
+
+      setFormData((prevFormData) => {
+        const updatedFormData: typeof formData = {
+          ...prevFormData,
+          imageUrls: [...prevFormData.imageUrls, ...urls],
+        };
+        return updatedFormData;
+      });
+
+      setImageUploadError(false);
+      setUploading(false);
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      setImageUploadError(true);
+    }
+  } else {
+    setImageUploadError(false);
+    setUploading(false);
+  }
+};
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
