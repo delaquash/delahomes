@@ -59,5 +59,10 @@ const updateListing = async (
     next(error);
   }
 };
+const getListing = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
 
-export { createListing, deleteListing, updateListing };
+export { createListing, deleteListing, updateListing, getListing };
