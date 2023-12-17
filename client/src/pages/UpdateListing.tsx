@@ -45,7 +45,7 @@ const UpdateListing = () => {
      useEffect(() => {
          const fetchListing = async () => {
              const listingId = params.listingId;
-             const { data }  = await axios.put(`http://localhost:5000/api/list/update/${listingId}`);
+             const { data }  = await axios.put(`http://localhost:5000/api/list/get-list/${listingId}`);
       if (data.success === false) {
         console.log(data.message);
         return;
