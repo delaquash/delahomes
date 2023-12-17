@@ -59,10 +59,16 @@ const updateListing = async (
     next(error);
   }
 };
-const getListing = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {};
+const getListing = async (req: Request, res: Response, next: NextFunction) => {
+  const list = await Listing.findById(req.params.id);
+  try {
+    if (!list) {
+      return next(errorHandler(404, "Lisitng not found."));
+    }
+    res.status(200).json(list);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export { createListing, deleteListing, updateListing, getListing };
