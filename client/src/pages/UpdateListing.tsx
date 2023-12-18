@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { StateProps } from "../../types/dataTypes";
 import axios from "axios";
 import { FaTruckMonster } from "react-icons/fa";
+import { useQuery } from "react-query";
 
 export type RootState = {
   user: StateProps;
