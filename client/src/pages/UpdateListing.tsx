@@ -13,17 +13,47 @@ import axios from "axios";
 import { FaTruckMonster } from "react-icons/fa";
 import { useQuery, useMutation } from "react-query";
 
-
-export type RootState = {
-  user: StateProps;
-  // Add other slices if you have more reducers
-};
-
-const fetchListing = async (listingId) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const fetchListing = async (listingId: any) => {
   const { data } = await axios.put(`http://localhost:5000/api/list/get-list/${listingId}`);
   return data;
 };
 
+
+const updateListing = async ({ listingId, formData }) => {
+  const res = await fetch(`http://localhost:5000/api/list/update/${listingId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...formData,
+      userRef: currentUser?._id,
+    }),
+  });
+  return res.json();
+};
+
+const UpdateListing = () => {
+  const navigate = useNavigate();
+  const params = useParams();
+  const { currentUser } = useSelector((state: RootState) => state.user);
+
+  const queryKey = ['listing', params.listingId];
+
+  const { data: formDataQuery, isLoading, isError, error } = useQuery(queryKey, () => fetchListing(params.listingId));
+
+  const mutation = useMutation((formData) => updateListing({ listingId: params.listingId, formData }));
+
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({
+    // ... your initial formData state
+  });
+
+  return (
+
+  )
+}
 
 
 
