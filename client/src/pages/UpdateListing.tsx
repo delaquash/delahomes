@@ -14,8 +14,15 @@ import { FaTruckMonster } from "react-icons/fa";
 import { useQuery, useMutation } from "react-query";
 
 
+export type RootState = {
+  user: StateProps;
+  // Add other slices if you have more reducers
+};
 
-
+const fetchListing = async (listingId) => {
+  const { data } = await axios.put(`http://localhost:5000/api/list/get-list/${listingId}`);
+  return data;
+};
 
 
 
