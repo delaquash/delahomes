@@ -8,7 +8,7 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { StateProps } from "../../types/dataTypes";
+import { StateProps, UserListProps } from "../../types/dataTypes";
 import axios from "axios";
 import { FaTruckMonster } from "react-icons/fa";
 import { useQuery, useMutation } from "react-query";
@@ -27,7 +27,7 @@ const UpdateListing = () => {
   const [loading, setLoading] = useState(false);
   const [imageUploadError, setImageUploadError] = useState(false);
   // const [formError, setFormError] = useState(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<UserListProps>({
     // ... your initial formData state
     imageUrls: [],
     name: "",
@@ -42,7 +42,7 @@ const UpdateListing = () => {
     parking: false,
     furnished: false,
   });
-  const updateListing = async ({ listingId, formData }: { listingId: string, formData: FormData }) => {
+  const updateListing = async ({ listingId, formData }: { listingId: string | undefined, formData: FormData }) => {
     const res = await fetch(`http://localhost:5000/api/list/update/${listingId}`, {
       method: 'POST',
       headers: {
@@ -57,7 +57,7 @@ const UpdateListing = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetchListing = async (listingId: any ) => {
+const fetchListing = async (listingId: string | undefined ) => {
   const { data } = await axios.put(`http://localhost:5000/api/list/get-list/${listingId}`);
   return data;
 };
@@ -65,9 +65,7 @@ const fetchListing = async (listingId: any ) => {
 
   const { data: formDataQuery, isLoading, isError, error } = useQuery(queryKey, () => fetchListing(params.listingId));
 
-  const mutation = useMutation((formData) => updateListing({ listingId: params.listingId, formData }))
-
- 
+  const mutation = useMutation((formData: FormData) => updateListing({ listingId: params.listingId, formData }))
 
   useEffect(() => {
     if (formDataQuery) {
@@ -158,7 +156,7 @@ const fetchListing = async (listingId: any ) => {
   };
 
   
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (formData.imageUrls.length < 1)
@@ -179,19 +177,29 @@ const fetchListing = async (listingId: any ) => {
       }
 
       navigate(`/listing/${data._id}`);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // Handle errors during the process
       console.error("Error:", error.message);
     }
-  
+  }
+
+  const handleRemoveImage = (index: number)=> {
+    setFormData({
+      ...formData,
+      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+    });
+  };
 
     return (
       <main className="p-3 max-w-4xl mx-auto">
         <h1 className="text-3xl font-semibold text-center my-7">
           Update a Listing
         </h1>
-        <form className="flex flex-col sm:flex-row gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col sm:flex-row gap-4"
+        >
           <div className="flex flex-col gap-4 flex-1">
             <input
               type="text"
@@ -359,7 +367,7 @@ const fetchListing = async (listingId: any ) => {
               <button
                 type='button'
                 disabled={isLoading}
-                //   onClick={handleImageSubmit}
+                  onClick={handleImageSubmit}
                 className='p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80'
               >
                 {isLoading ? 'Uploading...' : 'Upload'}
@@ -381,7 +389,7 @@ const fetchListing = async (listingId: any ) => {
                   />
                   <button
                     type='button'
-                    //   onClick={() => handleRemoveImage(index)}
+                      onClick={() => handleRemoveImage(index)}
                     className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75'
                   >
                     Delete
@@ -400,7 +408,7 @@ const fetchListing = async (listingId: any ) => {
       </main>
     )
   }
-}
+
 export default UpdateListing;
 
 

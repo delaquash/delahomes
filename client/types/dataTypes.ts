@@ -38,8 +38,8 @@ export interface UserListProps {
   imageUrls: string[];
   description?: string;
   address?: string;
-  regularPrice?: number;
-  discountPrice?: number;
+  regularPrice: number;
+  discountPrice: number;
   bathrooms?: number;
   bedrooms?: number;
   furnished?: boolean;
@@ -47,4 +47,3 @@ export interface UserListProps {
   type?: string;
   offer?: boolean;
 }
-[];
