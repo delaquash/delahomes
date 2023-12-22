@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { StateProps, UserListProps } from "../../types/dataTypes";
 import axios from "axios";
-import { FaTruckMonster } from "react-icons/fa";
+// import { FaTruckMonster } from "react-icons/fa";
 import { useQuery, useMutation } from "react-query";
 
 export type RootState = {
@@ -25,7 +25,7 @@ const UpdateListing = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [imageUploadError, setImageUploadError] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState<boolean>(false);
   // const [formError, setFormError] = useState(null);
   const [formData, setFormData] = useState<UserListProps>({
     // ... your initial formData state
@@ -357,7 +357,7 @@ const fetchListing = async (listingId: string | undefined ) => {
             </p>
             <div className='flex gap-4'>
               <input
-                //   onChange={(e) => setFiles(e.target.files)}
+                  onChange={(e) => setFiles(e.target.files)}
                 className='p-3 border border-gray-300 rounded w-full'
                 type='file'
                 id='images'
