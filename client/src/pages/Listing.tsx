@@ -5,16 +5,30 @@ import { useParams } from "react-router-dom";
 
 const Listing = () => {
     const [listing, setListing] = useState(null);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
     const params = useParams
+    
     useEffect(() => {
-          const fetchList = async () => {
-            const { data } = await axios.get(`http://localhost:5000/api/list/get-list/${params.listingId}`)
-              setListing(data)
-          }   
-        fetchList()
-    })
+        setLoading(true)
+        const fetchList = async () => {
+            try {
+                const { data } = await axios.get(`http://localhost:5000/api/list/get-list/${params.listingId}`)
+                if (data.success === false) {
+                    setError(true)
+                    return;
+                }
+                setListing(data)
+            } catch (error) {
+                setLoading(false)
+                setError(true)
+            }
+            
+        }
+        fetchList();
+    }, [params.listingId])
   return (
-    <div>Listing</div>
+      <div>{ listing && listing.name}</div>
   )
 }
 
