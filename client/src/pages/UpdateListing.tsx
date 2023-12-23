@@ -357,7 +357,7 @@ const fetchListing = async (listingId: string | undefined ) => {
             </p>
             <div className='flex gap-4'>
               <input
-                  onChange={(e) => setFiles(e.target.files)}
+                  // onChange={(e) => setFiles(e.target.files)}
                 className='p-3 border border-gray-300 rounded w-full'
                 type='file'
                 id='images'
