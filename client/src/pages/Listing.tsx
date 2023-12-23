@@ -1,11 +1,17 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from 'react-query';
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
+import { Navigation } from "swiper/modules";
+import "swiper/css/bundle"
+
 interface Params {
   listingId?: string;
 }
 
 const Listing = () => {
+    SwiperCore.use([Navigation])
     const params: Params = useParams();
     const { listingId } = params;
     
