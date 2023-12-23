@@ -1,13 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { useQuery } from 'react-query';
+interface Params {
+  listingId: string;
+}
 
 const Listing = () => {
     const [listing, setListing] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
-    const params = useParams
+    const params: Params = useParams();
+    const { listingId } = params;
+
+
     
     useEffect(() => {
         setLoading(true)
