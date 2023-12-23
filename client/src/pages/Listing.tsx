@@ -2,7 +2,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from 'react-query';
 interface Params {
-  listingId: string;
+  listingId?: string;
 }
 
 const Listing = () => {
@@ -14,17 +14,25 @@ const Listing = () => {
         return data;
     });
 
-    if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
     if (error || !listing || listing.success === false) {
     return <div>Error loading listing data.</div>;
   }
 
   return (
-      <div>{ listing && listing.name}</div>
-  )
+    <main>
+      {isLoading && <p className="text-center my-7 text-2xl">Loading...</p>}
+      {error ||
+        !listing ||
+        (listing.success === false && (
+          <p className="text-center my-7 text-2xl">
+            Error loading listing data...
+          </p>
+        ))}
+          {listing &&
+             <h1>listing.name</h1> 
+          }
+    </main>
+  );
 }
 
 export default Listing
