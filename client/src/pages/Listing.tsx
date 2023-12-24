@@ -20,7 +20,7 @@ const Listing = () => {
         return data;
     });
 
-    if (error || !listing || listing.success === false) {
+    if (error: string || !listing || listing.success === false) {
     return <div>Error loading listing data.</div>;
   }
 
