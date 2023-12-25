@@ -19,8 +19,6 @@ const Listing = () => {
         const { data } = await axios.get(`http://localhost:5000/api/list/get-list/${listingId}`);
         return data;
     });
-
-
   return (
     <main>
       {isLoading && <p className="text-center my-7 text-2xl">Loading...</p>}
@@ -31,8 +29,14 @@ const Listing = () => {
             Error loading listing data...
           </p>
         ))}
-          {listing &&
-             <h1>listing.name</h1> 
+          {listing && !isLoading && !error && (
+              <div>
+                <Swiper navigation>
+                      {listing.imageUrls.map((url) => (
+                        <SwiperSlide key={url}></SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>)
           }
     </main>
   );
