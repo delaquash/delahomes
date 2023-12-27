@@ -87,6 +87,11 @@ const Listing = () => {
                 <span className="font-semibold text-black">Description - {" "}</span>
                 {listing.description}
               </p>
+              <ul>
+                <li>
+                  
+                </li>
+              </ul>
         </div>
       )}
     </>
