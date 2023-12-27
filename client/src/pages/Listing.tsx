@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
-import { FaShare } from "react-icons/fa";
+import { FaBed, FaShare } from "react-icons/fa";
 import { useState } from "react";
 import { listProps } from "../../types/dataTypes";
 
@@ -88,9 +88,10 @@ const Listing = () => {
                 {listing.description}
               </p>
               <ul>
-                <li>
-                  
-                </li>
+                <li className='flex items-center gap-1 whitespace-nowrap '>
+                  <FaBed className='text-lg' />
+                    {listing.bedrooms > 1 ? `${listing.bedrooms} beds `: `${listing.bedrooms} bed `}
+                  </li>
               </ul>
         </div>
       )}
