@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface MyChangeEvent {
   target: {
     id: string;
@@ -61,5 +62,5 @@ export interface listProps {
   type: string;
   offer: boolean;
   imageUrls: string[];
-  // userRef: 65644755f9bb01cb30503441;
+  userRef: any;
 }
