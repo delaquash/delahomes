@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface User {
+  _id: string;
+  // ... other properties
+}
+
 interface StateProp {
-    currentUser: string | null;
+    currentUser: User | null;
     error:string | null;
     loading: boolean 
 }
