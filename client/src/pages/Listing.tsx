@@ -8,6 +8,8 @@ import "swiper/css/bundle";
 import { FaBath, FaBed, FaChair, FaParking, FaShare } from "react-icons/fa";
 import { useState } from "react";
 import { listProps } from "../../types/dataTypes";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface Params {
   listingId?: string;
@@ -16,6 +18,7 @@ interface Params {
 const Listing = () => {
   SwiperCore.use([Navigation]);
   const params: Params = useParams();
+  const  currentUser = useSelector((state: RootState)=> state.user.currentUser)
   const { listingId } = params;
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);

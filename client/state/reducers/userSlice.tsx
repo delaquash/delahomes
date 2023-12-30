@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface StateProps {
+interface StateProp {
     currentUser: string | null;
     error:string | null;
     loading: boolean 
 }
-const initialState: StateProps = {
+const initialState: StateProp = {
     currentUser: null,
     error: null,
     loading: false,
