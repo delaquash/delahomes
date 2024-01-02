@@ -73,4 +73,20 @@ const getUserList = async (req: Request, res: Response, next: NextFunction) => {
     return next(errorHandler(401, "You can only view your own listing.."));
   }
 };
-export { updateUser, deleteUser, getUserList };
+
+
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(errorHandler(404, "No user with that id exists"));
+    }
+    // Remove password from the response
+    const {password: pass, ...rest} = user._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);    
+  }
+}
+
+export { updateUser, deleteUser, getUserList, getUser };
