@@ -84,6 +84,7 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
     // Remove password from the response
     const {password: pass, ...rest} = user._doc;
     res.status(200).json(rest);
+    // console.log(rest, user)
   } catch (error) {
     next(error);    
   }
