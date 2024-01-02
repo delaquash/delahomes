@@ -10,6 +10,7 @@ import { useState } from "react";
 import { listProps } from "../../types/dataTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import Contact from "../components/Contact";
 
 interface Params {
   listingId?: string;
@@ -18,7 +19,7 @@ interface Params {
 const Listing = () => {
   SwiperCore.use([Navigation]);
   const params: Params = useParams();
-  const  currentUser = useSelector((state: RootState)=> state.user.currentUser)
+  const  { currentUser } = useSelector((state: RootState)=> state.user)
   const { listingId } = params;
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);
@@ -76,8 +77,7 @@ const Listing = () => {
             <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
               <p className="text-2xl font-semibold">
                 {listing.name} - ${" "}
-                {listing.offer
-                  ? listing.discountPrice.toLocaleString("en-NG")
+                {listing.offer ? listing.discountPrice.toLocaleString("en-NG")
                   : listing.regularPrice.toLocaleString("en-NG")}
                 {listing.type === "rent" && " / month"}
               </p>
@@ -121,7 +121,7 @@ const Listing = () => {
                 Contact landlord
               </button>
             )}
-            {/* {contact && <Contact listing={listing} />} */}
+            {contact && <Contact listing={listing} />}
           </div>
         )}
       </>

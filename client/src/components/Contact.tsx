@@ -1,6 +1,10 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const Contact = () => {
+interface listProps {
+  listing: any
+}
+
+const Contact = ({ listing }: listProps) => {
   return (
     <div>Contact</div>
   )
