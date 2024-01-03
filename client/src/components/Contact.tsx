@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface listProps {
-  listing: any
+  listing: any;
 }
 
 interface LandLordProps {
