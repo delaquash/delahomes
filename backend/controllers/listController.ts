@@ -71,4 +71,13 @@ const getListing = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { createListing, deleteListing, updateListing, getListing };
+const getList = async (req: Request, res: Response, next: NextFunction) => {
+  
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+export { createListing, deleteListing, updateListing, getListing, getList };
