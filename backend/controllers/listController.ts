@@ -72,11 +72,10 @@ const getListing = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getList = async (req: Request, res: Response, next: NextFunction) => {
-  
   try {
     
   } catch (error) {
-    
+    next(error);
   }
 }
 
