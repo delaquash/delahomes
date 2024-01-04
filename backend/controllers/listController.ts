@@ -86,7 +86,13 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
     if (furnished === undefined || furnished === 'false') {
       furnished = { $in: [false, true] };
     }
-    
+
+    let parking = req.query.parking;
+
+    if (parking === undefined || parking === 'false') {
+      parking = { $in: [false, true] };
+    }
+
   } catch (error) {
     next(error);
   }
