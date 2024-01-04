@@ -93,6 +93,12 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       parking = { $in: [false, true] };
     }
 
+    let type = req.query.type;
+
+    if (type === undefined || type === 'all') {
+      type = { $in: ['sale', 'rent'] };
+    }
+
   } catch (error) {
     next(error);
   }
