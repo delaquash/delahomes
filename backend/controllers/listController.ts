@@ -80,6 +80,13 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
     if (offer === undefined || offer === 'false') {
       offer = { $in: [false, true] };
     }
+
+    let furnished = req.query.furnished;
+
+    if (furnished === undefined || furnished === 'false') {
+      furnished = { $in: [false, true] };
+    }
+    
   } catch (error) {
     next(error);
   }
