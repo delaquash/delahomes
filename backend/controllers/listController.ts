@@ -73,7 +73,8 @@ const getListing = async (req: Request, res: Response, next: NextFunction) => {
 
 const getList = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    
+    const limit = parseInt(req.query.limit) || 9;
+    const startIndex = parseInt(req.query.startIndex) || 0;
   } catch (error) {
     next(error);
   }
