@@ -111,6 +111,10 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       type,
     })
 
+    .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
+
   } catch (error) {
     next(error);
   }
