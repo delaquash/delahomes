@@ -99,6 +99,10 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       type = { $in: ['sale', 'rent'] };
     }
 
+    const searchTerm = req.query.searchTerm || '';
+
+    const sort = req.query.sort || 'createdAt';
+
   } catch (error) {
     next(error);
   }
