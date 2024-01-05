@@ -103,6 +103,14 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
 
     const sort = req.query.sort || 'createdAt';
 
+    const listings = await Listing.find({
+      name: { $regex: searchTerm, $options: 'i' },
+      offer,
+      furnished,
+      parking,
+      type,
+    })
+
   } catch (error) {
     next(error);
   }
