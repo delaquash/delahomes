@@ -108,12 +108,12 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       offer,
       furnished,
       parking,
-      type,
+      type
     })
 
-    .sort({ [sort]: order })
-      .limit(limit)
-      .skip(startIndex);
+    // .sort({ [sort]: order })
+    //   .limit(limit)
+    //   .skip(startIndex);
       return res.status(200).json(listings);
   } catch (error) {
     next(error);
