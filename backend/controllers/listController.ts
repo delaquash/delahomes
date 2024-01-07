@@ -73,13 +73,14 @@ const getListing = async (req: Request, res: Response, next: NextFunction) => {
 
 const getList = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const limit = parseInt(req.query.limit) || 9;
-    const startIndex = parseInt(req.query.startIndex) || 0;
-    // let offer = req.query.offer;
+    const limit = parseInt(req.query.limit as string) || 9;
+    const startIndex = parseInt(req.query.startIndex as string ) || 0;
+    
+    let offer: boolean | { $in: [boolean, boolean] } = req.query.offer;
 
-    // if (offer === undefined || offer === 'false') {
-    //   offer = { $in: [false, true] };
-    // }
+    if (offer === undefined || offer === 'false') {
+      offer = { $in: [false, true] };
+    }
 
     let furnished = req.query.furnished;
 
@@ -111,9 +112,9 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       type
     })
 
-    // .sort({ [sort]: order })
-    //   .limit(limit)
-    //   .skip(startIndex);
+    .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
       return res.status(200).json(listings);
   } catch (error) {
     next(error);
