@@ -75,11 +75,12 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const limit: number = parseInt(req.query.limit as string) || 9;
     const startIndex: number = parseInt(req.query.startIndex as string) || 0;
-    let offer: boolean | { $in: [boolean, boolean] } = req.query.offer;
+    let offer: boolean | { $in: [boolean, boolean] } = req.query.offer === 'true';
 
-    if (offer === undefined || offer === 'false') {
+    if (req.query.offer === undefined || req.query.offer === 'false') {
       offer = { $in: [false, true] };
     }
+
 
     let furnished: boolean | { $in: [boolean, boolean] } = req.query.furnished;
 
@@ -87,17 +88,17 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       furnished = { $in: [false, true] };
     }
 
-    let parking: boolean | { $in: [boolean, boolean] } = req.query.parking;
+    // let parking: boolean | { $in: [boolean, boolean] } = req.query.parking;
 
-    if (parking === undefined || parking === 'false') {
-      parking = { $in: [false, true] };
-    }
+    // if (parking === undefined || parking === 'false') {
+    //   parking = { $in: [false, true] };
+    // }
 
-    let type: string | { $in: ['sale', 'rent'] } = req.query.type;
+    // let type: string | { $in: ['sale', 'rent'] } = req.query.type;
 
-    if (type === undefined || type === 'all') {
-      type = { $in: ['sale', 'rent'] };
-    }
+    // if (type === undefined || type === 'all') {
+    //   type = { $in: ['sale', 'rent'] };
+    // }
 
     const searchTerm: string = req.query.searchTerm as string || '';
     const sort: string = req.query.sort as string || 'createdAt';
