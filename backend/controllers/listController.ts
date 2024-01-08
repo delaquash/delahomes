@@ -82,9 +82,9 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
     }
 
 
-    let furnished: boolean | { $in: [boolean, boolean] } = req.query.furnished;
+    let furnished: boolean | { $in: [boolean, boolean] } = req.query.furnished === "true";
 
-    if (furnished === undefined || furnished === 'false') {
+    if (furnished === undefined || req.query.furnished === 'false') {
       furnished = { $in: [false, true] };
     }
 
