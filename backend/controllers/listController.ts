@@ -88,17 +88,17 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       furnished = { $in: [false, true] };
     }
 
-    // let parking: boolean | { $in: [boolean, boolean] } = req.query.parking;
+    let parking: boolean | { $in: [boolean, boolean] } = req.query.parking === "true";
 
-    // if (parking === undefined || parking === 'false') {
-    //   parking = { $in: [false, true] };
-    // }
+    if (parking === undefined || req.query.parking === 'false') {
+      parking = { $in: [false, true] };
+    }
 
-    // let type: string | { $in: ['sale', 'rent'] } = req.query.type;
+    let type: string | { $in: ['sale', 'rent'] } = req.query.type;
 
-    // if (type === undefined || type === 'all') {
-    //   type = { $in: ['sale', 'rent'] };
-    // }
+    if (req.query.type === undefined || req.query.type === 'all') {
+      type = { $in: ['sale', 'rent'] };
+    }
 
     const searchTerm: string = req.query.searchTerm as string || '';
     const sort: string = req.query.sort as string || 'createdAt';
