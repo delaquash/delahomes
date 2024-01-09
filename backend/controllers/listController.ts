@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Listing from "../models/listModel";
 import { errorHandler } from "../utils/errorHandler";
 import bcrypt from "bcryptjs";
+import { SortOrder } from "mongoose";
 
 const createListing = async (
   req: Request,
@@ -110,12 +111,11 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       furnished,
       parking,
       type,
-    })
-      .sort({ [sort]: order })
+  })
+      .sort({ [sort as string]: order } as { [key: string]: SortOrder })
       .limit(limit)
       .skip(startIndex);
-
-    res.status(200).json(listings);
+  
   } catch (error) {
     next(error);
   }
