@@ -97,14 +97,11 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
 
     let type: string | { $in: ['sale', 'rent'] } = req.query.type as string || { $in: ['sale', 'rent'] };
 
-    if (typeof type !== 'string' ) {
-      // Handle unexpected case where type is not a string or 'all'
-      throw new Error('Unexpected type value');
-    }
+    // let type: string | { $in: ['sale', 'rent'] } = req.query.type! as string || { $in: ['sale', 'rent'] };
 
-      if (type === 'all') {
-        type = { $in: ['sale', 'rent'] };
-      }
+    if (type === 'all') {
+      type = { $in: ['sale', 'rent'] };
+    }
 
     const searchTerm: string = req.query.searchTerm as string || '';
     const sort: string = req.query.sort as string || 'createdAt';
