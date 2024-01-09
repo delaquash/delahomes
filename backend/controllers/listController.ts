@@ -95,11 +95,16 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       parking = { $in: [false, true] };
     }
 
-    let type: string | { $in: ['sale', 'rent'] } = req.query.type || { $in: ['sale', 'rent'] };
+    let type: string | { $in: ['sale', 'rent'] } = req.query.type as string || { $in: ['sale', 'rent'] };
 
-    if (req.query.type === 'all') {
-      type = { $in: ['sale', 'rent'] };
+    if (typeof type !== 'string' ) {
+      // Handle unexpected case where type is not a string or 'all'
+      throw new Error('Unexpected type value');
     }
+
+      if (type === 'all') {
+        type = { $in: ['sale', 'rent'] };
+      }
 
     const searchTerm: string = req.query.searchTerm as string || '';
     const sort: string = req.query.sort as string || 'createdAt';
