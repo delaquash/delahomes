@@ -2,9 +2,11 @@ import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../store";
+import { useState } from "react";
 
 function Header() {
-  const { currentUser } = useSelector((state: RootState) => state.user);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const [searchTerm, setSearchTerm] = useState('')
   return (
     <header className="shadow-md bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
