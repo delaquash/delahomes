@@ -18,7 +18,7 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
   if (!process.env.JWT_SECRET) {
     throw new Error("Secret key is not defined");
   }
-  jwt.verify(token, process.env.JWT_SECRET, (err: any, user: any) => {
+  jwt.verify(token, process.env.JWT_SECRET as string, (err: any, user: any) => {
     // console.log(process.env.JWT_SECRET);
     if (err) return next(errorHandler(403, "Forbidden"));
     req.user = user;
