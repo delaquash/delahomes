@@ -16,7 +16,7 @@ interface LandLordProps {
 }
 const Contact = ({ listing }: listProps) => {
   const[message, setMessage ] = useState("")
-  const onChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+  const onChange = (e: { target: { value: SetStateAction<string>}; }) => {
     setMessage(e.target.value);
   };
   const {data: landlord, error} = useQuery(['landlord', listing.userRef], async () => {

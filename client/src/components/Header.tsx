@@ -7,6 +7,10 @@ import { useState } from "react";
 function Header() {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const [searchTerm, setSearchTerm] = useState('')
+  
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=> {
+    setSearchTerm(e.target.value)
+  }
   return (
     <header className="shadow-md bg-slate-200">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
@@ -18,6 +22,7 @@ function Header() {
         </Link>
         <form className="bg-slate-100 p-3 rounded-lg flex items-center">
           <input
+          onChange={handleChange}
             type="text"
             placeholder="Search..."
             className="bg-transparent focus:outline-none w-24 sm:w-64 font-bold"
