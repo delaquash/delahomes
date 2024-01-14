@@ -16,6 +16,10 @@ function Header() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
+      const urlParams = new URLSearchParams(window.location.search)
+      urlParams.set("searchTerm", searchTerm)
+      const searchQuery = urlParams.toString()
+      navigate(`/search/${searchQuery}`)
 
   }
   return (
