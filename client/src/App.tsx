@@ -3,13 +3,14 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/Signup";
 import Signin from "./pages/Signin";
-import "./App.css";
 import {  Route, Routes } from "react-router-dom";
 import Headers from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import UpdateListing from "./pages/UpdateListing";
 import Listing from "./pages/Listing";
+import Search from "./pages/Search";
+import "./App.css";
 
 const App = () => {
   return(
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/about" element={<About />}  />
         <Route path="/signin" element={<Signin />}  />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/search" element={<Search />}/>
         <Route path="/listing/:listingId" element={<Listing />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
