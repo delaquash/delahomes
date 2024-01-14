@@ -1,15 +1,22 @@
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
 import { useState } from "react";
 
+
 function Header() {
+  const navigate = useNavigate()
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const [searchTerm, setSearchTerm] = useState('')
-  
+
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=> {
     setSearchTerm(e.target.value)
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
   }
   return (
     <header className="shadow-md bg-slate-200">
@@ -20,14 +27,18 @@ function Header() {
             <span className="text-slate-700">Estate</span>
           </h1>
         </Link>
-        <form className="bg-slate-100 p-3 rounded-lg flex items-center">
-          <input
-          onChange={handleChange}
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent focus:outline-none w-24 sm:w-64 font-bold"
-          />
-          <FaSearch className="text-slate-600" />
+        <form
+          onSubmit={handleSubmit}
+          className="bg-slate-100 p-3 rounded-lg flex items-center">
+            <input
+            onChange={handleChange}
+              type="text"
+              placeholder="Search..."
+              className="bg-transparent focus:outline-none w-24 sm:w-64 font-bold"
+            />
+          <button>
+            <FaSearch className="text-slate-600" />
+          </button>
         </form>
         <ul className="flex gap-4">
           <Link to="/home">
