@@ -22,6 +22,7 @@ function Search() {
                 // onChange={handleChange}
               />
               <span>Rent & Sale</span>
+              </div>
               <div className="flex gap-2">
                 <input
                   type="checkbox"
@@ -51,9 +52,10 @@ function Search() {
                   // checked={sidebardata.offer}
                 />
                 <span>Offer</span>
+
+                
               </div>
             </div>
-          </div>
         </form>
       </div>
     </div>
