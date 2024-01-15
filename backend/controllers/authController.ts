@@ -11,8 +11,8 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     const newUser = new User({ email, password: hashedPassword, username });
     await newUser.save();
     res.status(201).json({ msg: "User created successfully" });
-  } catch (error) {
-    next(errorHandler(500, "Server Error.."));
+  } catch (error: any) {
+    next(errorHandler(500, `Server Error: ${error.message}`));
   }
 };
 
