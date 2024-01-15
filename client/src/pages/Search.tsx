@@ -15,13 +15,13 @@ function Search() {
           <div className="flex gap-2 flex-wrap items-center">
             <label className="font-semibold">Type:</label>
             <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="all"
-                className="w-5"
-                // onChange={handleChange}
-              />
-              <span>Rent & Sale</span>
+                <input
+                    type="checkbox"
+                    id="all"
+                    className="w-5"
+                    // onChange={handleChange}
+                />
+                <span>Rent & Sale</span>
               </div>
               <div className="flex gap-2">
                 <input
@@ -52,7 +52,19 @@ function Search() {
                   // checked={sidebardata.offer}
                 />
                 <span>Offer</span>
-
+                </div>
+                <div className='flex gap-2 flex-wrap items-center'>
+            <label className='font-semibold'>Amenities:</label>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='parking'
+                className='w-5'
+                // onChange={handleChange}
+                // checked={sidebardata.parking}
+              />
+              <span>Parking</span>
+            </div>
                 
               </div>
             </div>
