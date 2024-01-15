@@ -15,20 +15,14 @@ function Search() {
           <div className="flex gap-2 flex-wrap items-center">
             <label className="font-semibold">Type:</label>
             <div className="flex gap-2">
-                <input 
-                    type='checkbox'
-                    id='all'
-                    className='w-5'
-                    // onChange={handleChange}
-                />
-                <span>Rent & Sale</span>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div className="">
-        <h1>Listing Result:</h1>
-      </div>
+              <input
+                type="checkbox"
+                id="all"
+                className="w-5"
+                // onChange={handleChange}
+              />
+              <span>Rent & Sale</span>
+              
     </div>
   );
 }
