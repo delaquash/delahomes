@@ -42,7 +42,20 @@ function Search() {
                 />
                 <span>Sale</span>
               </div>
-        
+              <div className="flex gap-2">
+                <input
+                  type="checkbox"
+                  id="offer"
+                  className="w-5"
+                  // onChange={handleChange}
+                  // checked={sidebardata.offer}
+                />
+                <span>Offer</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
