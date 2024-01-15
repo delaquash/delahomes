@@ -22,7 +22,27 @@ function Search() {
                 // onChange={handleChange}
               />
               <span>Rent & Sale</span>
-              
+              <div className="flex gap-2">
+                <input
+                  type="checkbox"
+                  id="rent"
+                  className="w-5"
+                  // onChange={handleChange}
+                  // checked={sidebardata.type === 'rent'}
+                />
+                <span>Rent</span>
+              </div>
+              <div className="flex gap-2">
+                <input
+                  type="checkbox"
+                  id="sale"
+                  className="w-5"
+                  // onChange={handleChange}
+                  // checked={sidebardata.type === 'sale'}
+                />
+                <span>Sale</span>
+              </div>
+        
     </div>
   );
 }
