@@ -65,6 +65,17 @@ function Search() {
               />
               <span>Parking</span>
             </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='furnished'
+                className='w-5'
+                // onChange={handleChange}
+                // checked={sidebardata.furnished}
+              />
+              <span>Furnished</span>
+            </div>
+
                 
               </div>
             </div>
