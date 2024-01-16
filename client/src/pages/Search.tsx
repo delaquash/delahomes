@@ -14,15 +14,15 @@ function Search() {
           </div>
           <div className="flex gap-2 flex-wrap items-center">
             <label className="font-semibold">Type:</label>
-            <div className="flex gap-2">
-                <input
-                    type="checkbox"
-                    id="all"
-                    className="w-5"
-                    // onChange={handleChange}
-                />
-                <span>Rent & Sale</span>
-              </div>
+              <div className="flex gap-2">
+                  <input
+                      type="checkbox"
+                      id="all"
+                      className="w-5"
+                      // onChange={handleChange}
+                  />
+                  <span>Rent & Sale</span>
+                </div>
               <div className="flex gap-2">
                 <input
                   type="checkbox"
@@ -52,6 +52,7 @@ function Search() {
                   // checked={sidebardata.offer}
                 />
                 <span>Offer</span>
+                </div>
                 </div>
                 <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-semibold'>Amenities:</label>
@@ -89,9 +90,42 @@ function Search() {
               <option value='createdAt_desc'>Latest</option>
               <option value='createdAt_asc'>Oldest</option>
             </select>
-          </div>
+          
             </div>
+            <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>
+            Search
+          </button>
         </form>
+        </div>
+        <div className='flex-1'>
+        <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>
+          Listing results:
+        </h1>
+        <div className='p-7 flex flex-wrap gap-4'>
+          {/* {!loading && listings.length === 0 && (
+            <p className='text-xl text-slate-700'>No listing found!</p>
+          )}
+          {loading && (
+            <p className='text-xl text-slate-700 text-center w-full'>
+              Loading...
+            </p>
+          )} */}
+
+          {/* {!loading &&
+            listings &&
+            listings.map((listing) => (
+              <ListingItem key={listing._id} listing={listing} />
+            ))}
+
+          {showMore && (
+            <button
+              onClick={onShowMoreClick}
+              className='text-green-700 hover:underline p-7 text-center w-full'
+            >
+              Show more
+            </button>
+          )} */}
+        </div>
       </div>
     </div>
   );
