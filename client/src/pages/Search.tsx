@@ -50,11 +50,22 @@ const handleChange = (
           : false,
     });
   }
+
+  if (e.target.id === 'sort_order') {
+    const sort = e.target.value.split('_')[0] || 'created_at';
+    const order = e.target.value.split('_')[1] || 'desc';
+    setSideBarData({ ...sideBarData, sort, order });
+  }
 };
+
+const handleSubmit = (e: { preventDefault: () => void; }) => {
+  e.preventDefault();
+
+}
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b-2 md:border-r-2">
-        <form>
+      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
+        <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">Search Term:</label>
             <input
