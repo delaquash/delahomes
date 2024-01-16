@@ -20,12 +20,13 @@ const Search = ()=> {
     sort: "created_at",
     order: "desc"
 })
+
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b-2 md:border-r-2">
         <form>
           <div className="flex items-center gap-2">
-            <label className="whitespace-nowrap">Search Term:</label>
+            <label className="whitespace-nowrap font-semibold">Search Term:</label>
             <input
               type="text"
               id="searchTerm"
@@ -50,7 +51,7 @@ const Search = ()=> {
                   id="rent"
                   className="w-5"
                   // onChange={handleChange}
-                  // checked={sidebardata.type === 'rent'}
+                  checked={sideBarData.type === 'rent'}
                 />
                 <span>Rent</span>
               </div>
@@ -60,7 +61,7 @@ const Search = ()=> {
                   id="sale"
                   className="w-5"
                   // onChange={handleChange}
-                  // checked={sidebardata.type === 'sale'}
+                  checked={sideBarData.type === 'sale'}
                 />
                 <span>Sale</span>
               </div>
@@ -70,7 +71,7 @@ const Search = ()=> {
                   id="offer"
                   className="w-5"
                   // onChange={handleChange}
-                  // checked={sidebardata.offer}
+                  checked={sideBarData.offer}
                 />
                 <span>Offer</span>
                 </div>
@@ -83,7 +84,7 @@ const Search = ()=> {
                 id='parking'
                 className='w-5'
                 // onChange={handleChange}
-                // checked={sidebardata.parking}
+                checked={sideBarData.parking}
               />
               <span>Parking</span>
             </div>
@@ -93,7 +94,7 @@ const Search = ()=> {
                 id='furnished'
                 className='w-5'
                 // onChange={handleChange}
-                // checked={sidebardata.furnished}
+                checked={sideBarData.furnished}
               />
               <span>Furnished</span>
             </div>
