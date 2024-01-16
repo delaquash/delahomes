@@ -21,6 +21,36 @@ const Search = ()=> {
     order: "desc"
 })
 
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  if (
+    e.target.id === "all" ||
+    e.target.id === "rent" ||
+    e.target.id === "sale"
+  ) {
+    setSideBarData({ ...sideBarData, type: e.target.id });
+  }
+
+  if (e.target.id === "searchTerm") {
+    setSideBarData({ ...sideBarData, searchTerm: e.target.value });
+  }
+
+  if (
+    e.target.id === "parking" ||
+    e.target.id === "furnished" ||
+    e.target.id === "offer"
+  ) {
+    setSideBarData({
+      ...sideBarData,
+      [e.target.id]:
+        (e.target as HTMLInputElement).checked ||
+        (e.target as HTMLInputElement).checked === true
+          ? true
+          : false,
+    });
+  }
+};
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b-2 md:border-r-2">
@@ -41,7 +71,7 @@ const Search = ()=> {
                       type="checkbox"
                       id="all"
                       className="w-5"
-                      // onChange={handleChange}
+                      onChange={handleChange}
                   />
                   <span>Rent & Sale</span>
                 </div>
