@@ -1,4 +1,25 @@
-function Search() {
+import { useState } from "react";
+
+interface SideBarDataProps {
+  searchTerm: string;
+  type: string;
+  parking: boolean;
+  furnished: boolean;
+  offer: false;
+  sort: string;
+  order: string
+}
+
+const Search = ()=> {
+  const [sideBarData, setSideBarData] = useState<SideBarDataProps>({
+    searchTerm : "",
+    type:"all",
+    parking: false,
+    furnished: false,
+    offer: false,
+    sort: "created_at",
+    order: "desc"
+})
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b-2 md:border-r-2">
