@@ -6,7 +6,7 @@ interface SideBarDataProps {
   type: string;
   parking: boolean;
   furnished: boolean;
-  offer: false;
+  offer: boolean;
   sort: string;
   order: string
 }
@@ -34,13 +34,13 @@ useEffect(() => {
   const orderFromUrl = urlParams.get('order');
 
   if (
-    searchTermFromUrl !== null ||
-    typeFromUrl !== null ||
-    parkingFromUrl !== null ||
-    furnishedFromUrl !== null ||
-    offerFromUrl !== null ||
-    sortFromUrl !== null ||
-    orderFromUrl !== null
+    searchTermFromUrl  ||
+    typeFromUrl  ||
+    parkingFromUrl  ||
+    furnishedFromUrl  ||
+    offerFromUrl  ||
+    sortFromUrl  ||
+    orderFromUrl 
   ) {
     setSideBarData({
       searchTerm: searchTermFromUrl || '',
