@@ -60,8 +60,20 @@ const handleChange = (
 
 const handleSubmit = (e: { preventDefault: () => void; }) => {
   e.preventDefault();
-
+  const urlParams = new URLSearchParams()
+  urlParams.set("searchTerm", sideBarData.searchTerm);
+  urlParams.set("type", sideBarData.type);
+  urlParams.set("parking", String(sideBarData.parking));
+  urlParams.set("furnished", String(sideBarData.furnished));
+  urlParams.set("parking", String(sideBarData.offer));
+  urlParams.set("sort", sideBarData.sort);
+  urlParams.set("type", sideBarData.type);
+  const searchQuery = urlParams.toString()
 }
+
+
+
+
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
@@ -91,7 +103,7 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                   type="checkbox"
                   id="rent"
                   className="w-5"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   checked={sideBarData.type === 'rent'}
                 />
                 <span>Rent</span>
@@ -101,7 +113,7 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                   type="checkbox"
                   id="sale"
                   className="w-5"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   checked={sideBarData.type === 'sale'}
                 />
                 <span>Sale</span>
@@ -111,7 +123,7 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                   type="checkbox"
                   id="offer"
                   className="w-5"
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   checked={sideBarData.offer}
                 />
                 <span>Offer</span>
@@ -124,7 +136,7 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                 type='checkbox'
                 id='parking'
                 className='w-5'
-                // onChange={handleChange}
+                onChange={handleChange}
                 checked={sideBarData.parking}
               />
               <span>Parking</span>
@@ -134,7 +146,7 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                 type='checkbox'
                 id='furnished'
                 className='w-5'
-                // onChange={handleChange}
+                onChange={handleChange}
                 checked={sideBarData.furnished}
               />
               <span>Furnished</span>
@@ -143,7 +155,7 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
             <div className='flex items-center gap-2'>
             <label className='font-semibold'>Sort:</label>
             <select
-              // onChange={handleChange}
+              onChange={handleChange}
               defaultValue={'created_at_desc'}
               id='sort_order'
               className='border rounded-lg p-3'
