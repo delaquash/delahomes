@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +13,9 @@ interface SideBarDataProps {
 }
 
 const Search = ()=> {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [listing, setListing] = useState([]);
   const [sideBarData, setSideBarData] = useState<SideBarDataProps>({
     searchTerm : "",
     type:"all",
@@ -22,6 +25,11 @@ const Search = ()=> {
     sort: "created_at",
     order: "desc"
 })
+
+// const fetchListing = async () => {
+//     setLoading(true)
+//     const res = await axios.get(`https://localhost:5000/`)
+// }
 
 useEffect(() => {
   const urlParams = new URLSearchParams(location.search);
