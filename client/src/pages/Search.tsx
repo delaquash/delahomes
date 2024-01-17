@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface SideBarDataProps {
   searchTerm: string;
@@ -11,6 +12,7 @@ interface SideBarDataProps {
 }
 
 const Search = ()=> {
+  const navigate = useNavigate()
   const [sideBarData, setSideBarData] = useState<SideBarDataProps>({
     searchTerm : "",
     type:"all",
@@ -20,6 +22,38 @@ const Search = ()=> {
     sort: "created_at",
     order: "desc"
 })
+
+useEffect(() => {
+  const urlParams = new URLSearchParams(location.search);
+  const searchTermFromUrl = urlParams.get('searchTerm');
+  const typeFromUrl = urlParams.get('type');
+  const parkingFromUrl = urlParams.get('parking');
+  const furnishedFromUrl = urlParams.get('furnished');
+  const offerFromUrl = urlParams.get('offer');
+  const sortFromUrl = urlParams.get('sort');
+  const orderFromUrl = urlParams.get('order');
+
+  if (
+    searchTermFromUrl !== null ||
+    typeFromUrl !== null ||
+    parkingFromUrl !== null ||
+    furnishedFromUrl !== null ||
+    offerFromUrl !== null ||
+    sortFromUrl !== null ||
+    orderFromUrl !== null
+  ) {
+    setSideBarData({
+      searchTerm: searchTermFromUrl || '',
+      type: typeFromUrl || 'all',
+      parking: parkingFromUrl === 'true' ? true : false,
+      furnished: furnishedFromUrl === 'true' ? true : false,
+      offer: offerFromUrl === 'true' ? true : false,
+      sort: sortFromUrl || 'created_at',
+      order: orderFromUrl || 'desc',
+    });
+  }
+}, [location.search]);
+
 
 const handleChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -65,14 +99,12 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
   urlParams.set("type", sideBarData.type);
   urlParams.set("parking", String(sideBarData.parking));
   urlParams.set("furnished", String(sideBarData.furnished));
-  urlParams.set("parking", String(sideBarData.offer));
+  urlParams.set("offer", String(sideBarData.offer));
   urlParams.set("sort", sideBarData.sort);
   urlParams.set("type", sideBarData.type);
   const searchQuery = urlParams.toString()
+  navigate(`/search?${searchQuery}`)
 }
-
-
-
 
   return (
     <div className="flex flex-col md:flex-row">
