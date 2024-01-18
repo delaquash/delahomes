@@ -24,12 +24,9 @@ const Search = ()=> {
     offer: false,
     sort: "created_at",
     order: "desc"
-})
+}) 
 
-// const fetchListing = async () => {
-//     setLoading(true)
-//     const res = await axios.get(`https://localhost:5000/`)
-// }
+
 
 useEffect(() => {
   const urlParams = new URLSearchParams(location.search);
@@ -60,6 +57,13 @@ useEffect(() => {
       order: orderFromUrl || 'desc',
     });
   }
+  const fetchListing = async () => {
+    setLoading(true)
+    const {data} = await axios.get(`http://localhost:5000/api/list/get?${searchQuery}`);
+    setListing(data)
+    setLoading(false)
+  }
+  fetchListing()
 }, [location.search]);
 
 
