@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ListingItems from "../components/ListingItems";
 
 interface SideBarDataProps {
   searchTerm: string;
@@ -221,22 +222,22 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
           Listing results:
         </h1>
         <div className='p-7 flex flex-wrap gap-4'>
-          {/* {!loading && listings.length === 0 && (
+          {!loading && listing.length === 0 && (
             <p className='text-xl text-slate-700'>No listing found!</p>
           )}
           {loading && (
             <p className='text-xl text-slate-700 text-center w-full'>
               Loading...
             </p>
-          )} */}
+          )}
 
-          {/* {!loading &&
-            listings &&
-            listings.map((listing) => (
-              <ListingItem key={listing._id} listing={listing} />
+           {!loading &&
+            listing &&
+            listing.map((listing) => (
+              <ListingItems key={listing._id} listing={listing} />
             ))}
 
-          {showMore && (
+         {/* {showMore && (
             <button
               onClick={onShowMoreClick}
               className='text-green-700 hover:underline p-7 text-center w-full'
