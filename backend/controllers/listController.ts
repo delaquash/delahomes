@@ -42,6 +42,8 @@ const updateListing = async (
   res: Response,
   next: NextFunction
 ) => {
+
+
   const listing = await Listing.findById(req.params.id);
   if (!listing) {
     return next(errorHandler(404, "Lisitng not found."));
@@ -69,6 +71,7 @@ const getListing = async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json(list);
   } catch (error) {
     next(error);
+    
   }
 };
 
@@ -97,8 +100,6 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
 
     let type: string | { $in: ['sale', 'rent'] } = req.query.type as string || { $in: ['sale', 'rent'] };
 
-    // let type: string | { $in: ['sale', 'rent'] } = req.query.type! as string || { $in: ['sale', 'rent'] };
-
     if (type === 'all') {
       type = { $in: ['sale', 'rent'] };
     }
@@ -106,7 +107,7 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
     const searchTerm: string = req.query.searchTerm as string || '';
     const sort: string = req.query.sort as string || 'createdAt';
     const order: number = 1; // Assuming 'order' is not provided in the query, set the default order to ascending (1).
-
+    console.log(searchTerm, sort, order)
     const listings = await Listing.find({
       name: { $regex: searchTerm, $options: 'i' },
       offer,
@@ -114,13 +115,17 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       parking,
       type,
   })
+  
       .sort({ [sort as string]: order } as { [key: string]: SortOrder })
       .limit(limit)
       .skip(startIndex);
-  
+      
+      return res.status(200).json(listings);
   } catch (error) {
     next(error);
+    console.error(error)
   }
 }
+
 
 export { createListing, deleteListing, updateListing, getListing, getList };
