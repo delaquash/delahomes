@@ -18,14 +18,16 @@ interface Listing {
     // Your component logic here
     return (
       // JSX for displaying the listing
-      <div className="bg-white flex flex-col gap-4">
+      <div className="bg-white ">
         <Link to={`/listing/${listing._id}`}>
             <img src={listing.imageUrls[0]} 
             className="h-[320px] sm:h-[220px] w-full transition-scale
             object-cover hover:scale-105 duration-300"
             />
         </Link>
-        {listing.name}
+        <div >
+           {listing.name} 
+        </div>
       </div>
     )
   };
