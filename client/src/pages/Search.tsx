@@ -233,7 +233,8 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
 
            {!loading &&
             listing &&
-            listing.map((listing) => (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            listing.map((listing:any) => (
               <ListingItems key={listing._id} listing={listing} />
             ))}
 
