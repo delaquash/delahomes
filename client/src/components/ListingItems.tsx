@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { MdLocationOn } from "react-icons/md"
 
 interface Listing {
     _id: string;
     imageUrls: string;
+    address: string;
     // Add other properties based on the structure of your Listing object
     // For example:
     name: string;
@@ -18,15 +20,26 @@ interface Listing {
     // Your component logic here
     return (
       // JSX for displaying the listing
-      <div className="bg-white ">
+      <div className="bg-white shadow-md hover:shadow-lg transition-shadow 
+        overflow-hidden rounded-lg w-full sm:w-[330px]">
         <Link to={`/listing/${listing._id}`}>
-            <img src={listing.imageUrls[0]} 
-            className="h-[320px] sm:h-[220px] w-full transition-scale
-            object-cover hover:scale-105 duration-300"
+            <img 
+                alt="Listing Cover"
+                src={listing.imageUrls[0]} 
+                className="h-[320px] sm:h-[220px] w-full transition-scale
+                object-cover hover:scale-105 duration-300"
             />
         </Link>
-        <div >
-           {listing.name} 
+        <div className="p-3 flex flex-col gap-2 w-full">
+            <p className="truncate text-lg font-semibold text-slate-700">
+               {listing.name} 
+            </p>
+            <div className="flex items-center gap-1">
+                <MdLocationOn className="h-4 w-4 text-green-700" />
+                <p className="text-sm text-gray-600 truncate">
+                    {listing.address}
+                </p>
+            </div>
         </div>
       </div>
     )

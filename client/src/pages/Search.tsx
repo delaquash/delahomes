@@ -25,9 +25,7 @@ const Search = ()=> {
     offer: false,
     sort: "created_at",
     order: "desc"
-}) 
-
-
+})
 
 useEffect(() => {
   const urlParams = new URLSearchParams(location.search);
