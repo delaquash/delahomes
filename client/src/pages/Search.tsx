@@ -17,6 +17,7 @@ const Search = ()=> {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState([]);
+  const [showMore, setShowMore] = useState(false);
   const [sideBarData, setSideBarData] = useState<SideBarDataProps>({
     searchTerm : "",
     type:"all",
@@ -58,6 +59,7 @@ useEffect(() => {
   }
   const fetchListing = async () => {
     setLoading(true)
+    const searchQuery = urlParams.toString();
     const {data} = await axios.get(`http://localhost:5000/api/list/get?${searchQuery}`);
     setListing(data)
     setLoading(false)
