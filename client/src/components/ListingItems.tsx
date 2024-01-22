@@ -38,6 +38,7 @@ import { UserListProps } from "../../types/dataTypes";
             {listing.offer
               ? listing.discountPrice.toLocaleString("en-US")
               : listing.regularPrice.toLocaleString("en-US")}
+              {listing.type === "rent" && " / month"}
           </p>
         </div>
       </div>

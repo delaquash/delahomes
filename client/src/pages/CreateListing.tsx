@@ -125,24 +125,6 @@ function CreateListing() {
         }
     };
 
-    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     try {
-    //         setLoading(true);
-    //         setError(false);
-    //         const { data } = await axios.post('http://localhost:5000/api/list/create');
-    //         console.log(data)
-    //         setLoading(false)
-    //         if (data === false) {
-    //             setError(data.message);
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //         setError(true)
-    //         setLoading(false)
-    //     }
-    // }
-
   const createListMutation = useMutation(() =>
     axios.post('http://localhost:5000/api/list/create', {}, {
       headers: {
@@ -162,7 +144,7 @@ function CreateListing() {
         return setError('Discount price must be lower than regular price');
       setLoading(true);
       setError(false);
-      const res = await fetch('http://localhost:5000/api/listing/create', {
+      const res = await fetch('http://localhost:5000/api/list/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -343,16 +325,9 @@ function CreateListing() {
                     rounded  hover:shadow-lg 
                     uppercase disabled:opacity-80"
             >
-              Upload
+              {uploading ? 'Uploading...' : 'Upload'}
             </button>
           </div>
-          <button
-            className="p-3 bg-black rounded-lg 
-                         text-white hover:opacity-95
-                          uppercase disabled:opacity-80"
-          >
-            Create Listing
-          </button>
           <p className="text-red-700 text-sm">
             {imageUploadError && imageUploadError}
           </p>

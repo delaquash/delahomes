@@ -245,14 +245,14 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
               <ListingItems key={listing._id} listing={listing} />
             ))}
 
-         {/* {showMore && (
+         {showMore && (
             <button
-              onClick={onShowMoreClick}
+              // onClick={onShowMoreClick}
               className='text-green-700 hover:underline p-7 text-center w-full'
             >
               Show more
             </button>
-          )} */}
+          )}
         </div>
       </div>
     </div>
