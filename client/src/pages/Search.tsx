@@ -60,9 +60,16 @@ useEffect(() => {
   const fetchListing = async () => {
     setLoading(true)
     const searchQuery = urlParams.toString();
+    setShowMore(false);
     const {data} = await axios.get(`http://localhost:5000/api/list/get?${searchQuery}`);
-    setListing(data)
-    setLoading(false)
+    if (data.length > 8) {
+      setShowMore(true);
+    } else {
+      setShowMore(false);
+    }
+    setListing(data);
+    setLoading(false);
+
   }
   fetchListing()
 }, [location.search]);
