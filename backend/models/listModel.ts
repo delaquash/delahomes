@@ -3,9 +3,6 @@ import { listModelProps } from "../types/ModelTypes/ListModel";
 
 const listingSchema = new mongoose.Schema(
   {
-    _id: {
-      type: String
-    },
     name: {
       type: String,
       required: true,
