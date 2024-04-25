@@ -8,9 +8,9 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 // route
-import authRoute from "./route/authRoute";
-import userRoute from "./route/userRoute";
-import listRoute from "./route/listRoute";
+// import authRoute from "./route/authRoute";
+// import userRoute from "./route/userRoute";
+// import listRoute from "./route/listRoute";
 
 connectDB();
 const app = express();
@@ -39,9 +39,10 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-app.use("/api/auth", authRoute);
-app.use("/api/user", userRoute);
-app.use("/api/list", listRoute);
+
+// app.use("/api/auth", authRoute);
+// app.use("/api/user", userRoute);
+// app.use("/api/list", listRoute);
 
 // error
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
