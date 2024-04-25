@@ -5,10 +5,10 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../firebase";
+import { app } from "../../src/firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { StateProps, UserListProps } from "../../types/dataTypes";
+import { StateProps, UserListProps } from "../dataTypes";
 import axios from "axios";
 // import { FaTruckMonster } from "react-icons/fa";
 import { useQuery, useMutation } from "react-query";
