@@ -7,13 +7,17 @@ import { Provider } from 'react-redux'
 import { store } from '../store.ts';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
+import AuthProviderWithnavigate from './auth/AuthProviderWithnavigate.tsx';
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <App />
+      <AuthProviderWithnavigate >
+      <App />
+      </AuthProviderWithnavigate>
+        
       </BrowserRouter>
     </QueryClientProvider>
   
