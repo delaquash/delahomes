@@ -11,12 +11,12 @@ namespace Express {
 
 
 export interface UserSchemaProps extends MongoResult {
-  username: string;
+  username?: string;
   name?: string;
   addressLine1?: string;
   city?: string;
   country?: string;
-  email: string;
-  password: string;
-  avatar: string;
+  email?: string;
+  password?: string;
+  avatar?: string;
 }

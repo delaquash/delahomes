@@ -9,7 +9,7 @@ dotenv.config();
 
 // route
 // import authRoute from "./route/authRoute";
-// import userRoute from "./route/userRoute";
+import userRoute from "./route/userRoute";
 // import listRoute from "./route/listRoute";
 
 connectDB();
@@ -41,7 +41,7 @@ app.get("/", (req: Request, res: Response) => {
 
 
 // app.use("/api/auth", authRoute);
-// app.use("/api/user", userRoute);
+app.use("/api/v1/user", userRoute);
 // app.use("/api/list", listRoute);
 
 // error

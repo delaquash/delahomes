@@ -11,6 +11,22 @@ declare module "express" {
   }
 }
 
+const createUser = async(req: Request, res: Response, next: NextFunction)=>{
+  try {
+    const { auth0Id } = req.body;
+    const existingUser = await User.findOne({ auth0Id });
+    if(existingUser){
+      return res.status(200).json({ msg: "User already exist..."})
+    }
+    const newUser = new User(req.body)
+    await newUser.save()
+    res.status(201).json(newUser.toObject()) 
+   } catch (error) {
+    console.error("Error in creating user:", error);
+    next(error);
+  }
+}
+
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   if (req.user.id !== req.params.id) {
     console.log("Unauthorized update attempt");
@@ -90,4 +106,4 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export { updateUser, deleteUser, getUserList, getUser };
+export { updateUser, deleteUser, getUserList, getUser, createUser };
