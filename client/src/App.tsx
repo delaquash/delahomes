@@ -1,35 +1,71 @@
-import About from "./pages/About";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import SignUp from "./pages/Signup";
-import Signin from "./pages/Signin";
-import {  Route, Routes } from "react-router-dom";
-import Headers from "./components/Header";
-import PrivateRoute from "./components/PrivateRoute";
-import CreateListing from "./pages/CreateListing";
-import UpdateListing from "./pages/UpdateListing";
-import Listing from "./pages/Listing";
-import Search from "./pages/Search";
-import "./App.css";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Layout from "./layouts/layout";
+import HomePage from "./pages/HomePage";
+import AuthCallbackPage from "./pages/AuthCallbackPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import ManageRestaurantPage from "./pages/ManageRestaurantPage";
+import SearchPage from "./pages/SearchPage";
+import DetailPage from "./pages/DetailPage";
+import OrderStatusPage from "./pages/OrderStatusPage";
 
 const App = () => {
-  return(
-    <>
-      <Headers />
-      <Routes>
-        <Route path="/" element={<Home />}  />
-        <Route path="/about" element={<About />}  />
-        <Route path="/signin" element={<Signin />}  />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/search" element={<Search />}/>
-        <Route path="/listing/:listingId" element={<Listing />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/create-listing" element={<CreateListing />} />
-          <Route path="/update-listing" element={<UpdateListing />} />
-        </Route>
-      </Routes>
-    </>
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Layout showHero>
+            <HomePage />
+          </Layout>
+        }
+      />
+      <Route path="/auth-callback" element={<AuthCallbackPage />} />
+      <Route
+        path="/search/:city"
+        element={
+          <Layout showHero={false}>
+            <SearchPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/detail/:restaurantId"
+        element={
+          <Layout showHero={false}>
+            <DetailPage />
+          </Layout>
+        }
+      />
+      <Route element={<ProtectedRoute />}>
+        <Route
+          path="/order-status"
+          element={
+            <Layout>
+              <OrderStatusPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/user-profile"
+          element={
+            <Layout>
+              <UserProfilePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/manage-restaurant"
+          element={
+            <Layout>
+              <ManageRestaurantPage />
+            </Layout>
+          }
+        />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 };
 
