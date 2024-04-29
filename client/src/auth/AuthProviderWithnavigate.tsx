@@ -1,7 +1,7 @@
 import React from "react";
 import { AppState, Auth0Provider } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
-import { useCreateUserRequest } from "@/helper/myUserApi";
+// import { useCreateUserRequest } from "@/helper/myUserApi";
 
 interface Props {
     children: React.ReactNode
@@ -26,8 +26,8 @@ const AuthProviderWithnavigate = ({ children }: Props) => {
     * represents the user object returned from an authentication process. It may contain information
     * about the authenticated user, such as their sub (subject) identifier and email address.
     */
-    const onRedirectCallback=(appState?: AppState, user?: User)=> {
-      navigate("/auth-callback")
+    const onRedirectCallback=(appState?: AppState)=> {
+     navigate (appState?.returnTo || "/auth-callback");
     }
 
   return (
