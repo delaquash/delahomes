@@ -9,7 +9,8 @@ interface Props {
 
 
 const AuthProviderWithnavigate = ({ children }: Props) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     const domain = import.meta.env.VITE_AUTH_DOMAIN;
     const clientID = import.meta.env.VITE_AUTH_CLIENTID;
     const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URI;
