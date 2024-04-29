@@ -9,7 +9,7 @@ interface MyUserProps {
 
 export const useCreateUserRequest = () => {
  const createNewUserRequest = async (user: MyUserProps) => {
-        const res = await fetch (`${API_BASE_URL}/user`,{
+        const res = await fetch (`${API_BASE_URL}/api/v1//user`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

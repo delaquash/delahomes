@@ -1,6 +1,6 @@
 import React from "react";
 import { AppState, Auth0Provider } from "@auth0/auth0-react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCreateUserRequest } from "@/helper/myUserApi";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 
 const AuthProviderWithnavigate = ({ children }: Props) => {
-  const { createUser } = useCreateUserRequest();
+    const navigate = useNavigate()
     const domain = import.meta.env.VITE_AUTH_DOMAIN;
     const clientID = import.meta.env.VITE_AUTH_CLIENTID;
     const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URI;
@@ -27,9 +27,7 @@ const AuthProviderWithnavigate = ({ children }: Props) => {
     * about the authenticated user, such as their sub (subject) identifier and email address.
     */
     const onRedirectCallback=(appState?: AppState, user?: User)=> {
-        if(user?.sub && user?.email) {
-          createUser({ auth0Id: user.sub, email: user.email })
-        }
+      navigate("/auth-callback")
     }
 
   return (
