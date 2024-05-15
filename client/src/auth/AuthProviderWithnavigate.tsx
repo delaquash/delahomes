@@ -10,11 +10,11 @@ interface Props {
 
 const AuthProviderWithnavigate = ({ children }: Props) => {
     const navigate = useNavigate();
-
     const domain = import.meta.env.VITE_AUTH_DOMAIN;
     const clientID = import.meta.env.VITE_AUTH_CLIENTID;
     const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URI;
     const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
+    console.log(audience)
 
     if(!domain || !clientID || !redirectUri || !audience) {
         throw new Error("Unable to initialize auth!!!")
