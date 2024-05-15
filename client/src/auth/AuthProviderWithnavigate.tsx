@@ -1,5 +1,5 @@
 import React from "react";
-import { AppState, Auth0Provider } from "@auth0/auth0-react";
+import {  Auth0Provider } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 // import { useCreateUserRequest } from "@/helper/myUserApi";
 
@@ -14,8 +14,7 @@ const AuthProviderWithnavigate = ({ children }: Props) => {
     const clientID = import.meta.env.VITE_AUTH_CLIENTID;
     const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URI;
     const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
-    console.log(audience)
-
+    
     if(!domain || !clientID || !redirectUri || !audience) {
         throw new Error("Unable to initialize auth!!!")
     }
@@ -29,8 +28,8 @@ const AuthProviderWithnavigate = ({ children }: Props) => {
     * represents the user object returned from an authentication process. It may contain information
     * about the authenticated user, such as their sub (subject) identifier and email address.
     */
-    const onRedirectCallback=(appState?: AppState)=> {
-     navigate (appState?.returnTo || "/auth-callback");
+    const onRedirectCallback=()=> {
+     navigate( "/auth-callback");
     }
 
   return (
