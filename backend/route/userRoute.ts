@@ -7,10 +7,10 @@ import {
   createUser
 } from "../controllers/userController";
 import { verifyUser } from "../utils/verifyUser";
-import { jwtCheck } from "../middleware/auth";
+import { jwtCheck, JwtParser } from "../middleware/auth";
 const router = express.Router();
 
-router.put("/", updateUser);
+router.put("/",jwtCheck,JwtParser, updateUser);
 
 router.post("/",jwtCheck,  createUser )
 

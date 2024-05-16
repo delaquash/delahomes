@@ -37,7 +37,8 @@ export const JwtParser = async (req: Request, res: Response, next: NextFunction)
       return next(errorHandler(404, "User not found!!!"))
     }
     req.userId = user._id.toString();
-    req.auth0Id = user.auth0Id
+    req.auth0Id = auth0Id as string;
+    next()
    } catch (error) {
     return next(errorHandler(401, "User not authorized..."))
    }
