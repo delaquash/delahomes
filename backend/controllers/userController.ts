@@ -28,12 +28,21 @@ const createUser = async(req: Request, res: Response, next: NextFunction)=>{
 }
 
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+
   if (req.user.id !== req.params.id) {
     console.log("Unauthorized update attempt");
     return next(errorHandler(401, "You can only update your account..."));
   }
 
   try {
+    const { name, addressLine1, city, country } = req.body;
+    const user = await User.findById(req.userId)
+
+    if (!user) {
+      console.log("User not found");
+      return next(errorHandler(404, "User not found"));
+    }
+
     if (req.body.password) {
       req.body.password = bcrypt.hashSync(req.body.password, 10);
     }
@@ -51,10 +60,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
       { new: true }
     );
 
-    if (!updatedUser) {
-      console.log("User not found");
-      return next(errorHandler(404, "User not found"));
-    }
+    
 
     const { password, ...rest } = updatedUser?._doc;
     res.status(200).json(rest);
