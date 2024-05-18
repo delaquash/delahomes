@@ -8,4 +8,18 @@ const formSchema = z.object({
     addressLine1: z.string().min(1, "Address Line 1 is required"),
 })
 
-type UseFormSchema = z.infer<typeof formSchema>
+type UseFormData = z.infer<typeof formSchema>;
+
+type Props = {
+    onSave: (userprofileData: UseFormData) => void;
+    isLoading: boolean;
+}
+
+const UserProfileForm = ({isLoading,onSave}: Props) => {
+    return (
+        <>
+        </>
+    )
+}
+
+export default UserProfileForm;
