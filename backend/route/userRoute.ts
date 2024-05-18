@@ -8,7 +8,9 @@ import {
 } from "../controllers/userController";
 import { verifyUser } from "../utils/verifyUser";
 import { jwtCheck, JwtParser } from "../middleware/auth";
+import { ExpressValidator } from "../middleware/validation";
 const router = express.Router();
+
 
 router.put("/",jwtCheck,JwtParser, updateUser);
 
