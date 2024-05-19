@@ -112,7 +112,6 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
                         </FormItem>
                     )}
                 />
-               
                 </div>
             </form>
         </Form>
