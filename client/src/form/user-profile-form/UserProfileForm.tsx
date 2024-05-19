@@ -61,7 +61,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
               <FormControl>
                 <Input {...field} disabled className="bg-white" />
               </FormControl>
-              <FormMessage />>
+              <FormMessage />
             </FormItem>
           )}
         />
