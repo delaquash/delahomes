@@ -1,7 +1,20 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormDescription } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import LoadingButton from "@/components/LoadingButton";
+import { Button } from "@/components/ui/button";
+// import { User } from "@/types";
+import { useEffect } from "react";
 
 
 const formSchema = z.object({
@@ -38,9 +51,19 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
                     <h2 className="font-bold text-2xl">User Profile Form</h2>
                     <FormDescription>View and Change Your Profile Information</FormDescription>
                 </div>
-                <FormField>
-                    
-                </FormField>
+                <FormField
+                    control = {form.control}
+                    name= "email"
+                    render= {({ field })=> (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input {...field} disabled className="bg-white"/>
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                
             </form>
         </Form>
     )
