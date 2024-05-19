@@ -81,7 +81,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
             control={form.control}
             name="city"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>City</FormLabel>
                 <FormControl>
                   <Input {...field} disabled className="bg-white" />
@@ -93,7 +93,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
             control={form.control}
             name="addressLine1"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Address Line</FormLabel>
                 <FormControl>
                   <Input {...field} disabled className="bg-white" />
@@ -105,7 +105,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
             control={form.control}
             name="country"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormLabel>Country</FormLabel>
                 <FormControl>
                   <Input {...field} disabled className="bg-white" />
