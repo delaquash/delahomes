@@ -63,7 +63,33 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
                         </FormItem>
                     )}
                 />
+                <FormField
+                    control = {form.control}
+                    name= "name"
+                    render= {({ field })=> (
+                        <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} disabled className="bg-white"/>
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <div className="flex flex-col md:flex-row gap-4">
+                <FormField
+                    control = {form.control}
+                    name= "city"
+                    render= {({ field })=> (
+                        <FormItem>
+                            <FormLabel>City</FormLabel>
+                            <FormControl>
+                                <Input {...field} disabled className="bg-white"/>
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
                 
+                </div>
             </form>
         </Form>
     )
