@@ -8,7 +8,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-//   FormMessage,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
@@ -61,6 +61,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
               <FormControl>
                 <Input {...field} disabled className="bg-white" />
               </FormControl>
+              <FormMessage />>
             </FormItem>
           )}
         />
@@ -73,6 +74,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
               <FormControl>
                 <Input {...field} disabled className="bg-white" />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -86,6 +88,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
                 <FormControl>
                   <Input {...field} disabled className="bg-white" />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -98,6 +101,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
                 <FormControl>
                   <Input {...field} disabled className="bg-white" />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -110,6 +114,7 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
                 <FormControl>
                   <Input {...field} disabled className="bg-white" />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
