@@ -88,7 +88,31 @@ const UserProfileForm = ({ isLoading, onSave }: Props) => {
                         </FormItem>
                     )}
                 />
-                
+                 <FormField
+                    control = {form.control}
+                    name= "addressLine1"
+                    render= {({ field })=> (
+                        <FormItem>
+                            <FormLabel>Address Line</FormLabel>
+                            <FormControl>
+                                <Input {...field} disabled className="bg-white"/>
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control = {form.control}
+                    name= "country"
+                    render= {({ field })=> (
+                        <FormItem>
+                            <FormLabel>Country</FormLabel>
+                            <FormControl>
+                                <Input {...field} disabled className="bg-white"/>
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+               
                 </div>
             </form>
         </Form>
