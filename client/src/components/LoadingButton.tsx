@@ -1,7 +1,6 @@
 import { Loader } from "lucide-react";
 import { Button } from "./ui/button";
 
-
 const LoadingButton = () => {
   return (
    <Button>
