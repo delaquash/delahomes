@@ -57,5 +57,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on mode on port ${PORT}`);
 });
-
-// 08069405513
