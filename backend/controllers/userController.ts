@@ -78,6 +78,9 @@ const getUserList = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+export const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
+    
+}
 
 const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
