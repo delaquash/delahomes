@@ -105,4 +105,4 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export { updateUser, deleteUser, getUserList, getUser, createUser };
+export { updateUser, deleteUser, getUser, createUser };
