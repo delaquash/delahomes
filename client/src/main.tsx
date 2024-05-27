@@ -7,6 +7,7 @@ import "./globals.css";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import AuthProviderWithnavigate from './auth/AuthProviderWithnavigate.tsx';
+import { Toaster } from 'sonner';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries:{
@@ -21,8 +22,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
       <AuthProviderWithnavigate >
       <App />
+      <Toaster position='top-right' visibleToasts={1} richColors/>
       </AuthProviderWithnavigate>
-        
       </BrowserRouter>
     </QueryClientProvider>
   
