@@ -26,10 +26,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </AuthProviderWithnavigate>
       </BrowserRouter>
     </QueryClientProvider>
-<<<<<<< HEAD
-  // </Provider>,
-=======
-  
-  // {/* </Provider>, */}
->>>>>>> frontend
 )

@@ -1,11 +1,9 @@
 import React from "react";
 import { AppState, Auth0Provider } from "@auth0/auth0-react";
-<<<<<<< HEAD
-// import { useNavigate } from "react-router-dom";
-=======
+
 import { useNavigate } from "react-router-dom";
 // import { useCreateUserRequest } from "@/helper/myUserApi";
->>>>>>> frontend
+
 
 interface Props {
     children: React.ReactNode
