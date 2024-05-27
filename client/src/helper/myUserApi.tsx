@@ -32,9 +32,9 @@ export const useCreateUserRequest = () => {
 
 type UpdateMyUserRequest = {
     name: string;
-    email: string;
+    email?: string;
     city: string;
-    addressLine: string;
+    addressLine1: string;
 }
 
 export const useUpdateMyUser =() => {
@@ -56,8 +56,8 @@ export const useUpdateMyUser =() => {
         return res.json()
  
     }
-    const { mutateAsync:updateUser, isLoading, isError, isSuccess} = useMutation(updateMyUserProfileRequest);
+    const { mutateAsync:updateUser, isLoading, isError, error, reset, isSuccess} = useMutation(updateMyUserProfileRequest);
     return {
-        updateUser, isLoading, isError, isSuccess
+        updateUser, isLoading, isError, isSuccess, error, reset,
     }
 }
