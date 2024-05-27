@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
-// import { User } from "@/types";
+import { User } from "@/AllTypes"
 // import { useEffect } from "react";
 
 const formSchema = z.object({
@@ -27,6 +27,7 @@ const formSchema = z.object({
 type UseFormData = z.infer<typeof formSchema>;
 
 type Props = {
+  CurrentUser: User
   /* The `onSave` prop in the `Props` type is defining a function that takes an argument of type
     `UseFormData` and returns `void`. This means that the `onSave` function passed to the
     `UserProfileForm` component should accept an object that matches the shape defined by the
@@ -36,9 +37,10 @@ type Props = {
   isLoading: boolean;
 };
 
-const UserProfileForm = ({ isLoading, onSave }: Props) => {
+const UserProfileForm = ({ isLoading, onSave, CurrentUser }: Props) => {
   const form = useForm<UseFormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: CurrentUser
   });
   return (
     <Form {...form}>

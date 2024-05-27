@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
-import { User }  from "../../types/AllTypes"
+import { User }  from "@/AllTypes"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -78,7 +78,7 @@ export const useGetMyUser = () => {
 
     const getMyUserProfile = async (): Promise<User> => {
         const accessToken = getAccessTokenSilently()
-        const res = await fetch (`${API_BASE_URL}/api/v1/yser`, {
+        const res = await fetch (`${API_BASE_URL}/api/v1/user`, {
             method: "GET",
             headers: {
                 Authorization:  `Bearer ${accessToken}`,

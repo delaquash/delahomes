@@ -15,23 +15,11 @@ const AuthProviderWithnavigate = ({ children }: Props) => {
     const domain = import.meta.env.VITE_AUTH_DOMAIN;
     const clientID = import.meta.env.VITE_AUTH_CLIENTID;
     const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URI;
-<<<<<<< HEAD
-    // const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
-
-    if(!domain || !clientID || !redirectUri) {
-=======
     const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
-  // console.log(domain, clientID, redirectUri, audience)
 
-    if(!domain 
-      || !clientID
-       || !redirectUri 
-       || !audience 
-      ) {
->>>>>>> frontend
-        throw new Error("Unable to initialize auth!!!")
-    }
-
+    if (!domain || !clientID || !redirectUri || !audience) {
+    throw new Error("unable to initialise auth");
+  }
    /**
     * The `onRedirectCallback` function creates a user with Auth0 ID and email if they are provided.
     * @param {AppState} [appState] - `appState` is an optional parameter of type `AppState`, which
