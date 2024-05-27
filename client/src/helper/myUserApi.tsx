@@ -30,30 +30,30 @@ export const useCreateUserRequest = () => {
     }
 }
 
-type UpdateMyUserRequest = {
-    name: string;
-    email: string;
-    city: string;
-    addressLine: string;
-}
+// type UpdateMyUserRequest = {
+//     name: string;
+//     email: string;
+//     city: string;
+//     addressLine: string;
+// }
 
-export const useUpdateMyUserProfile =() => {
-    const { getAccessTokenSilently } = useAuth0()
+// export const useUpdateMyUserProfile =() => {
+//     const { getAccessTokenSilently } = useAuth0()
 
-    const updateMyUserProfileRequest =  async (formData: UpdateMyUserRequest) => {
-        const accessToken = await getAccessTokenSilently();
-        const res = await fetch (`${API_BASE_URL}/api/v1/user`, {
-            method: "PUT",
-            headers: {
-                Authorization:  `Bearer ${accessToken}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        });
-        if(!res.ok){
-            throw new Error("User not created...")
-        }
-        return res.json()
+//     const updateMyUserProfileRequest =  async (formData: UpdateMyUserRequest) => {
+//         const accessToken = await getAccessTokenSilently();
+//         const res = await fetch (`${API_BASE_URL}/api/v1/user`, {
+//             method: "PUT",
+//             headers: {
+//                 Authorization:  `Bearer ${accessToken}`,
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify(formData)
+//         });
+//         if(!res.ok){
+//             throw new Error("User not created...")
+//         }
+//         return res.json()
  
-    }
-}
+//     }
+// }

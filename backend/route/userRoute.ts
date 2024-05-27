@@ -14,6 +14,6 @@ const router = express.Router();
 
 router.put("/",jwtCheck,JwtParser,ExpressValidator, updateUser);
 
-router.post("/",jwtCheck,  createUser )
+router.post("/",  createUser )
 
 export default router;
