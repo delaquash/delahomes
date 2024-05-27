@@ -65,21 +65,29 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getUserList = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user.id === req.params.id) {
-    try {
-      const listing = await Listing.find({ userRef: req.params.id });
-      res.status(200).json(listing);
-    } catch (error) {
-      next(error);
-    }
-  } else {
-    return next(errorHandler(401, "You can only view your own listing.."));
-  }
-};
+// const getUserList = async (req: Request, res: Response, next: NextFunction) => {
+//   if (req.user.id === req.params.id) {
+//     try {
+//       const listing = await Listing.find({ userRef: req.params.id });
+//       res.status(200).json(listing);
+//     } catch (error) {
+//       next(error);
+//     }
+//   } else {
+//     return next(errorHandler(401, "You can only view your own listing.."));
+//   }
+// };
 
 export const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
-    
+  try {
+    const currentUser = await User.findOne({ _id: req.userId })
+    if(!currentUser){
+      return next(errorHandler(404, "User not found"));
+    }
+    res.status(200).json(currentUser)
+  } catch (error) {
+    next(error);
+  }
 }
 
 const getUser = async (req: Request, res: Response, next: NextFunction) => {
