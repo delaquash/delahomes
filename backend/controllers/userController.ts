@@ -16,7 +16,7 @@ const createUser = async(req: Request, res: Response, next: NextFunction)=>{
     const { auth0Id } = req.body;
     const existingUser = await User.findOne({ auth0Id });
     if(existingUser){
-      return res.status(200).json({ msg: "User already exist..."})
+      return res.status(200).send({msg: "User already exist.."})
     }
     const newUser = new User(req.body)
     await newUser.save()
@@ -28,36 +28,24 @@ const createUser = async(req: Request, res: Response, next: NextFunction)=>{
 }
 
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user.id !== req.params.id) {
-    console.log("Unauthorized update attempt");
-    return next(errorHandler(401, "You can only update your account..."));
-  }
+
 
   try {
-    if (req.body.password) {
-      req.body.password = bcrypt.hashSync(req.body.password, 10);
-    }
+    const { name, addressLine1, city, country } = req.body;
+    const user = await User.findById(req.userId)
 
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: {
-          email: req.body.email,
-          username: req.body.username,
-          avatar: req.body.avatar,
-          password: req.body.password,
-        },
-      },
-      { new: true }
-    );
-
-    if (!updatedUser) {
+    if (!user) {
       console.log("User not found");
       return next(errorHandler(404, "User not found"));
     }
 
-    const { password, ...rest } = updatedUser?._doc;
-    res.status(200).json(rest);
+    user.name = name;
+    user.country = country;
+    user.city = city;
+    user.addressLine1 = addressLine1; 
+
+    await user.save()
+    res.status(201).send(user)
   } catch (error) {
     console.error("Error in updateUser:", error);
     next(error);

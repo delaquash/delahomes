@@ -1,6 +1,11 @@
 import React from "react";
 import { AppState, Auth0Provider } from "@auth0/auth0-react";
+<<<<<<< HEAD
 // import { useNavigate } from "react-router-dom";
+=======
+import { useNavigate } from "react-router-dom";
+// import { useCreateUserRequest } from "@/helper/myUserApi";
+>>>>>>> frontend
 
 interface Props {
     children: React.ReactNode
@@ -8,17 +13,39 @@ interface Props {
 
 
 const AuthProviderWithnavigate = ({ children }: Props) => {
+    const navigate = useNavigate();
     const domain = import.meta.env.VITE_AUTH_DOMAIN;
     const clientID = import.meta.env.VITE_AUTH_CLIENTID;
     const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URI;
+<<<<<<< HEAD
     // const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
 
     if(!domain || !clientID || !redirectUri) {
+=======
+    const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
+  // console.log(domain, clientID, redirectUri, audience)
+
+    if(!domain 
+      || !clientID
+       || !redirectUri 
+       || !audience 
+      ) {
+>>>>>>> frontend
         throw new Error("Unable to initialize auth!!!")
     }
 
-    const onRedirectCallback=(appState?: AppState, user?: User)=> {
-        console.log("USER", user)
+   /**
+    * The `onRedirectCallback` function creates a user with Auth0 ID and email if they are provided.
+    * @param {AppState} [appState] - `appState` is an optional parameter of type `AppState`, which
+    * represents the state of the application before the redirect occurred. It may contain information
+    * such as the URL the user was trying to access before authentication.
+    * @param {User} [user] - The `user` parameter in the `onRedirectCallback` function likely
+    * represents the user object returned from an authentication process. It may contain information
+    * about the authenticated user, such as their sub (subject) identifier and email address.
+    */
+    const onRedirectCallback=(appState?: AppState)=> {
+     navigate (appState?.returnTo || "/auth-callback");
+     console.log(appState)
     }
 
   return (
@@ -26,7 +53,8 @@ const AuthProviderWithnavigate = ({ children }: Props) => {
         domain={domain} 
         clientId={clientID}
         authorizationParams={{
-            redirect_uri: redirectUri
+            redirect_uri: redirectUri,
+            audience,
         }}
         onRedirectCallback={onRedirectCallback}
     >
@@ -35,6 +63,5 @@ const AuthProviderWithnavigate = ({ children }: Props) => {
   )
 }
 
-// 08181077096
 
 export default AuthProviderWithnavigate

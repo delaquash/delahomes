@@ -2,7 +2,7 @@ import { CircleUserRound, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "./ui/sheet";
 import {  Separator } from "./ui/separator";
 import { Button } from "./ui/button";
-import MobileNavLinks from "./MobilenavLinks";
+import MobileNavLinks from "./MobileNavLinks";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const MobileNav = () => {

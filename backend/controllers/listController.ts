@@ -119,7 +119,10 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
       .sort({ [sort as string]: order } as { [key: string]: SortOrder })
       .limit(limit)
       .skip(startIndex);
+<<<<<<< HEAD
+=======
       
+>>>>>>> backend
       return res.status(200).json(listings);
   } catch (error) {
     next(error);
