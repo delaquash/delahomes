@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { User } from "@/AllTypes"
-// import { useEffect } from "react";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().optional(),
@@ -38,10 +38,17 @@ type Props = {
 };
 
 const UserProfileForm = ({ isLoading, onSave, CurrentUser }: Props) => {
+  /* This code snippet is using the `useForm` hook from the `react-hook-form` library to create a form
+  instance for the UserProfileForm component. Here's what each part of the `useForm` hook
+  configuration is doing: */
   const form = useForm<UseFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: CurrentUser
   });
+
+  useEffect(()=> {
+    form.reset(CurrentUser)
+  }, [CurrentUser, form])
   return (
     <Form {...form}>
       <form
