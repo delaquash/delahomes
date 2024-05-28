@@ -86,7 +86,7 @@ export const getCurrentUser = async (req: Request, res: Response, next: NextFunc
     }
     res.status(200).json(currentUser)
   } catch (error) {
-    next(error);
+   return next(error);
   }
 }
 
