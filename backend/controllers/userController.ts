@@ -159,7 +159,6 @@ const updateCurrentUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     user.name = name;
     user.addressLine1 = addressLine1;
     user.city = city;
@@ -174,10 +173,13 @@ const updateCurrentUser = async (req: Request, res: Response) => {
   }
 };
 
-export default {
-  getCurrentUser,
-  createCurrentUser,
-  updateCurrentUser,
-};
+// export default {
+//   getCurrentUser,
+//   createCurrentUser,
+//   updateCurrentUser,
+// };
 
-export {createCurrentUser, updateCurrentUser, getCurrentUser };
+export {  getCurrentUser,
+  createCurrentUser,
+  updateCurrentUser};
+
