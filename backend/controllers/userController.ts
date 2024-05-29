@@ -81,12 +81,14 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 export const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const currentUser = await User.findOne({ _id: req.userId })
+    console.log(req.userId)
     if(!currentUser){
       return next(errorHandler(404, "User not found"));
     }
-    res.status(200).json(currentUser)
+    res.json(currentUser)
   } catch (error) {
    return next(error);
+   console.log(error)
   }
 }
 

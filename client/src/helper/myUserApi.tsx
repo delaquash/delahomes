@@ -11,9 +11,10 @@ interface MyUserProps {
 }
 
 export const useCreateUserRequest = () => {
-    const {getAccessTokenSilently} = useAuth0()
+    const {getAccessTokenSilently} = useAuth0();
  const createNewUserRequest = async (user: MyUserProps) => {
     const accessToken = await getAccessTokenSilently();
+    
         const res = await fetch (`${API_BASE_URL}/api/v1/user`,{
             method: "POST",
             headers: {
@@ -78,11 +79,12 @@ export const useGetMyUser = () => {
 
     const getMyUserProfile = async (): Promise<User> => {
         const accessToken = getAccessTokenSilently()
+        console.log("Get User Token", accessToken)
         const res = await fetch (`${API_BASE_URL}/api/v1/user`, {
             method: "GET",
             headers: {
                 Authorization:  `Bearer ${accessToken}`,
-                "Content-type": "application/json",
+                "Content-Type": "application/json",
             },
         })
         if(!res.ok){
