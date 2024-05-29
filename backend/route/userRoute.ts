@@ -1,18 +1,18 @@
 import express from "express";
 import {
   updateUser,
-  deleteUser,
-  getUser,
+  // deleteUser,
+  // getUser,
   createUser,
   getCurrentUser
 } from "../controllers/userController";
-import { verifyUser } from "../utils/verifyUser";
-import { jwtCheck, JwtParser } from "../middleware/auth";
+import { jwtCheck, JwtParse } from "../middleware/auth";
 import { ExpressValidator } from "../middleware/validation";
 const router = express.Router();
 
-router.get("/", jwtCheck, JwtParser, getCurrentUser)
+
 router.post("/", jwtCheck, createUser )
-router.put("/",jwtCheck,JwtParser,ExpressValidator, updateUser);
+router.put("/",  jwtCheck, JwtParse,ExpressValidator, updateUser);
+router.get("/",   getCurrentUser)
 
 export default router;

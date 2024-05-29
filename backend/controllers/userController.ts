@@ -52,18 +52,18 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user.id !== req.params.id) {
-    console.log("Unauthorized update attempt");
-    return next(errorHandler(401, "You can only delete your account..."));
-  }
-  try {
-    await User.findByIdAndDelete(req.params.id);
-    res.status(200).json("User deleted successfully...");
-  } catch (error) {
-    next(error);
-  }
-};
+// const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+//   if (req.user.id !== req.params.id) {
+//     console.log("Unauthorized update attempt");
+//     return next(errorHandler(401, "You can only delete your account..."));
+//   }
+//   try {
+//     await User.findByIdAndDelete(req.params.id);
+//     res.status(200).json("User deleted successfully...");
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 // const getUserList = async (req: Request, res: Response, next: NextFunction) => {
 //   if (req.user.id === req.params.id) {
@@ -78,33 +78,47 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 //   }
 // };
 
-export const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const currentUser = await User.findOne({ _id: req.userId })
-    console.log(req.userId)
-    if(!currentUser){
-      return next(errorHandler(404, "User not found"));
-    }
-    res.json(currentUser)
-  } catch (error) {
-   return next(error);
-   console.log(error)
-  }
-}
+//  const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const currentUser = await User.findOne({ _id: req.userId })
+//     console.log(currentUser)
+//     if(!currentUser){
+//       return next(errorHandler(404, "User not found"));
+//     }
+//     res.json(currentUser)
+//   } catch (error) {
+//    next(error);
+//    console.log(error)
+//   }
+// }
 
-const getUser = async (req: Request, res: Response, next: NextFunction) => {
+const getCurrentUser = async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return next(errorHandler(404, "No user with that id exists"));
+    const currentUser = await User.findOne({ _id: req.userId });
+    if (!currentUser) {
+      return res.status(404).json({ message: "User not found..." });
     }
-    // Remove password from the response
-    const {password: pass, ...rest} = user._doc;
-    res.status(200).json(rest);
-    // console.log(rest, user)
-  } catch (error) {
-    next(error);    
-  }
-}
 
-export { updateUser, deleteUser, getUser, createUser };
+    res.json(currentUser);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+// const getUser = async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     if (!user) {
+//       return next(errorHandler(404, "No user with that id exists"));
+//     }
+//     // Remove password from the response
+//     const {password: pass, ...rest} = user._doc;
+//     res.status(200).json(rest);
+//     // console.log(rest, user)
+//   } catch (error) {
+//     next(error);    
+//   }
+// }
+
+export { updateUser, createUser, getCurrentUser };

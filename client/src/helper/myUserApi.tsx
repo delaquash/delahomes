@@ -14,8 +14,7 @@ export const useCreateUserRequest = () => {
     const {getAccessTokenSilently} = useAuth0();
  const createNewUserRequest = async (user: MyUserProps) => {
     const accessToken = await getAccessTokenSilently();
-    
-        const res = await fetch (`${API_BASE_URL}/api/v1/user`,{
+            const res = await fetch (`${API_BASE_URL}/api/v1/user`,{
             method: "POST",
             headers: {
                 Authorization:  `Bearer ${accessToken}`,
@@ -23,6 +22,7 @@ export const useCreateUserRequest = () => {
             },
             body: JSON.stringify(user)
         });
+        
         if(!res.ok){
             throw new Error("User not created...")
         }
@@ -31,6 +31,7 @@ export const useCreateUserRequest = () => {
     return {
         createUser, isLoading, isError, isSuccess
     }
+    console.log(createUser)
 }
 
 type UpdateMyUserRequest = {
@@ -57,7 +58,7 @@ export const useUpdateMyUser =() => {
             throw new Error("User not created...")
         }
         return res.json()
- 
+        console.log(res.json())
     }
     const { mutateAsync:updateUser, isLoading, isError, error, reset, isSuccess} = useMutation(updateMyUserProfileRequest);
     if(isSuccess){

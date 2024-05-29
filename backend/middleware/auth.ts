@@ -45,34 +45,66 @@ export const jwtCheck = auth({
 // }
 
 
-export const JwtParser = async (req: Request, res: Response, next: NextFunction) => {
+export const JwtParse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { authorization } = req.headers;
+
   if (!authorization || !authorization.startsWith("Bearer ")) {
-     return res.sendStatus(401); // Unauthorized if no or incorrect authorization header
+    return res.sendStatus(401);
   }
 
+  // Bearer lshdflshdjkhvjkshdjkvh34h5k3h54jkh
   const token = authorization.split(" ")[1];
-  if (!process.env.JWT_SECRET) {
-    throw new Error("Secret key is not defined");
-  }
+
   try {
-     const decoded = jwt.verify(token, process.env.JWT_SECRET) as jwt.JwtPayload;
-     if (!decoded || !decoded.sub) {
-        return res.sendStatus(401); // Unauthorized if token is invalid or no sub field
-     }
+    const decoded = jwt.decode(token) as jwt.JwtPayload;
+    const auth0Id = decoded.sub;
 
-     const auth0Id = decoded.sub;
+    const user = await User.findOne({ auth0Id });
 
-     const user = await User.findOne({ auth0Id });
+    if (!user) {
+      return res.sendStatus(401);
+    }
 
-     if (!user) {
-        return res.status(404).json({ message: "User not found!!!" });
-     }
-     req.userId = user._id.toString();
-     req.auth0Id = auth0Id as string;
-     next();
+    req.auth0Id = auth0Id as string;
+    req.userId = user._id.toString();
+    next();
   } catch (error) {
-     console.error('JWT Parsing Error:', error);
-     return next(errorHandler(401, "User not authorized..."));
+    return res.sendStatus(401);
   }
 };
+
+// export const JwtParser = async (req: Request, res: Response, next: NextFunction) => {
+//   const { authorization } = req.headers;
+//   if (!authorization || !authorization.startsWith("Bearer ")) {
+//      return res.sendStatus(401); // Unauthorized if no or incorrect authorization header
+//   }
+
+//   const token = authorization.split(" ")[1];
+//   if (!process.env.JWT_SECRET) {
+//     throw new Error("Secret key is not defined");
+//   }
+//   try {
+//      const decoded = jwt.verify(token, process.env.JWT_SECRET) as jwt.JwtPayload;
+//      if (!decoded || !decoded.sub) {
+//         return res.sendStatus(401); // Unauthorized if token is invalid or no sub field
+//      }
+
+//      const auth0Id = decoded.sub;
+
+//      const user = await User.findOne({ auth0Id });
+
+//      if (!user) {
+//         return res.status(404).json({ message: "User not found!!!" });
+//      }
+//      req.userId = user._id.toString();
+//      req.auth0Id = auth0Id as string;
+//      next();
+//   } catch (error) {
+//      console.error('JWT Parsing Error:', error);
+//      return next(errorHandler(401, "User not authorized..."));
+//   }
+// };
