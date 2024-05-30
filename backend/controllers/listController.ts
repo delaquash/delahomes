@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Listing from "../models/listModel";
 import { errorHandler } from "../utils/errorHandler";
 import bcrypt from "bcryptjs";
-import { SortOrder } from "mongoose";
+import mongoose from "mongoose";
 import Restaurant from "../models/restaurant";
 import cloudinary from "cloudinary";
 
@@ -20,26 +20,27 @@ export const createRestaurant = async(req: Request, res: Response, next: NextFun
       if(existingUser){
         return next(errorHandler(409, "User restaurant already exist..."))
       }
-      
-    } catch (error) {
+      const imageUrl = await uploadImage(req.file as Express.Multer.File);
+
+      const restaurant = new Restaurant(req.body);
+      restaurant.imageUrl = imageUrl;
+      restaurant.user = new mongoose.Types.ObjectId(req.userId);
+      restaurant.lastUpdated = new Date();
+      await restaurant.save();
+      res.status(201).send(restaurant);
+        } catch (error) {
       next(errorHandler(500, "Server error..."))
     }
 }
 
 
 
-async function uploadImages(imageFiles: Express.Multer.File[]) {
-  if (!imageFiles || !Array.isArray(imageFiles)) {
-      throw new Error('No image files provided or invalid data format');
-  }
 
-  const uploadPromises = imageFiles.map(async (image) => {
-      const b64 = Buffer.from(image.buffer).toString("base64");
-      let dataURI = "data:" + image.mimetype + ";base64," + b64;
-      const res = await cloudinary.v2.uploader.upload(dataURI);
-      return res.url;
-  });
-
-  const imageUrls = await Promise.all(uploadPromises);
-  return imageUrls;
-}
+  const uploadImage = async (file: Express.Multer.File) => {
+    const image = file;
+    const base64Image = Buffer.from(image.buffer).toString("base64");
+    const dataURI = `data:${image.mimetype};base64,${base64Image}`;
+  
+    const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
+    return uploadResponse.url;
+  };
