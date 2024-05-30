@@ -4,6 +4,7 @@ import { errorHandler } from "../utils/errorHandler";
 import bcrypt from "bcryptjs";
 import { SortOrder } from "mongoose";
 import Restaurant from "../models/restaurant";
+import cloudinary from "cloudinary";
 
 
  declare module "express" {
@@ -23,4 +24,22 @@ export const createRestaurant = async(req: Request, res: Response, next: NextFun
     } catch (error) {
       next(errorHandler(500, "Server error..."))
     }
+}
+
+
+
+async function uploadImages(imageFiles: Express.Multer.File[]) {
+  if (!imageFiles || !Array.isArray(imageFiles)) {
+      throw new Error('No image files provided or invalid data format');
+  }
+
+  const uploadPromises = imageFiles.map(async (image) => {
+      const b64 = Buffer.from(image.buffer).toString("base64");
+      let dataURI = "data:" + image.mimetype + ";base64," + b64;
+      const res = await cloudinary.v2.uploader.upload(dataURI);
+      return res.url;
+  });
+
+  const imageUrls = await Promise.all(uploadPromises);
+  return imageUrls;
 }
