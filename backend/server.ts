@@ -11,7 +11,7 @@ import { v2 as cloudinary } from "cloudinary";
 // route
 // import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
-// import listRoute from "./route/listRoute";
+import restaurantRoute from "./route/MyRestaurantRoute";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -51,7 +51,7 @@ app.get("/", (req: Request, res: Response) => {
 
 // app.use("/api/auth", authRoute);
 app.use("/api/v1/user", userRoute);
-// app.use("/api/list", listRoute);
+app.use("/api/v1/restaurant", restaurantRoute);
 
 // error
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {

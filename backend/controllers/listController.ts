@@ -6,7 +6,6 @@ import mongoose from "mongoose";
 import Restaurant from "../models/restaurant";
 import cloudinary from "cloudinary";
 
-
  declare module "express" {
     interface Request {
       userId?: any; // Replace 'any' with the actual type of your user object
@@ -16,7 +15,7 @@ import cloudinary from "cloudinary";
 
 export const createRestaurant = async(req: Request, res: Response, next: NextFunction) => {
     try {
-      const existingUser = await Restaurant.find({ user: req.userId });
+      const existingUser = await Restaurant.findOne({ user: req.userId });
       if(existingUser){
         return next(errorHandler(409, "User restaurant already exist..."))
       }
