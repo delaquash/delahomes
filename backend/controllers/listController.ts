@@ -39,9 +39,13 @@ export const createRestaurant = async(req: Request, res: Response, next: NextFun
       restaurant.lastUpdated = new Date();
       await restaurant.save();
       res.status(201).send(restaurant);
-        } catch (error) {
+        } catch (error: any) {
           console.log(error);
-          res.status(500).json({ message: "Something went wrong" });
+          if (error.name === 'TimeoutError') {
+            res.status(499).json({ message: 'Request Timeout' });
+          } else {
+            res.status(500).json({ message: "Something went wrong" });
+          }
     }
 }
 
