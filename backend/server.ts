@@ -5,9 +5,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 import cookieParser from "cookie-parser";
-dotenv.config();
 import { v2 as cloudinary } from "cloudinary";
 
+dotenv.config();
 // route
 // import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
