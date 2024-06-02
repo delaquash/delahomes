@@ -6,6 +6,7 @@ const handleValidationErrors = async (req: Request, res: Response, next: NextFun
     const error = validationResult(req);
     if(!error.isEmpty()) {
         return res.status(401).json({ error: error.array() })
+        console.log(error)
     }
     next()
 }
@@ -16,4 +17,4 @@ export const ExpressValidator = [
     body("country").isString().notEmpty().withMessage("Country is a string"),
     body("city").isString().notEmpty().withMessage("City is a string"),
     handleValidationErrors
-]
+];
