@@ -135,6 +135,9 @@ const getCurrentUser = async (req: Request, res: Response) => {
 const createCurrentUser = async (req: Request, res: Response) => {
   try {
     const { auth0Id } = req.body;
+    if (!auth0Id) {
+      return res.status(400).json({ message: "auth0Id is required", success: false });
+    }
     const existingUser = await User.findOne({ auth0Id });
 
     if (existingUser) {
