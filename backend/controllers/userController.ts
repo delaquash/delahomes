@@ -147,10 +147,10 @@ const createCurrentUser = async (req: Request, res: Response) => {
     const newUser = new User(req.body);
     await newUser.save();
 
-    res.status(201).json(newUser.toObject());
+    res.status(201).json({ user: newUser.toObject(), message: "User created successfully", success: true });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Error creating user" });
+    console.error(error);
+    res.status(500).json({ message: "Error creating user", success: false });
   }
 };
 
