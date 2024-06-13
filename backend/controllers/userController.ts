@@ -8,21 +8,6 @@ import User from "../models/userModel";
 //   }
 // }
 
-// const createUser = async(req: Request, res: Response, next: NextFunction)=>{
-//   try {
-//     const { auth0Id } = req.body;
-//     const existingUser = await User.findOne({ auth0Id });
-//     if(existingUser){
-//       return res.status(200).send({msg: "User already exist.."})
-//     }
-//     const newUser = new User(req.body)
-//     await newUser.save()
-//     res.status(201).json(newUser.toObject()) 
-//    } catch (error) {
-//     console.error("Error in creating user:", error);
-//     next(error);
-//   }
-// }
 
 // const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -133,8 +118,10 @@ const getCurrentUser = async (req: Request, res: Response) => {
 };
 
 const createCurrentUser = async (req: Request, res: Response) => {
+  console.log('Headers:', req.headers); // Log headers
   try {
     const { auth0Id } = req.body;
+    console.log(auth0Id)
     if (!auth0Id) {
       return res.status(400).json({ message: "auth0Id is required", success: false });
     }

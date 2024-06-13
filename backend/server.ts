@@ -1,6 +1,5 @@
 import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
-// import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
@@ -31,18 +30,18 @@ app.use(cookieParser());
 
 app.use(bodyParser.json());
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Preload"
-  );
-  next();
-});
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, PATCH, DELETE"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, Preload"
+//   );
+//   next();
+// });
 
 app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");

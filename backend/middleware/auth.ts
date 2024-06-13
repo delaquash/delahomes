@@ -13,14 +13,15 @@ declare global {
   }
 }
 
-export const jwtCheck = auth({
+export const jwtCheck = auth ({
     audience: process.env.AUTH0_URI,
     issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
     tokenSigningAlg: process.env.AUTH0_TOKEN_SIGNING_ALG
+    
   });
 
 
-export const JwtParse = async (
+export const jwtParse = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -34,9 +35,18 @@ export const JwtParse = async (
   // Bearer lshdflshdjkhvjkshdjkvh34h5k3h54jkh
   const token = authorization.split(" ")[1];
 
+
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('AUTH0_SECRET environment variable is not defined');
+  }
   try {
-    const decoded = jwt.decode(token) as jwt.JwtPayload;
+    const decoded = jwt.verify(token, secret) as jwt.JwtPayload;
     const auth0Id = decoded.sub;
+
+    if (!auth0Id) {
+      return res.status(401).json({ msg: "Not authorized" });
+    }
 
     const user = await User.findOne({ auth0Id });
 
