@@ -1,16 +1,37 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
-// import { errorHandler } from "../utils/errorHandler";
+import { errorHandler } from "../utils/errorHandler";
 // Extend the Express Request interface to include the user property
-// declare module "express" {
-//   interface Request {
-//     user?: any; // Replace 'any' with the actual type of your user object
-//   }
-// }
+declare module "express" {
+  interface Request {
+    user?: any; // Replace 'any' with the actual type of your user object
+  }
+}
 
+const createCurrentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { name, email, password, address, city, country } = req.body;
+    const newUser = new User({
+      name,
+      email,
+      password,
+      address,
+      city,
+      country,
+    });
+
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-
 
 //   try {
 //     const { name, addressLine1, city, country } = req.body;
@@ -24,7 +45,7 @@ import User from "../models/userModel";
 //     user.name = name;
 //     user.country = country;
 //     user.city = city;
-//     user.addressLine1 = addressLine1; 
+//     user.addressLine1 = addressLine1;
 
 //     await user.save()
 //     res.status(201).send(user)
@@ -33,8 +54,6 @@ import User from "../models/userModel";
 //     next(error);
 //   }
 // };
-
-
 
 // const getUserList = async (req: Request, res: Response, next: NextFunction) => {
 //   if (req.user.id === req.params.id) {
@@ -88,7 +107,7 @@ import User from "../models/userModel";
 //     res.status(200).json(rest);
 //     // console.log(rest, user)
 //   } catch (error) {
-//     next(error);    
+//     next(error);
 //   }
 // }
 
@@ -103,30 +122,6 @@ import User from "../models/userModel";
 //   } catch (error) {
 //     console.log(error);
 //     return res.status(500).json({ message: "Something went wrong" });
-//   }
-// };
-
-// const createCurrentUser = async (req: Request, res: Response) => {
-//   console.log('Headers:', req.headers); // Log headers
-//   try {
-//     const { auth0Id } = req.body;
-//     console.log(auth0Id)
-//     if (!auth0Id) {
-//       return res.status(400).json({ message: "auth0Id is required", success: false });
-//     }
-//     const existingUser = await User.findOne({ auth0Id });
-
-//     if (existingUser) {
-//       return res.status(200).send();
-//     }
-
-//     const newUser = new User(req.body);
-//     await newUser.save();
-
-//     res.status(201).json({ user: newUser.toObject(), message: "User created successfully", success: true });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Error creating user", success: false });
 //   }
 // };
 
@@ -158,7 +153,8 @@ import User from "../models/userModel";
 // //   updateCurrentUser,
 // // };
 
-// export {  getCurrentUser,
-//   createCurrentUser,
-//   updateCurrentUser};
-
+export {  
+// getCurrentUser,
+  createCurrentUser,
+//   updateCurrentUser
+};
