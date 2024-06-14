@@ -6,7 +6,7 @@ const router = express.Router();
 // import { auth } from 'express-oauth2-jwt-bearer';
 
 // router.get("/",   jwtParse, getCurrentUser)
-router.post("/createuser",  createCurrentUser )
+router.post("/createuser", ExpressValidator, createCurrentUser )
 // router.put("/",jwtCheck, ExpressValidator, updateCurrentUser);
 
 
