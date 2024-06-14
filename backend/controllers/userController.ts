@@ -15,6 +15,13 @@ const createCurrentUser = async (
 ) => {
   try {
     const { name, email, password, address, city, country } = req.body;
+    const userExists = await User.findOne({ email });
+
+    if (userExists) {
+      res.status(400);
+      throw new Error("User already exists");
+    }
+    
     const newUser = new User({
       name,
       email,

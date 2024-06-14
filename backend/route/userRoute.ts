@@ -1,16 +1,9 @@
 import express from "express";
 import { createCurrentUser } from "../controllers/userController";
-import {  jwtParse } from "../middleware/auth";
+// import {  jwtParse } from "../middleware/auth";
 import { ExpressValidator } from "../middleware/validation";
 const router = express.Router();
-import { auth } from 'express-oauth2-jwt-bearer';
-
-// export const jwtCheck = auth({
-//     audience: "mern-food-ordering-app-api",
-//     issuerBaseURL: "https://dev-m6fiy401keas0g76.us.auth0.com/",
-//     tokenSigningAlg:  "RS256"
-    
-//   });
+// import { auth } from 'express-oauth2-jwt-bearer';
 
 // router.get("/",   jwtParse, getCurrentUser)
 router.post("/createuser",  createCurrentUser )

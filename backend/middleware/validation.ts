@@ -13,9 +13,10 @@ const handleValidationErrors = async (req: Request, res: Response, next: NextFun
 
 export const ExpressValidator = [
     body("name").isString().notEmpty().withMessage("Name must be a string"),
-    body("addressLine1").isString().notEmpty().withMessage("AddressLine must be a string"),
+    body("address").isString().notEmpty().withMessage("AddressLine must be a string"),
     body("country").isString().notEmpty().withMessage("Country is a string"),
     body("city").isString().notEmpty().withMessage("City is a string"),
+    body("password").isString().notEmpty().withMessage("Password should not be empty"),
     handleValidationErrors
 ];
 
