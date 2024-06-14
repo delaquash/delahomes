@@ -21,11 +21,10 @@ const createCurrentUser = async (
       res.status(400);
       throw new Error("User already exists");
     }
-    
+
     const newUser = new User({
       name,
       email,
-      password,
       address,
       city,
       country,
