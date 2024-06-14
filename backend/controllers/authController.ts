@@ -1,44 +1,44 @@
-// import { NextFunction, Request, Response } from "express";
-// import User from "../models/userModel";
-// import bcryptjs from "bcryptjs";
-// import { errorHandler } from "../utils/errorHandler";
-// import jwt from "jsonwebtoken";
+import { NextFunction, Request, Response } from "express";
+import User from "../models/userModel";
+import bcryptjs from "bcryptjs";
+import { errorHandler } from "../utils/errorHandler";
+import jwt from "jsonwebtoken";
 
-// const signup = async (req: Request, res: Response, next: NextFunction) => {
-//   const { username, email, password } = req.body;
-//   try {
-//     const hashedPassword = bcryptjs.hashSync(password, 10);
-//     const newUser = new User({ email, password: hashedPassword, username });
-//     await newUser.save();
-//     res.status(201).json({ msg: "User created successfully" });
-//   } catch (error: any) {
-//     next(errorHandler(500, `Server Error: ${error.message}`));
-//   }
-// };
+const signup = async (req: Request, res: Response, next: NextFunction) => {
+  const { name, email, password } = req.body;
+  try {
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const newUser = new User({ email, password: hashedPassword, name });
+    await newUser.save();
+    res.status(201).json({ msg: "User created successfully" });
+  } catch (error: any) {
+    next(errorHandler(500, `Server Error: ${error.message}`));
+  }
+};
 
-// const signin = async (req: Request, res: Response, next: NextFunction) => {
-//   const { email, password } = req.body;
-//   try {
-//     const validUser = await User.findOne({ email });
-//     if (!validUser) return next(errorHandler(404, "User not found..."));
-//     const validPassword = bcryptjs.compareSync(password, validUser.password);
-//     if (!validPassword) return next(errorHandler(401, "Wrong credentials"));
-//     if (!process.env.JWT_SECRET) {
-//       throw new Error("Secret key is not defined");
-//     }
-//     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
-//     // console.log(token);
-//     // destructured password from the other attribute so we wont be seein password in DB
-//     const { password: pass, ...rest } = validUser._doc;
-//     // console.log(validUser._doc);
-//     res
-//       .cookie("access_token", token, { httpOnly: true })
-//       .status(200)
-//       .json(rest);
-//   } catch (error) {
-//     next(errorHandler(500, "Server Error.."));
-//   }
-// };
+const signin = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+  try {
+    const validUser = await User.findOne({ email });
+    if (!validUser) return next(errorHandler(404, "User not found..."));
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    if (!validPassword) return next(errorHandler(401, "Wrong credentials"));
+    if (!process.env.JWT_SECRET) {
+      throw new Error("Secret key is not defined");
+    }
+    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    // console.log(token);
+    // destructured password from the other attribute so we wont be seein password in DB
+    const { password: pass, ...rest } = validUser._doc
+    // console.log(validUser._doc);
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
+  } catch (error) {
+    next(errorHandler(500, "Server Error.."));
+  }
+};
 
 // const google = async (req: Request, res: Response, next: NextFunction) => {
 //   try {
@@ -97,12 +97,14 @@
 //   }
 // };
 
-// const signout = async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     res.clearCookie("access_token");
-//     res.status(200).json("User has been logged out...");
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-// export { signup, signin, google, signout };
+const signout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.clearCookie("access_token");
+    res.status(200).json("User has been logged out...");
+  } catch (error) {
+    next(error);
+  }
+};
+export { signup, signin,
+    //  google,
+      signout };

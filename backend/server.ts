@@ -8,7 +8,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
 // route
-// import authRoute from "./route/authRoute";
+import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
 import restaurantRoute from "./route/MyRestaurantRoute";
 
@@ -50,6 +50,7 @@ app.get("/", (req: Request, res: Response) => {
 
 // app.use("/api/auth", authRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/restaurant", restaurantRoute);
 
 // error

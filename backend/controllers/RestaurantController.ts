@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import Listing from "../models/listModel";
+// import Listing from "../models/listModel";
 import { errorHandler } from "../utils/errorHandler";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
