@@ -4,54 +4,31 @@ import jwt, { GetPublicKeyOrSecret, Jwt, Secret } from "jsonwebtoken";
 import { errorHandler } from '../utils/errorHandler';
 import User from '../models/userModel';
 
-declare global {
-  namespace Express {
-    interface Request {
-      userId: string;
-      auth0Id: string;
-    }
+// Extend the Express Request interface to include the user property
+declare module "express" {
+  interface Request {
+    user?: any; // Replace 'any' with the actual type of your user object
   }
 }
 
-
-export const jwtParse = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { authorization } = req.headers;
-
-  if (!authorization || !authorization.startsWith("Bearer ")) {
-    return res.status(401).json({msg: "Not authorized..."});
+export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
+  const tokenFromBody = req.body.access_token;
+  // Check if token is in cookies
+  const tokenFromCookie = req.cookies.access_token;
+  const token = tokenFromCookie;
+  if (!token) return next(errorHandler(401, "User not authenticated."));
+  if (!process.env.JWT_SECRET) {
+    throw new Error("Secret key is not defined");
   }
-
-  // Bearer lshdflshdjkhvjkshdjkvh34h5k3h54jkh
-  const token = authorization.split(" ")[1];
-
-
-  const secret = process.env.JWT_SECRET;
-  if (!secret) {
-    throw new Error('AUTH0_SECRET environment variable is not defined');
-  }
-  try {
-    const decoded = jwt.verify(token, secret) as jwt.JwtPayload;
-    const auth0Id = decoded.sub;
-
-    if (!auth0Id) {
-      return res.status(401).json({ msg: "Not authorized" });
-    }
-
-    const user = await User.findOne({ auth0Id });
-
-    if (!user) {
-      return res.status(401).json({msg: "Not authorized"});
-    }
-
-    req.auth0Id = auth0Id as string;
-    req.userId = user._id.toString();
+  jwt.verify(token, process.env.JWT_SECRET as string, (err: any, user: any) => {
+    // console.log(process.env.JWT_SECRET);
+    if (err) return next(errorHandler(403, "Forbidden"));
+    req.user = user;
     next();
-  } catch (error) {
-    console.log(error)
-    return res.sendStatus(401);
-  }
+  });
 };
+
+
+export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization;
+}
