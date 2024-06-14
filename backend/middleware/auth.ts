@@ -29,6 +29,35 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
 };
 
 
-export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
+export const jwtParse = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-}
+
+  if(authHeader && authHeader?.startsWith("Bearer ")) {
+       try {
+             // Split the 'Bearer' prefix and the token
+          const token = authHeader.split(' ')[1];
+            if(!process.env.JWT_SECRET) {
+              throw new Error("Please provide secret key");
+            }
+            // Verify the token using jwt.verify method
+            jwt.verify(token, process.env.JWT_SECRET, (err: any, user: any) => {
+              if (err) {
+                // If there is an error during verification, respond with 403 (Forbidden)
+                return res.status(403).json({ message: 'Invalid token' });
+              }
+              // Attach the user object (decoded payload) to the request object
+              req.user = user;
+        
+              // Proceed to the next middleware or route handler
+              next();
+            })
+          }
+         catch (err) {
+          // If there is an error during verification, respond with 403 (Forbidden)
+          res.status(403).json({ message: 'Invalid token' });
+        }
+      } else {
+        // If no token is provided, respond with 401 (Unauthorized)
+        res.status(401).json({ message: 'No token provided' });
+      }
+  }
