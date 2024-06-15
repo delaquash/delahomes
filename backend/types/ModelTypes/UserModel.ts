@@ -10,7 +10,8 @@ namespace Express {
 }
 
 
-export interface UserSchemaProps extends MongoResult {
+export interface IUser extends MongoResult {
+  isNew: boolean;
   username?: string;
   name?: string;
   addressLine: string;
