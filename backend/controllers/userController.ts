@@ -115,5 +115,6 @@ export {
     getCurrentUser,
     createCurrentUser,
     updateUser,
-    getUser
+    getUser,
+    getUserList
 };
