@@ -78,19 +78,18 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 //   }
 // };
 
-//  const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const currentUser = await User.findOne({ _id: req.userId })
-//     console.log(currentUser)
-//     if(!currentUser){
-//       return next(errorHandler(404, "User not found"));
-//     }
-//     res.json(currentUser)
-//   } catch (error) {
-//    next(error);
-//    console.log(error)
-//   }
-// }
+ const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const currentUser = await User.findOne({ _id: req.params.userId })
+    if(!currentUser){
+      return next(errorHandler(404, "User not found"));
+    }
+    res.status(200).json(currentUser)
+  } catch (error) {
+   next(error);
+   console.log(error)
+  }
+}
 
 
 
@@ -112,7 +111,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
 
 export {  
-// getCurrentUser,
+getCurrentUser,
   createCurrentUser,
 updateUser
 };
