@@ -14,7 +14,7 @@ export interface IUser extends MongoResult {
   isNew: boolean;
   username?: string;
   name?: string;
-  addressLine: string;
+  address: string;
   city?: string;
   country?: string;
   email?: string;

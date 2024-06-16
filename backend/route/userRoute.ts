@@ -1,5 +1,5 @@
 import express from "express";
-import { createCurrentUser } from "../controllers/userController";
+import { createCurrentUser, updateUser } from "../controllers/userController";
 import {  jwtParse } from "../middleware/auth";
 import { ExpressValidator } from "../middleware/validation";
 const router = express.Router();
@@ -7,7 +7,7 @@ const router = express.Router();
 
 // router.get("/",   jwtParse, getCurrentUser)
 router.post("/createuser", ExpressValidator, jwtParse,  createCurrentUser )
-// router.put("/",jwtCheck, ExpressValidator, updateCurrentUser);
+router.put("/updateuser", jwtParse, ExpressValidator, updateUser);
 
 
 export default router;

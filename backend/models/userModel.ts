@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model<IUser>("User", userSchema);
 
+
 interface HookNextFunction {
   (err?: Error): void;
 }
