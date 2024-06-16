@@ -92,26 +92,25 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 
-
-// const getUser = async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     if (!user) {
-//       return next(errorHandler(404, "No user with that id exists"));
-//     }
-//     // Remove password from the response
-//     const {password: pass, ...rest} = user._doc;
-//     res.status(200).json(rest);
-//     // console.log(rest, user)
-//   } catch (error) {
-//     next(error);
-//   }
-// }
-
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(errorHandler(404, "No user with that id exists"));
+    }
+    // Remove password from the response
+    const {password: pass, ...rest} = user._doc;
+    res.status(200).json(rest);
+    // console.log(rest, user)
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 export {  
-getCurrentUser,
-  createCurrentUser,
-updateUser
+    getCurrentUser,
+    createCurrentUser,
+    updateUser,
+    getUser
 };
