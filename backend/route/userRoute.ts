@@ -7,7 +7,7 @@ const router = express.Router();
 
 // router.get("/",   jwtParse, getCurrentUser)
 router.post("/createuser", ExpressValidator, jwtParse,  createCurrentUser )
-router.put("/updateuser", jwtParse, ExpressValidator, updateUser);
+router.put("/updateuser/:userId", jwtParse, ExpressValidator, updateUser);
 
 
 export default router;

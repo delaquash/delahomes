@@ -42,15 +42,17 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
       // Extract userId from request parameters (assuming route pattern)
       const userId = req.params.userId;
+      console.log(req.params)
 
       // Check if user ID matches the authenticated user (security measure)
-      if (userId !== req.user.id) {
+      if (userId !== req.userId) {
         return next(errorHandler(401, "You can only update your own profile"))
       }
 
     const { name, address, city, country } = req.body;
-    const user = await User.findById(req.userId)
-
+    const user = await User.findById(userId)
+    console.log(user)
+    
     if (!user) {
       console.log("User not found");
       return next(errorHandler(404, "User not found"));
