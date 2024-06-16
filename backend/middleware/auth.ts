@@ -41,10 +41,10 @@ export const jwtParse = async (req: Request, res: Response, next: NextFunction) 
             }
             // Verify the token using jwt.verify method
             jwt.verify(token, process.env.JWT_SECRET, (err: any, user: any) => {
-              if (err) {
-                // If there is an error during verification, respond with 403 (Forbidden)
-                return res.status(403).json({ message: 'Invalid token' });
-              }
+              // if (err) {
+              //   // If there is an error during verification, respond with 403 (Forbidden)
+              //   return res.status(403).json({ message: 'Invalid token....' });
+              // }
               // Attach the user object (decoded payload) to the request object
               req.user = user;
         
@@ -56,8 +56,5 @@ export const jwtParse = async (req: Request, res: Response, next: NextFunction) 
           // If there is an error during verification, respond with 403 (Forbidden)
           res.status(403).json({ message: 'Invalid token' });
         }
-      } else {
-        // If no token is provided, respond with 401 (Unauthorized)
-        res.status(401).json({ message: 'No token provided' });
-      }
+      } 
   }
