@@ -6,7 +6,7 @@ interface MenuItem {
   price: number;
 }
 
-interface Restaurant {
+export interface Restaurant {
   _id: mongoose.Schema.Types.ObjectId;
   user: mongoose.Schema.Types.ObjectId; // Reference to User model
   restaurantName: string;
