@@ -68,16 +68,12 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
 
 const getUserList = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.params.id === "admin" || req.user.userId === req.params.userId) {
     try {
-      const listing = await Restaurant.find({ userRef: req.params.id });
-      res.status(200).json(listing);
-    } catch (error) {
-      next(error);
-    }
-  } else {
-    return next(errorHandler(401, "You can only view your own listing.."));
-  }
+        const listing = await Restaurant.find({ userRef: req.params.id });
+        res.status(200).json(listing);
+      } catch (error) {
+        next(error);
+      }
 };
 
 
@@ -90,7 +86,7 @@ const getCurrentUser = async (req: Request, res: Response, next: NextFunction) =
     res.status(200).json(currentUser)
   } catch (error) {
    next(error);
-   console.log(error)
+  
   }
 }
 

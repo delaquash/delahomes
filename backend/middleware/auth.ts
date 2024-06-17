@@ -48,7 +48,7 @@ export const jwtParse = async (req: Request, res: Response, next: NextFunction) 
       if (!req.user || !req.user.isAdmin) {
         throw new Error("Not authorized as an admin");
       }
-  
+      console.log(req)
       // Proceed to the next middleware or route handler
       next();
     } catch (error) {
