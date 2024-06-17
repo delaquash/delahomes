@@ -28,7 +28,7 @@ const createCurrentUser = async (
       email,
       address,
       city,
-      country,
+      country
     });
 
     const savedUser = await newUser.save();
@@ -68,7 +68,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
 
 const getUserList = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user.id === req.params.id) {
+  if (req.params.id === "admin" || req.user.userId === req.params.userId) {
     try {
       const listing = await Restaurant.find({ userRef: req.params.id });
       res.status(200).json(listing);

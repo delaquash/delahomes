@@ -5,7 +5,6 @@ import { IUser } from "../types/ModelTypes/UserModel";
 const userSchema = new mongoose.Schema({
     name: {
       type: String,
-      required: true
     },
     email: {
       type: String,
@@ -14,6 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
       type: String,
+      readonlyd: true
     },
     isAdmin: {
       type: Boolean,
