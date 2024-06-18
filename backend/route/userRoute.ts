@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.post("/createuser", ExpressValidator, jwtParse, admin, createCurrentUser );
 router.put("/updateuser/:userId", jwtParse, ExpressValidator, updateUser);
-router.get("/getuser/:userId", jwtParse, ExpressValidator, getCurrentUser);
-router.get("/:id", jwtParse, ExpressValidator, getUser);
-router.get("/list/:userId", jwtParse,   ExpressValidator, getUserList )
+router.get("/getuser/:userId", jwtParse,  getCurrentUser);
+router.get("/:id", jwtParse,  getUser);
+router.get("/list/:userId", jwtParse,    getUserList )
 
 export default router;

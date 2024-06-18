@@ -41,6 +41,19 @@ export const createRestaurant = async(req: Request, res: Response, next: NextFun
 }
 
 
+export const getMyRestaurant = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const restaurant =  Restaurant.findOne({ user: req.userId })
+    if(!restaurant) {
+      return next(errorHandler(404, "Restaurant not found..."))
+    }
+  } catch (error) {
+    console.log(error);
+    next(errorHandler(500, "Server Error.."));
+    
+  }
+}
+
   // const uploadImage = async (file: Express.Multer.File) => {
   //   const image = file;
   //   const base64Image = Buffer.from(image.buffer).toString("base64");
