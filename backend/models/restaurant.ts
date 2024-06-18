@@ -28,5 +28,5 @@ const restaurantSchema = new mongoose.Schema({
 
 type RestaurantType = InferSchemaType<typeof restaurantSchema>;
 
-const Restaurant = mongoose.model<RestaurantType>("Restaurant", restaurantSchema);
+const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 export default Restaurant;

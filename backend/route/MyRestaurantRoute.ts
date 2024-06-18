@@ -6,6 +6,6 @@ import { jwtParse } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/", UploadImage.single("imageFile"), validateMyRestaurantRequest, jwtParse, createRestaurant)
+router.post("/", UploadImage.single("imageFile"), jwtParse, validateMyRestaurantRequest,  createRestaurant)
 
 export default router;

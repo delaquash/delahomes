@@ -13,10 +13,6 @@ import cloudinary from "cloudinary";
 
 export const createRestaurant = async(req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.userId) {
-        return next(errorHandler(400, "User ID not provided"));
-      }
-
       const existingUser = await Restaurant.findOne({ user: req.userId });
       if(existingUser){
         return next(errorHandler(409, "User restaurant already exist..."))
@@ -43,13 +39,6 @@ export const createRestaurant = async(req: Request, res: Response, next: NextFun
           }
     }
 }
-
-// const imageUrl = await uploadImage(req.file as Express.Multer.File);
-
-      // const restaurant = new Restaurant(req.body);
-      // restaurant.imageUrl = uploadeResponse.url;
-      // restaurant.user = new mongoose.Types.ObjectId(req.userId);
-      // restaurant.lastUpdated = new Date();
 
 
   // const uploadImage = async (file: Express.Multer.File) => {
