@@ -14,6 +14,7 @@ import cloudinary from "cloudinary";
 export const createRestaurant = async(req: Request, res: Response, next: NextFunction) => {
     try {
       const existingUser = await Restaurant.findOne({ user: req.userId });
+      console.log('UserID in createRestaurant:', req.userId);
       if(existingUser){
         return next(errorHandler(409, "User restaurant already exist..."))
       }
@@ -43,10 +44,13 @@ export const createRestaurant = async(req: Request, res: Response, next: NextFun
 
 export const getMyRestaurant = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const restaurant =  Restaurant.findOne({ user: req.userId })
+    const restaurant = await Restaurant.findOne({ user: req.userId });
+    console.log('UserID in getMyRestaurant:', req.userId);
+    console.log(restaurant)
     if(!restaurant) {
       return next(errorHandler(404, "Restaurant not found..."))
     }
+    res.status(200).json(restaurant)
   } catch (error) {
     console.log(error);
     next(errorHandler(500, "Server Error.."));

@@ -10,7 +10,11 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     const hashedPassword = bcryptjs.hashSync(password, 10);
     const newUser = new User({ email, password: hashedPassword, name });
     await newUser.save();
-    res.status(201).json({ msg: "User created successfully" });
+    if (!process.env.JWT_SECRET) {
+      throw new Error("Secret key is not defined");
+    }
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET);
+    res.status(201).json({ message: "User created successfully", token });
   } catch (error: any) {
     next(errorHandler(500, `Server Error: ${error.message}`));
   }
@@ -26,7 +30,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
     if (!process.env.JWT_SECRET) {
       throw new Error("Secret key is not defined");
     }
-    const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET);
     // console.log(token);
     // destructured password from the other attribute so we wont be seein password in DB
     const { password: pass, ...rest } = validUser._doc
