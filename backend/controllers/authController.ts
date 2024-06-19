@@ -33,7 +33,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
       throw new Error("Secret key is not defined");
     }
     const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+    console.log('Generated token:', token); // Log the generated token
     // Exclude the password from the response
     const { password: pass, ...rest } = validUser.toObject(); // Ensure you are converting the document to a plain object
 

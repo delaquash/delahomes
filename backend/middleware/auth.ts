@@ -5,26 +5,34 @@ import { errorHandler } from '../utils/errorHandler';
 import User from '../models/userModel';
 
 // Extend the Express Request interface to include the user property
-declare module "express" {
-  interface Request {
-    user?: any; // Replace 'any' with the actual type of your user object
-  }
+// declare module "express" {
+//   interface Request {
+//     userId?: string // Replace 'any' with the actual type of your user object
+//   }
+// }
+
+interface CustomRequest extends Request {
+  userId?: string;
 }
 
-
-export const jwtParse = async (req: Request, res: Response, next: NextFunction) => {
+export const jwtParse = async (req: CustomRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
+  console.log(authHeader, "Authheader token")
 
   if (authHeader && authHeader.startsWith("Bearer ")) {
     try {
       const token = authHeader.split(' ')[1];
+      console.log(token)
       if (!process.env.JWT_SECRET) {
         throw new Error("Please provide secret key");
       }
       jwt.verify(token, process.env.JWT_SECRET, (err: any, decoded: any) => {
+        console.error(token, "This is token generated with no error message for invalid token")
         if (err) {
-          return res.status(403).json({ message: 'Invalid token' });
+          console.error('Token verification error:', err);
+          return res.status(403).json({ message: 'Invalid token...' });
         }
+        
         if (typeof decoded === 'object' && decoded !== null) {
           req.userId = (decoded as { userId: string }).userId;
         }

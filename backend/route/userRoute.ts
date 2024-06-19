@@ -5,7 +5,7 @@ import { ExpressValidator } from "../middleware/validation";
 
 const router = express.Router();
 
-router.post("/createuser", ExpressValidator, jwtParse, admin, createCurrentUser );
+router.post("/createuser", ExpressValidator, jwtParse, createCurrentUser );
 router.put("/updateuser/:userId", jwtParse, ExpressValidator, updateUser);
 router.get("/getuser/:userId", jwtParse,  getCurrentUser);
 router.get("/:id", jwtParse,  getUser);
