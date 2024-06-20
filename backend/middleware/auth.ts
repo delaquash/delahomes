@@ -15,36 +15,47 @@ interface CustomRequest extends Request {
   userId?: string;
 }
 
+
+
 export const jwtParse = async (req: CustomRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-  console.log(authHeader, "Authheader token")
+  console.log('AuthHeader:', authHeader); // Log the authorization header
 
   if (authHeader && authHeader.startsWith("Bearer ")) {
     try {
-      const token = authHeader.split(' ')[1];
-      console.log(token)
+      const token = authHeader.split(' ')[1].trim();
+      console.log('Extracted Token:', token); // Log the extracted token
+
+      if (!token) {
+        console.error('Token is undefined');
+        return res.status(403).json({ message: 'Invalid token format' });
+      }
+
       if (!process.env.JWT_SECRET) {
         throw new Error("Please provide secret key");
       }
+
       jwt.verify(token, process.env.JWT_SECRET, (err: any, decoded: any) => {
-        console.error(token, "This is token generated with no error message for invalid token")
         if (err) {
           console.error('Token verification error:', err);
-          return res.status(403).json({ message: 'Invalid token...' });
+          return res.status(403).json({ message: 'Invalid token' });
         }
         
         if (typeof decoded === 'object' && decoded !== null) {
           req.userId = (decoded as { userId: string }).userId;
         }
+        
         next();
       });
     } catch (err) {
+      console.error('Error during token verification:', err);
       res.status(403).json({ message: 'Invalid token' });
     }
   } else {
     res.status(401).json({ message: 'No token provided' });
   }
 };
+
 
   export const admin = (req: Request, res: Response, next: NextFunction) => {
     try {

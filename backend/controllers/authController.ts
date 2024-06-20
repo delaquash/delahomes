@@ -36,7 +36,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
     console.log('Generated token:', token); // Log the generated token
     // Exclude the password from the response
     const { password: pass, ...rest } = validUser.toObject(); // Ensure you are converting the document to a plain object
-
+    
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
