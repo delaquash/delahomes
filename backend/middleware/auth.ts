@@ -26,39 +26,12 @@ export const jwtParse = async (
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader: any = req.headers.authorization;
-//   console.log("AuthHeader:", token); // Log the authorization header
-
-//   // const token = authHeader.split(" ")[1].trim();
-//   // console.log("Extracted Token:", token); // Log the extracted token
-
-//   if (!token) {
-//     console.error("Token is undefined");
-//     return res.status(403).json({ message: "Invalid token format" });
-//   }
-
-//   if (!process.env.JWT_SECRET) {
-//     throw new Error("Please provide secret key");
-//   }
-// console.log(token, "Before verification")
-//   const decodedAccesToken  = jwt.verify(
-//     token,
-//     process.env.JWT_SECRET) as Decoded
-    
-//     // (err: any, decoded: any) => {
-//     //   if (err) {
-//     //     console.error("Token verification error:", err, token);
-//     //     return res.status(403).json({ message: "Invalid token" });
-//     //   }
-
-//     //   if (typeof decoded === "object" && decoded !== null) {
-//     //     req.userId = (decoded as { userId: string }).userId;
-//     //   }
-//       console.log(decodedAccesToken, "After verification")
-//       req.userId = {userId: decodedAccesToken.id}
-//       next();
-//     }
-    if (authHeader && authHeader.startsWith("Bearer")) {
+  const authHeader = req.headers.authorization;
+console.log(authHeader, "This is authheader token")
+    /* The `if (authHeader && authHeader.startsWith("Bearer "))` condition is checking if the
+    `authHeader` exists and if it starts with the string "Bearer ". This is a common pattern used to
+    validate and extract JWT (JSON Web Token) from the Authorization header in HTTP requests. */
+    if (authHeader && authHeader.startsWith("Bearer ")) {
       try {
         const token = authHeader.split(' ')[1].trim();
         console.log('Extracted Token:', token); // Log the extracted token
