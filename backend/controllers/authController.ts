@@ -1,19 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { errorHandler } from "../utils/errorHandler";
 import jwt from "jsonwebtoken";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   const { name, email, password } = req.body;
   try {
-    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ email, password: hashedPassword, name });
+    
     await newUser.save();
-    if (!process.env.JWT_SECRET) {
-      throw new Error("Secret key is not defined");
-    }
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET as string, {expiresIn: "400days"});
+    console.log(token, "registered user token")
     res.status(201).json({ message: "User created successfully", token });
   } catch (error: any) {
     next(errorHandler(500, `Server Error: ${error.message}`));
@@ -26,21 +25,17 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
     const validUser = await User.findOne({ email });
     if (!validUser) return next(errorHandler(404, "User not found..."));
 
-    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    const validPassword = await bcrypt.compare(password, validUser.password);
     if (!validPassword) return next(errorHandler(401, "Wrong credentials"));
-
-    if (!process.env.JWT_SECRET) {
-      throw new Error("Secret key is not defined");
-    }
-    const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET as string);
     console.log('Generated token:', token); // Log the generated token
     // Exclude the password from the response
     const { password: pass, ...rest } = validUser.toObject(); // Ensure you are converting the document to a plain object
     
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie('access_token', token)
       .status(200)
-      .json(rest);
+      .json({rest, token});
   } catch (error) {
     next(errorHandler(500, "Server Error.."));
   }

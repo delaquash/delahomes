@@ -2,12 +2,12 @@ interface MongoResult {
   _doc: any;
 }
 
-namespace Express {
-  interface Request {
-    userId: string;
-    auth0Id: string;
-  }
-}
+// namespace Express {
+//   interface Request {
+//     userId: string;
+//     auth0Id: string;
+//   }
+// }
 
 
 export interface IUser extends MongoResult {
