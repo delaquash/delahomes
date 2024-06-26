@@ -37,7 +37,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
       .status(200)
       .json({rest, token});
   } catch (error) {
-    next(errorHandler(500, "Server Error.."));
+    next(errorHandler(500, "Server Error..."));
   }
 };
 
