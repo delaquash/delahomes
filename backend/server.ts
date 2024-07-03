@@ -11,6 +11,7 @@ dotenv.config();
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
 import restaurantRoute from "./route/MyRestaurantRoute";
+import productRoute from "./route/Products"
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -29,20 +30,20 @@ request object. It adds a `cookies` property to the `req` object, which contains
 This allows you to access and manipulate cookies in your application. */
 
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "50mb" }));
 
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, PATCH, DELETE"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Authorization, Preload"
-//   );
-//   next();
-// });
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Preload"
+  );
+  next();
+});
 
 app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
@@ -53,6 +54,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/auth", authRoute)
 app.use("/api/v1/restaurant", restaurantRoute);
+app.use("/api/v1/product", productRoute);
 
 // error
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
