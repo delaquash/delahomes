@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
+import { RouteError } from  "./middleware/error";
 
 dotenv.config();
 // route
@@ -12,6 +13,7 @@ import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
 import restaurantRoute from "./route/MyRestaurantRoute";
 import productRoute from "./route/Products"
+import ErrorHandler from "./utils/errorHandler";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -57,6 +59,7 @@ app.use("/api/v1/restaurant", restaurantRoute);
 app.use("/api/v1/product", productRoute);
 
 // error
+app.use(RouteError)
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || "Something went wrong";

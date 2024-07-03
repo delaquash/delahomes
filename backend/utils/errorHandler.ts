@@ -1,9 +1,9 @@
 class ErrorHandler extends Error {
-  status: number;
+  statusCode: number;
 
-  constructor(status: number, message: string) {
+  constructor(message:any, statusCode: number) {
     super(message);
-    this.status = status;
+    this.statusCode = statusCode;
 
     // Set the prototype explicitly.
     // Object.setPrototypeOf(this, CustomError.prototype);
