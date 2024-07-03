@@ -1,6 +1,6 @@
 import { body, validationResult} from "express-validator";
 import { NextFunction, Request, Response } from "express";
-import { errorHandler } from "../utils/errorHandler";
+import ErrorHandler from "../utils/errorHandler";
 
 const handleValidationErrors = async (req: Request, res: Response, next: NextFunction)=> {
     const error = validationResult(req);
@@ -12,12 +12,35 @@ const handleValidationErrors = async (req: Request, res: Response, next: NextFun
 }
 
 export const ExpressValidator = [
-    body("name").isString().notEmpty().withMessage("Name must be a string"),
-    body("address").isString().notEmpty().withMessage("AddressLine must be a string"),
-    body("country").isString().notEmpty().withMessage("Country is a string"),
-    body("city").isString().notEmpty().withMessage("City is a string"),
-    body("password").isString().notEmpty().withMessage("Password should not be empty"),
-    handleValidationErrors
+  body("name").isString().notEmpty().withMessage("Please enter your name."),
+  body("email")
+    .withMessage("Please enter your email.")
+    .isEmail()
+    .withMessage("Please enter a valid email."),
+  body("password")
+    .withMessage("Please enter your password.")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters."),
+  body("role").optional().isIn(["user"]),
+  body("isVerified")
+    .optional()
+    .isBoolean()
+    .withMessage("isVerified must be true or false"),
+  body("courses").optional().isArray().withMessage("Courses must be an array"),
+  body("courses.*.courseId")
+    .optional()
+    .isString()
+    .withMessage("courseId must be a string"),
+  body("avatar")
+    .optional()
+    .isObject()
+    .withMessage("Avatar must be an object"),
+  body("avatar.public_id")
+    .optional()
+    .isString()
+    .withMessage("public_id must be a string"),
+  body("avatar.url").optional().isString().withMessage("url must be a string"),
+  handleValidationErrors,
 ];
 
 export const validateMyRestaurantRequest = [
