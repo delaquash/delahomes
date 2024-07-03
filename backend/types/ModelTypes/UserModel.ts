@@ -1,23 +1,19 @@
+import { Document } from "mongoose";
+
 interface MongoResult {
   _doc: any;
 }
-
-// namespace Express {
-//   interface Request {
-//     userId: string;
-//     auth0Id: string;
-//   }
-// }
-
-
+const emailRegexPattern: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 export interface IUser extends MongoResult {
-  isNew: boolean;
-  username?: string;
-  name?: string;
-  address: string;
-  city?: string;
-  country?: string;
+  courses: Array<{courseId: string}>;
+  name: string;
+  avatar: {
+    public_id: string;
+    url: string;
+  };
+  role: string;
+  isVerified: boolean;
   email?: string;
   password: string;
-  avatar?: string;
+  comparePassword: (password: string) => Promise<boolean>;
 }
