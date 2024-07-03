@@ -4,7 +4,7 @@ interface MongoResult {
   _doc: any;
 }
 
-export interface IUser extends MongoResult {
+export interface IUser extends Document {
   courses: Array<{courseId: string}>;
   name: string;
   avatar: {
