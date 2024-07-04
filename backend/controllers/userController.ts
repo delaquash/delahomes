@@ -1,10 +1,11 @@
+require ("dotenv").config();
 import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import { CatchAsyncError } from "../middleware/CatchAsyncError"
 import  ErrorHandler  from "../utils/errorHandler";
 import Restaurant from "../models/restaurant";
 import { IUser } from "../types/ModelTypes/UserModel";
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 // Extend the Express Request interface to include the user property
 // declare module "express" {
 //   interface Request {
@@ -52,11 +53,11 @@ interface IRegistrationBody {
   activationCode: string;
  }
 
-const createActivationToken = (user:IUser): IActivationToken => {
+const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
   const token = jwt.sign(
     { activationCode, user },
-    process.env.ACTIVATION_TOKEN_SECRET,
+    process.env.ACTIVATION_TOKEN_SECRET as Secret,
     {
       expiresIn: "3h",
       });
