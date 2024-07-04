@@ -3,12 +3,14 @@ import User from "../models/userModel";
 import { CatchAsyncError } from "../middleware/CatchAsyncError"
 import  ErrorHandler  from "../utils/errorHandler";
 import Restaurant from "../models/restaurant";
+import { IUser } from "../types/ModelTypes/UserModel";
+import jwt from "jsonwebtoken";
 // Extend the Express Request interface to include the user property
-declare module "express" {
-  interface Request {
-    user?: any; // Replace 'any' with the actual type of your user object
-  }
-}
+// declare module "express" {
+//   interface Request {
+//     user?: any; // Replace 'any' with the actual type of your user object
+//   }
+// }
 
 interface IRegistrationBody {
   name: string;
@@ -28,21 +30,38 @@ interface IRegistrationBody {
       if (isEmailExist) {
         return next(new ErrorHandler("Email already exist", 400));
         }
-        const user: IRegistrationBody = ({
+        const user: IRegistrationBody = {
           name,
           email,
           password,
-          });
+          };
 
-          
+          const activationToken = createActivationToken(user);
+
           // res.status(201).json({
           //   success: true,
           //   user,
           //   });
-    } catch (error) {
-      
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400))
     }
  });
+
+ interface IActivationToken {
+  token: string;
+  activationCode: string;
+ }
+
+const createActivationToken = (user:IUser): IActivationToken => {
+  const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
+  const token = jwt.sign(
+    { activationCode, user },
+    process.env.ACTIVATION_TOKEN_SECRET,
+    {
+      expiresIn: "3h",
+      });
+      return {token, activationCode}
+}
 
 
 

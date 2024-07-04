@@ -13,7 +13,7 @@ export interface IUser extends Document {
   };
   role: string;
   isVerified: boolean;
-  email?: string;
+  email: string;
   password: string;
   comparePassword: (password: string) => Promise<boolean>;
 }
