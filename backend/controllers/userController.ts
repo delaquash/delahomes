@@ -46,7 +46,7 @@ interface IRegistrationBody {
 
           const data = { user: {name: user.name}, activationCode};
 
-          const html = await ejs.renderFile(path.join(__dirname, ""))
+          const html = await ejs.renderFile(path.join(__dirname, "../mail/activation-mail.ejs"))
           // res.status(201).json({
           //   success: true,
           //   user,
