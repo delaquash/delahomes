@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LMS Activation Email</title>
+    <meta http-equiv="Content-Type" content="text/html: charset-UTF-4" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            min-width: 100%;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            background-color: #FAFAFA;
+            color: #222222;
+            }
+            a {
+                color: #0000;
+                text-decoration: none;
+            }
+            h1 {
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 1.25;
+                margin-top: 0;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            p {
+                margin-top: 0;
+                margin-bottom: 24px;
+            }
+            table td {
+                vertical-align: top;
+            }
+            /* Layout */
+            .email-wrapper {
+                min-width: 600px;
+                margin: 0 auto;
+            }
+            .email-header {
+                padding: 24px;
+                background-color: #0070f3;
+                color: #ffffff
+            }
+            .email-body {
+                padding: 24px;
+                background-color: #ffffff;
+            }
+            .email-footer {
+                padding: 24px;
+                background-color: #f6f6f6;
+            }
+            /* button */
+            .button {
+                display: inline-block;
+                padding: 12px 24px;
+                background-color: #0070f3;
+                font-size: 16px;
+                font-weight: 700;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 4px;
+                color: #0070f3;
+            }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-header">
+            <h1>Welcome to Delacademy</h1>
+        </div>
+        <div class="email-body">
+            <p>Dear {{ $user->name }},</p>
+            <p>Thank you for registering with Delacademy. We are excited to have you as a part
+                of our community. Please find your login credentials below:</p>
+            <p>Please enter this code on the activation page within the next 20min.</p>
+            <p>If you did not register with Delacademy, Kindly ignore this mail.</p>
+        </div>
+        <div class="email-footer">
+            <p>If you have any questions or enquiries, please don't hesitate to contact us at <a href="mailto:olaide1191@gmail.com">support@delacademy.com</a></p>
+            <p>Regards,<br>Delacademy</p>
+        </div>
+    </div>
+</body>
+</html>

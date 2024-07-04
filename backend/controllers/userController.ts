@@ -6,6 +6,9 @@ import  ErrorHandler  from "../utils/errorHandler";
 import Restaurant from "../models/restaurant";
 import { IUser } from "../types/ModelTypes/UserModel";
 import jwt, { Secret } from "jsonwebtoken";
+import ejs from "ejs";
+import path from "path";
+// import { sendEmail } from "../utils/sendEmail";
 // Extend the Express Request interface to include the user property
 // declare module "express" {
 //   interface Request {
@@ -39,6 +42,11 @@ interface IRegistrationBody {
 
           const activationToken = createActivationToken(user);
 
+          const activationCode = activationToken.activationCode;
+
+          const data = { user: {name: user.name}, activationCode};
+
+          const html = await ejs.renderFile(path.join(__dirname, ""))
           // res.status(201).json({
           //   success: true,
           //   user,
