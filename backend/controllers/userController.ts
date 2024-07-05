@@ -8,6 +8,8 @@ import { IUser } from "../types/ModelTypes/UserModel";
 import jwt, { Secret } from "jsonwebtoken";
 import ejs from "ejs";
 import path from "path";
+import sendEmail from "../utils/SendMail";
+
 // import { sendEmail } from "../utils/sendEmail";
 // Extend the Express Request interface to include the user property
 // declare module "express" {
@@ -49,14 +51,21 @@ interface IRegistrationBody {
           const html = await ejs.renderFile(path.join(__dirname, "../mail/activation-mail.ejs"));
 
           try {
-            await User.create(user)
-          } catch (error) {
-            
-          }
-          // res.status(201).json({
-          //   success: true,
-          //   user,
-          //   });
+            await sendEmail({
+              email: user.email,
+              subject: "Account Activation",
+              template: "activation-mail.ejs",
+              data: data,
+            })
+          
+          res.status(201).json({
+            success: true,
+            message: "User created successfully! Please check your mail: ${user.mail} to activate",
+            activationToken: activationToken.token
+            });
+            } catch (error) {
+              return next(new ErrorHandler(error.message, 400));  
+              }
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400))
     }
