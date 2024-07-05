@@ -13,19 +13,10 @@ const handleValidationErrors = async (req: Request, res: Response, next: NextFun
 
 export const ExpressValidator = [
   body("name").isString().notEmpty().withMessage("Please enter your name."),
-  body("email")
-    .withMessage("Please enter your email.")
-    .isEmail()
-    .withMessage("Please enter a valid email."),
-  body("password")
-    .withMessage("Please enter your password.")
-    .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters."),
+  body("email").notEmpty().isEmail().withMessage("Please enter a valid email."),
+  body("password").notEmpty().withMessage("Please enter your password.").isLength({ min: 6 }).withMessage("Password must be at least 6 characters."),
   body("role").optional().isIn(["user"]),
-  body("isVerified")
-    .optional()
-    .isBoolean()
-    .withMessage("isVerified must be true or false"),
+  body("isVerified").optional().isBoolean().withMessage("isVerified must be true or false"),
   body("courses").optional().isArray().withMessage("Courses must be an array"),
   body("courses.*.courseId")
     .optional()

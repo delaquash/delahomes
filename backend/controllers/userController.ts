@@ -1,8 +1,8 @@
-require ("dotenv").config();
+require("dotenv").config();
 import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
-import { CatchAsyncError } from "../middleware/CatchAsyncError"
-import  ErrorHandler  from "../utils/errorHandler";
+import { CatchAsyncError } from "../middleware/CatchAsyncError";
+import ErrorHandler from "../utils/errorHandler";
 import Restaurant from "../models/restaurant";
 import { IUser } from "../types/ModelTypes/UserModel";
 import jwt, { Secret } from "jsonwebtoken";
@@ -22,59 +22,60 @@ interface IRegistrationBody {
   name: string;
   email: string;
   password: string;
-  avatar?:string;
+  avatar?: string;
 }
 
- const RegistarUser = CatchAsyncError (async(
-   req: Request,
-   res: Response,
-   next: NextFunction
- )=> {
+const RegisterUser = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { name, email, password} = req.body;
+      const { name, email, password } = req.body;
       const isEmailExist = await User.findOne({ email });
       if (isEmailExist) {
         return next(new ErrorHandler("Email already exist", 400));
-        }
-        const user: IRegistrationBody = {
-          name,
-          email,
-          password,
-          };
+      }
+      const user: IRegistrationBody = {
+        name,
+        email,
+        password,
+      };
 
-          const activationToken = createActivationToken(user);
+      const activationToken = createActivationToken(user);
 
-          const activationCode = activationToken.activationCode;
+      const activationCode = activationToken.activationCode;
 
-          const data = { user: {name: user.name}, activationCode};
+      const data = { user: { name: user.name }, activationCode };
 
-          const html = await ejs.renderFile(path.join(__dirname, "../mail/activation-mail.ejs"));
+      const html = await ejs.renderFile(
+        path.join(__dirname, "../mail/activation-mail.ejs")
+      );
 
-          try {
-            await sendEmail({
-              email: user.email,
-              subject: "Account Activation",
-              template: "activation-mail.ejs",
-              data: data,
-            })
-          
-          res.status(201).json({
-            success: true,
-            message: "User created successfully! Please check your mail: ${user.mail} to activate",
-            activationToken: activationToken.token
-            });
-            } catch (error) {
-              return next(new ErrorHandler(error.message, 400));  
-              }
+      try {
+        await sendEmail({
+          email: user.email,
+          subject: "Account Activation",
+          template: "activation-mail.ejs",
+          data: data,
+        });
+        console.log(user.email)
+        res.status(201).json({
+          success: true,
+          message:
+            `User created successfully! Please check your mail: ${user.email} to activate`,
+          activationToken: activationToken.token,
+        });
+      } catch (error:any) {
+        return next(new ErrorHandler(error.message, 400));
+      }
     } catch (error: any) {
-      return next(new ErrorHandler(error.message, 400))
+      return next(new ErrorHandler(error.message, 400));
     }
- });
+  }
+);
 
- interface IActivationToken {
+interface IActivationToken {
   token: string;
   activationCode: string;
- }
+}
 
 const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
@@ -83,11 +84,10 @@ const createActivationToken = (user: any): IActivationToken => {
     process.env.ACTIVATION_TOKEN_SECRET as Secret,
     {
       expiresIn: "3h",
-      });
-      return {token, activationCode}
-}
-
-
+    }
+  );
+  return { token, activationCode };
+};
 
 // const createCurrentUser = async (
 //   req: Request,
@@ -123,11 +123,10 @@ const createActivationToken = (user: any): IActivationToken => {
 //   try {
 //       // Extract userId from request parameters (assuming route pattern)
 //       const userId = req.params.userId;
-      
+
 //     const { name, address, city, country } = req.body;
 //     const user = await User.findById(userId)
-   
-    
+
 //     if (!user) {
 //       console.log("User not found");
 //       return next(errorHandler(404, "User not found"));
@@ -146,7 +145,6 @@ const createActivationToken = (user: any): IActivationToken => {
 //   }
 // };
 
-
 // const getUserList = async (req: Request, res: Response, next: NextFunction) => {
 //     try {
 //         const listing = await Restaurant.find({ userRef: req.params.id });
@@ -155,7 +153,6 @@ const createActivationToken = (user: any): IActivationToken => {
 //         next(error);
 //       }
 // };
-
 
 // const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
 //   try {
@@ -166,10 +163,9 @@ const createActivationToken = (user: any): IActivationToken => {
 //     res.status(200).json(currentUser)
 //   } catch (error) {
 //    next(error);
-  
+
 //   }
 // }
-
 
 // const getUser = async (req: Request, res: Response, next: NextFunction) => {
 //   try {
@@ -186,11 +182,11 @@ const createActivationToken = (user: any): IActivationToken => {
 //   }
 // }
 
-
-// export {  
+export {
+  RegisterUser
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
 //     getUser,
 //     getUserList
-// };
+};

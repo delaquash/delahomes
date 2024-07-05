@@ -40,6 +40,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.14.9",
+    "@types/nodemailer": "^6.4.15",
     "@types/nodemon": "^1.19.5",
     "typescript": "^5.3.2"
   }
