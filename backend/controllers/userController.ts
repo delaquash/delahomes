@@ -89,6 +89,21 @@ const createActivationToken = (user: any): IActivationToken => {
   return { token, activationCode };
 };
 
+
+// Activate user
+interface IActivationRequest {
+  activation_token: string;
+  activation_code: string;
+}
+
+
+const acivateUser = CatchAsyncError(async(req:  Request, res: Response, next:NextFunction)=> {
+  try {
+    const {activation_code,activation_token} = req.body as IActivationRequest;
+  } catch (error) {
+    
+  }
+})
 // const createCurrentUser = async (
 //   req: Request,
 //   res: Response,
