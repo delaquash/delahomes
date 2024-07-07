@@ -99,7 +99,32 @@ interface IActivationRequest {
 
 const acivateUser = CatchAsyncError(async(req:  Request, res: Response, next:NextFunction)=> {
   try {
-    const {activation_code,activation_token} = req.body as IActivationRequest;
+    const {activation_code, activation_token} = req.body as IActivationRequest;
+
+    const newUser: {user: IUser; activationCode: string} =jwt.verify(
+      activation_token,
+      process.env.ACTIVATION_TOKEN as string
+    ) as {user: IUser; activationCode:string}
+
+    if(newUser.activationCode !== activation_code){
+        return next(new ErrorHandler("Invalid activation Code", 400))
+    }
+
+    const {name, email, password} = newUser.user;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return next(new ErrorHandler("User already exists", 400));
+      }
+    const user = await User.create({
+      name,
+      email,
+      password,
+      });
+      res.status(201).json({
+        success: true,
+        msg: "User created successfully",
+        user,
+      })
   } catch (error) {
     
   }
