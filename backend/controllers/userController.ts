@@ -102,7 +102,7 @@ const activateUser = CatchAsyncError(async(req:  Request, res: Response, next:Ne
 
     const newUser: {user: IUser; activationCode: string} =jwt.verify(
       activation_token,
-      process.env.ACTIVATION_TOKEN as string
+      process.env.ACTIVATION_TOKEN_SECRET as string
     ) as {user: IUser; activationCode:string}
 
     if(newUser.activationCode !== activation_code){
@@ -124,7 +124,8 @@ const activateUser = CatchAsyncError(async(req:  Request, res: Response, next:Ne
         msg: "User created successfully",
         user,
       })
-  } catch (error) {
+  } catch (error:any) {
+    return next(new ErrorHandler(error.message, 400))
     
   }
 })

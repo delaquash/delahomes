@@ -41,5 +41,5 @@ const sendEmail = async(options: EmailOptions): Promise<void> => {
         await transporter.sendMail(mailOptions)
        
 }
-
+// 1265
 export default sendEmail;
