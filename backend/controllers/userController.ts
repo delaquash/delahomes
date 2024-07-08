@@ -43,11 +43,11 @@ const RegisterUser = CatchAsyncError(
       const activationCode = activationToken.activationCode;
 
       const data = { user: { name: user.name }, activationCode };
-      console.log(data)
+      
       const html = await ejs.renderFile(
-        path.join(__dirname, "../mail/activation-mail.ejs")
+        path.join(__dirname, "../mail/activation-mail.ejs"),data
       );
-
+      console.log("This is html")
       try {
         await sendEmail({
           email: user.email,

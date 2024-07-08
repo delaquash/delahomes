@@ -29,13 +29,16 @@ const sendEmail = async(options: EmailOptions): Promise<void> => {
 
     // Render the email template EJS 
     const html:string = await ejs.renderFile(templatePth, data);
+
     // Send the email with Nodemailer
-    const mailOptions = await transporter.sendMail({
-        from: process.env.SMTP_FROM,
+    const mailOptions = {
+        from: process.env.SMTP_MAIL,
         to: email,
         subject,
         html
-        });
+        };
+
+        await transporter.sendMail(mailOptions)
        
 }
 
