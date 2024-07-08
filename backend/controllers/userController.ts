@@ -10,7 +10,6 @@ import ejs from "ejs";
 import path from "path";
 import sendEmail from "../utils/SendMail";
 
-// import { sendEmail } from "../utils/sendEmail";
 // Extend the Express Request interface to include the user property
 // declare module "express" {
 //   interface Request {
@@ -44,7 +43,7 @@ const RegisterUser = CatchAsyncError(
       const activationCode = activationToken.activationCode;
 
       const data = { user: { name: user.name }, activationCode };
-
+      console.log(data)
       const html = await ejs.renderFile(
         path.join(__dirname, "../mail/activation-mail.ejs")
       );
@@ -54,7 +53,7 @@ const RegisterUser = CatchAsyncError(
           email: user.email,
           subject: "Account Activation",
           template: "activation-mail.ejs",
-          data: data,
+          data
         });
         console.log(user.email)
         res.status(201).json({
