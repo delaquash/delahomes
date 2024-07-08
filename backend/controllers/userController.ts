@@ -97,7 +97,7 @@ interface IActivationRequest {
 }
 
 
-const acivateUser = CatchAsyncError(async(req:  Request, res: Response, next:NextFunction)=> {
+const activateUser = CatchAsyncError(async(req:  Request, res: Response, next:NextFunction)=> {
   try {
     const {activation_code, activation_token} = req.body as IActivationRequest;
 
@@ -223,7 +223,8 @@ const acivateUser = CatchAsyncError(async(req:  Request, res: Response, next:Nex
 // }
 
 export {
-  RegisterUser
+  RegisterUser,
+  activateUser
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
