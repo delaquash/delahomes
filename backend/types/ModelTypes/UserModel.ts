@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 
+
 interface MongoResult {
   _doc: any;
 }
@@ -16,6 +17,8 @@ export interface IUser extends Document {
   email: string;
   password: string;
   comparePassword: (password: string) => Promise<boolean>;
+  SignAccessToken: () => string;
+  RefreshAccessToken: () => string;
 }
 
 

@@ -1,7 +1,8 @@
+require("dotenv").config();
 import mongoose, { Schema, Model, Document } from "mongoose";
 import bcrypt from "bcryptjs";
 import { IUser } from "../types/ModelTypes/UserModel";
-
+import jwt from "jsonwebtoken";
 const emailRegexPattern: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const UserSchema = new mongoose.Schema({
