@@ -54,8 +54,8 @@ app.get("/", (req: Request, res: Response) => {
 
 
 app.use("/api/v1/user", userRoute);
-// app.use("/api/auth", authRoute);
-// app.use("/api/v1/auth", authRoute)
+
+app.use("/api/v1/auth", authRoute)
 // app.use("/api/v1/restaurant", restaurantRoute);
 // app.use("/api/v1/product", productRoute);
 

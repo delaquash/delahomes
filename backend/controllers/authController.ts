@@ -3,6 +3,7 @@ import User from "../models/userModel";
 import bcrypt from "bcryptjs";
 import  ErrorHandler  from "../utils/errorHandler";
 import jwt from "jsonwebtoken";
+import { sendToken } from "../utils/jwt";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   const { name, email, password } = req.body;
@@ -36,11 +37,8 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
 
     const isComparePassword = await validUser.comparePassword(password);
     if (!isComparePassword) return next(new ErrorHandler("Password is incorrect...", 404,));
-    // console.log(...rest)
-    // res
-    //   .cookie('access_token', token)
-    //   .status(200)
-    //   .json({rest, token});
+    
+    sendToken(validUser, 200, res)
   } catch (error) {
     next(new ErrorHandler("Server Error...", 500));
   }
