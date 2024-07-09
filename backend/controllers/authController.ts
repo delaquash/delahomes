@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcryptjs";
-import { errorHandler } from "../utils/errorHandler";
+import  ErrorHandler  from "../utils/errorHandler";
 import jwt from "jsonwebtoken";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,31 +15,86 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     console.log(token, "registered user token")
     res.status(201).json({ message: "User created successfully", token });
   } catch (error: any) {
-    next(errorHandler(500, `Server Error: ${error.message}`));
+    next(new ErrorHandler(`Server Error: ${error.message}`, 500));
   }
 };
-
+interface ISignInData {
+  email: string;
+  password: string;
+}
 const signin = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
+  
   try {
-    const validUser = await User.findOne({ email });
-    if (!validUser) return next(errorHandler(404, "User not found..."));
+    const { email, password } = req.body as ISignInData;
+    
+    const validUser = await User.findOne({ email })./* In the provided code snippet, the `select`
+    method is used in a Mongoose query to explicitly
+    include or exclude certain fields from the query
+    result. */
+    select("+password");
+    if (!validUser) return next(new ErrorHandler( "User not found...", 404,));
 
-    const validPassword = await bcrypt.compare(password, validUser.password);
-    if (!validPassword) return next(errorHandler(401, "Wrong credentials"));
-    const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET as string);
-    console.log('Generated token:', token); // Log the generated token
-    // Exclude the password from the response
-    const { password: pass, ...rest } = validUser.toObject(); // Ensure you are converting the document to a plain object
+    const isComparePassword = await validUser.comparePassword(password);
+    if (!isComparePassword) return next(new ErrorHandler("Password is incorrect...", 404,));
     // console.log(...rest)
-    res
-      .cookie('access_token', token)
-      .status(200)
-      .json({rest, token});
+    // res
+    //   .cookie('access_token', token)
+    //   .status(200)
+    //   .json({rest, token});
   } catch (error) {
-    next(errorHandler(500, "Server Error..."));
+    next(new ErrorHandler("Server Error...", 500));
   }
 };
+
+
+// const signin = async (req: Request, res: Response, next: NextFunction) => {
+  
+//   try {
+//     const { email, password } = req.body as ISignInData;
+    
+//     const validUser = await User.findOne({ email })./* In the provided code snippet, the `select`
+//     method is used in a Mongoose query to explicitly
+//     include or exclude certain fields from the query
+//     result. */
+//     select("+password");
+//     if (!validUser) return next(new ErrorHandler( "User not found...", 404,));
+
+//     const validPassword = await bcrypt.compare(password, validUser.password);
+//     if (!validPassword) return next(new ErrorHandler( "Wrong credentials", 401,));
+//     const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET as string);
+//     console.log('Generated token:', token); // Log the generated token
+//     // Exclude the password from the response
+//     const { password: pass, ...rest } = validUser.toObject(); // Ensure you are converting the document to a plain object
+//     // console.log(...rest)
+//     res
+//       .cookie('access_token', token)
+//       .status(200)
+//       .json({rest, token});
+//   } catch (error) {
+//     next(new ErrorHandler("Server Error...", 500));
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // const google = async (req: Request, res: Response, next: NextFunction) => {
 //   try {
