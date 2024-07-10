@@ -1,6 +1,6 @@
 import express from "express";
 import { activateUser, RegisterUser } from "../controllers/userController";
-import {   jwtParse } from "../middleware/auth";
+// import {   jwtParse } from "../middleware/auth";
 import { ExpressValidator } from "../middleware/validation";
 
 const router = express.Router();

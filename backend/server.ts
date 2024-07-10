@@ -1,13 +1,14 @@
+require("dotenv").config();
 import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "./config/db";
 import cookieParser from "cookie-parser";
+import connectDB from "./config/db";
+
 import { v2 as cloudinary } from "cloudinary";
 import { RouteError } from  "./middleware/error";
 
-dotenv.config();
 // route
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
@@ -21,18 +22,21 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-
-connectDB();
 const app = express();
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+}));
+
+
 /* `app.use(cookieParser());` is a middleware function that parses cookies attached to the incoming
 request object. It adds a `cookies` property to the `req` object, which contains the parsed cookies.
 This allows you to access and manipulate cookies in your application. */
 
 
-app.use(bodyParser.json({ limit: "50mb" }));
+
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -54,7 +58,6 @@ app.get("/", (req: Request, res: Response) => {
 
 
 app.use("/api/v1/user", userRoute);
-
 app.use("/api/v1/auth", authRoute)
 // app.use("/api/v1/restaurant", restaurantRoute);
 // app.use("/api/v1/product", productRoute);
@@ -66,6 +69,8 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const message = error.message || "Something went wrong";
   return res.status(status).json({ message, status, success: false });
 });
+
+connectDB();
 
 const PORT = process.env.PORT || 5000;
 

@@ -32,8 +32,8 @@ const signin = CatchAsyncError( async (req: Request, res: Response, next: NextFu
     if (!isComparePassword) return next(new ErrorHandler("Password is incorrect...", 404,));
     
     sendToken(validUser, 200, res)
-  } catch (error) {
-    next(new ErrorHandler("Server Error...", 500));
+  } catch (error:any) {
+    next(new ErrorHandler(error.message, 500));
   }
 });
 
@@ -47,7 +47,7 @@ const signout = CatchAsyncError(async( Req: Request, res: Response, next: NextFu
        message: "Logged out successfully" 
     });
   } catch (error:any) {
-    return next(new ErrorHandler("Server Error...", 500));
+    return next(new ErrorHandler(error.message, 500));
     
   }
 })
