@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import  ErrorHandler  from "../utils/errorHandler";
 import jwt from "jsonwebtoken";
 import { sendToken } from "../utils/jwt";
+import { CatchAsyncError } from "../middleware/CatchAsyncError";
 
 const signup = async (req: Request, res: Response, next: NextFunction) => {
   const { name, email, password } = req.body;
@@ -23,7 +24,7 @@ interface ISignInData {
   email: string;
   password: string;
 }
-const signin = async (req: Request, res: Response, next: NextFunction) => {
+const signin =CatchAsyncError( async (req: Request, res: Response, next: NextFunction) => {
   
   try {
     const { email, password } = req.body as ISignInData;
@@ -42,7 +43,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     next(new ErrorHandler("Server Error...", 500));
   }
-};
+});
 
 
 // const signin = async (req: Request, res: Response, next: NextFunction) => {
