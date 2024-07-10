@@ -6,20 +6,14 @@ import jwt from "jsonwebtoken";
 import { sendToken } from "../utils/jwt";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
 
-const signup = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, password } = req.body;
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hashedPassword, name });
-    
-    await newUser.save();
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET as string, {expiresIn: "400days"});
-    console.log(token, "registered user token")
-    res.status(201).json({ message: "User created successfully", token });
-  } catch (error: any) {
-    next(new ErrorHandler(`Server Error: ${error.message}`, 500));
+
+const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
+  const access_token = req.cookies.access_token;
+  if(!access_token){
+    return next(new ErrorHandler("Please login to access this resources", 400))
   }
-};
+})
+
 interface ISignInData {
   email: string;
   password: string;
@@ -28,6 +22,9 @@ const signin = CatchAsyncError( async (req: Request, res: Response, next: NextFu
   
   try {
     const { email, password } = req.body as ISignInData;
+    if(!email || !password) {
+      return next(new ErrorHandler("Please enter email and password", 400));
+    }
     
     const validUser = await User.findOne({ email })./* In the provided code snippet, the `select`
     method is used in a Mongoose query to explicitly
@@ -46,7 +43,7 @@ const signin = CatchAsyncError( async (req: Request, res: Response, next: NextFu
 });
 
 
-const logout = CatchAsyncError(async( Req: Request, res: Response, next: NextFunction)=> {
+const signout = CatchAsyncError(async( Req: Request, res: Response, next: NextFunction)=> {
   try {
     res.cookie("access_token", "", {maxAge: 1});
     res.cookie("refresh_token", "", {maxAge: 1});
@@ -59,6 +56,27 @@ const logout = CatchAsyncError(async( Req: Request, res: Response, next: NextFun
     
   }
 })
+
+export { signin,
+    //  google,
+      signout };
+
+
+// const signup = async (req: Request, res: Response, next: NextFunction) => {
+//   const { name, email, password } = req.body;
+//   try {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const newUser = new User({ email, password: hashedPassword, name });
+    
+//     await newUser.save();
+//     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET as string, {expiresIn: "400days"});
+//     console.log(token, "registered user token")
+//     res.status(201).json({ message: "User created successfully", token });
+//   } catch (error: any) {
+//     next(new ErrorHandler(`Server Error: ${error.message}`, 500));
+//   }
+// };
+
 
 // const signin = async (req: Request, res: Response, next: NextFunction) => {
   
@@ -87,26 +105,6 @@ const logout = CatchAsyncError(async( Req: Request, res: Response, next: NextFun
 //     next(new ErrorHandler("Server Error...", 500));
 //   }
 // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // const google = async (req: Request, res: Response, next: NextFunction) => {
@@ -166,14 +164,12 @@ const logout = CatchAsyncError(async( Req: Request, res: Response, next: NextFun
 //   }
 // };
 
-const signout = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    res.clearCookie("access_token");
-    res.status(200).json("User has been logged out...");
-  } catch (error) {
-    next(error);
-  }
-};
-export { signup, signin,
-    //  google,
-      signout };
+// const signout = async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     res.clearCookie("access_token");
+//     res.status(200).json("User has been logged out...");
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
