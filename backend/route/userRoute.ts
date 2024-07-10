@@ -1,6 +1,10 @@
 import express from "express";
 import { activateUser, RegisterUser } from "../controllers/userController";
+<<<<<<< HEAD
 // import {   jwtParse } from "../middleware/auth";
+=======
+import {  admin, jwtParse } from "../middleware/auth";
+>>>>>>> parent of b37e429 ("Refactored authController, auth middleware, and routes to update authentication logic and token verification")
 import { ExpressValidator } from "../middleware/validation";
 
 const router = express.Router();
