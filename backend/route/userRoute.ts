@@ -1,7 +1,7 @@
 import express from "express";
 import { activateUser, RegisterUser } from "../controllers/userController";
 
-import {  admin } from "../middleware/auth";
+// import {  admin } from "../middleware/auth";
 
 import { ExpressValidator } from "../middleware/validation";
 
