@@ -24,7 +24,7 @@ interface ISignInData {
   email: string;
   password: string;
 }
-const signin =CatchAsyncError( async (req: Request, res: Response, next: NextFunction) => {
+const signin = CatchAsyncError( async (req: Request, res: Response, next: NextFunction) => {
   
   try {
     const { email, password } = req.body as ISignInData;
@@ -45,6 +45,20 @@ const signin =CatchAsyncError( async (req: Request, res: Response, next: NextFun
   }
 });
 
+
+const logout = CatchAsyncError(async( Req: Request, res: Response, next: NextFunction)=> {
+  try {
+    res.cookie("access_token", "", {maxAge: 1});
+    res.cookie("refresh_token", "", {maxAge: 1});
+    res.status(200).json({
+      success: true,
+       message: "Logged out successfully" 
+    });
+  } catch (error:any) {
+    return next(new ErrorHandler("Server Error...", 500));
+    
+  }
+})
 
 // const signin = async (req: Request, res: Response, next: NextFunction) => {
   
