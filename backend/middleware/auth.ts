@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { auth } from 'express-oauth2-jwt-bearer';
-import jwt, { GetPublicKeyOrSecret, Jwt, Secret } from "jsonwebtoken";
-import { errorHandler } from '../utils/errorHandler';
+import jwt, {JwtPayload, GetPublicKeyOrSecret, Jwt, Secret } from "jsonwebtoken";
+import  ErrorHandler from '../utils/errorHandler';
 import User from '../models/userModel';
+import { CatchAsyncError } from './CatchAsyncError';
+import { IUser } from "../types/ModelTypes/UserModel"
+import { redis } from '../utils/redis';
 
 // Extend the Express Request interface to include the user property
 declare global {
