@@ -2,12 +2,17 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcryptjs";
 import  ErrorHandler  from "../utils/errorHandler";
-import jwt, { JsonWebTokenError, JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { sendToken } from "../utils/jwt";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
-import { redis } from "../utils/redis";
-import { IUser } from "../types/ModelTypes/UserModel";
 
+
+const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
+  const access_token = req.cookies.access_token;
+  if(!access_token){
+    return next(new ErrorHandler("Please login to access this resources", 400))
+  }
+})
 
 interface ISignInData {
   email: string;
