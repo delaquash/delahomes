@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcryptjs";
-import { errorHandler } from "../utils/errorHandler";
+import  ErrorHandler  from "../utils/errorHandler";
 import jwt from "jsonwebtoken";
 import { sendToken } from "../utils/jwt";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
