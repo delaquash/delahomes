@@ -19,6 +19,7 @@ declare global {
 
 export const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
   const access_token = req.cookies.access_token;
+  console.log(access_token, "this is access token");
   if(!access_token){
     return next(new ErrorHandler("Please login to access this resources", 400))
   }
