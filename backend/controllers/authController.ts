@@ -5,6 +5,7 @@ import  ErrorHandler  from "../utils/errorHandler";
 import jwt from "jsonwebtoken";
 import { sendToken } from "../utils/jwt";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
+import { redis } from "../utils/redis";
 
 const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
   const access_token = req.cookies.access_token;
@@ -81,10 +82,13 @@ const signin = CatchAsyncError( async (req: Request, res: Response, next: NextFu
 // });
 
 
-    const signout = CatchAsyncError(async( Req: Request, res: Response, next: NextFunction)=> {
+    const signout = CatchAsyncError(async( req: Request, res: Response, next: NextFunction)=> {
       try {
         res.cookie("access_token", "", {maxAge: 1});
         res.cookie("refresh_token", "", {maxAge: 1});
+        const userID = req.user?._id || "";
+  
+        redis.del(userID)
         res.status(200).json({
           success: true,
           message: "Logged out successfully" 
