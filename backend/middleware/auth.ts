@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { auth } from 'express-oauth2-jwt-bearer';
-import jwt, { GetPublicKeyOrSecret, Jwt, JwtPayload, Secret } from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import  ErrorHandler  from '../utils/errorHandler';
-import User from '../models/userModel';
 import { CatchAsyncError } from './CatchAsyncError';
 import { redis } from '../utils/redis';
 import { IUser } from '../types/ModelTypes/UserModel';
@@ -34,6 +32,21 @@ export const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Respon
   req.user = JSON.parse(user);
   next();
 })
+
+
+export const authorization = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!roles.includes(req.user?.role || "")) {
+      return next(
+        new ErrorHandler(
+          `This ${req.user?.role} is not authorized to perform this operation`,
+          403
+        )
+      );
+    }
+    next();
+  };
+};
 
 
 

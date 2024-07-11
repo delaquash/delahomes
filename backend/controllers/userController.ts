@@ -101,6 +101,7 @@ const activateUser = CatchAsyncError(async(req:  Request, res: Response, next:Ne
     const {activation_code, activation_token} = req.body as IActivationRequest;
 
     const newUser: {user: IUser; activationCode: string} =jwt.verify(
+      activation_token,
       process.env.ACTIVATION_TOKEN_SECRET as string
     ) as {user: IUser; activationCode:string}
 
