@@ -6,8 +6,6 @@ import jwt from "jsonwebtoken";
 import { sendToken } from "../utils/jwt";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
 
-<<<<<<< HEAD
-
 const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
   const access_token = req.cookies.access_token;
   if(!access_token){
@@ -40,63 +38,67 @@ const signin = CatchAsyncError( async (req: Request, res: Response, next: NextFu
     sendToken(validUser, 200, res)
   } catch (error:any) {
     next(new ErrorHandler(error.message, 500));
-=======
-const signup = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, password } = req.body;
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hashedPassword, name });
-    
-    await newUser.save();
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET as string, {expiresIn: "400days"});
-    console.log(token, "registered user token")
-    res.status(201).json({ message: "User created successfully", token });
-  } catch (error: any) {
-    next(errorHandler(500, `Server Error: ${error.message}`));
-  }
-};
-
-const signin = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
-  try {
-    const validUser = await User.findOne({ email });
-    if (!validUser) return next(errorHandler(404, "User not found..."));
-
-    const validPassword = await bcrypt.compare(password, validUser.password);
-    if (!validPassword) return next(errorHandler(401, "Wrong credentials"));
-    const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET as string);
-    console.log('Generated token:', token); // Log the generated token
-    // Exclude the password from the response
-    const { password: pass, ...rest } = validUser.toObject(); // Ensure you are converting the document to a plain object
-    // console.log(...rest)
-    res
-      .cookie('access_token', token)
-      .status(200)
-      .json({rest, token});
-  } catch (error) {
-    next(errorHandler(500, "Server Error..."));
->>>>>>> parent of bf52b23 ("Refactored authController and userModel: updated error handling, added interface for signin data, and modified signin and comparePassword methods.")
-  }
-});
-
-
-const signout = CatchAsyncError(async( Req: Request, res: Response, next: NextFunction)=> {
-  try {
-    res.cookie("access_token", "", {maxAge: 1});
-    res.cookie("refresh_token", "", {maxAge: 1});
-    res.status(200).json({
-      success: true,
-       message: "Logged out successfully" 
-    });
-  } catch (error:any) {
-    return next(new ErrorHandler(error.message, 500));
-    
   }
 })
+// const signup = async (req: Request, res: Response, next: NextFunction) => {
+//   const { name, email, password } = req.body;
+//   try {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const newUser = new User({ email, password: hashedPassword, name });
+    
+//     await newUser.save();
+//     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET as string, {expiresIn: "400days"});
+//     console.log(token, "registered user token")
+//     res.status(201).json({ message: "User created successfully", token });
+//   } catch (error: any) {
+//     next(new ErrorHandler( `Server Error: ${error.message}`, 500,));
+//   }
+// };
+
+// })
+
+// const signin = async (req: Request, res: Response, next: NextFunction) => {
+//   const { email, password } = req.body;
+//   try {
+//     const validUser = await User.findOne({ email });
+//     if (!validUser) return next(new ErrorHandler( "User not found...", 404));
+
+//     const validPassword = await bcrypt.compare(password, validUser.password);
+//     if (!validPassword) return next(new ErrorHandler("Wrong credentials", 401 ));
+//     const token = jwt.sign({ userId: validUser._id }, process.env.JWT_SECRET as string);
+//     console.log('Generated token:', token); // Log the generated token
+//     // Exclude the password from the response
+//     const { password: pass, ...rest } = validUser.toObject(); // Ensure you are converting the document to a plain object
+//     // console.log(...rest)
+//     res
+//       .cookie('access_token', token)
+//       .status(200)
+//       .json({rest, token});
+//   } catch (error: any) {
+//     next(new ErrorHandler(500, "Server Error..."));
+// }
+//   }
+// });
+
+
+    const signout = CatchAsyncError(async( Req: Request, res: Response, next: NextFunction)=> {
+      try {
+        res.cookie("access_token", "", {maxAge: 1});
+        res.cookie("refresh_token", "", {maxAge: 1});
+        res.status(200).json({
+          success: true,
+          message: "Logged out successfully" 
+        });
+      } catch (error:any) {
+        return next(new ErrorHandler(error.message, 500)); 
+      }
+    })
+
 
 export { signin,
     //  google,
-      signout };
+      signout
+     };
 
 
 // const signup = async (req: Request, res: Response, next: NextFunction) => {
@@ -114,7 +116,6 @@ export { signin,
 //   }
 // };
 
-<<<<<<< HEAD
 
 // const signin = async (req: Request, res: Response, next: NextFunction) => {
   
@@ -145,8 +146,7 @@ export { signin,
 // };
 
 
-=======
->>>>>>> parent of bf52b23 ("Refactored authController and userModel: updated error handling, added interface for signin data, and modified signin and comparePassword methods.")
+//  ("Refactored authController and userModel: updated error handling, added interface for signin data, and modified signin and comparePassword methods.")
 // const google = async (req: Request, res: Response, next: NextFunction) => {
 //   try {
 //     const user = await User.findOne({ email: req.body.email });
@@ -213,3 +213,4 @@ export { signin,
 //   }
 // };
 
+// })
