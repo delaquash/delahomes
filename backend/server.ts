@@ -9,6 +9,16 @@ import connectDB from "./config/db";
 import { v2 as cloudinary } from "cloudinary";
 import { RouteError } from  "./middleware/error";
 
+
+const app = express();
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(cookieParser());
+app.use(express.json());
+
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+}));
+
 // route
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
@@ -22,13 +32,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-const app = express();
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-}));
+
 
 
 /* `app.use(cookieParser());` is a middleware function that parses cookies attached to the incoming

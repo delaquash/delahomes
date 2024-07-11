@@ -12,6 +12,6 @@ const router = express.Router();
 router.post("/signin",  signin);
 // router.post("/google", google);
 router.post("/signout", signout);
-router.post("/signout", signout);
+router.get("/signout", isUserAuthenticated, signout);
 
 export default router;
