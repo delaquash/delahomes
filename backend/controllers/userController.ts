@@ -5,10 +5,12 @@ import { CatchAsyncError } from "../middleware/CatchAsyncError";
 import ErrorHandler from "../utils/errorHandler";
 import Restaurant from "../models/restaurant";
 import { IUser } from "../types/ModelTypes/UserModel";
-import jwt, { Secret } from "jsonwebtoken";
+import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import ejs from "ejs";
 import path from "path";
 import sendEmail from "../utils/SendMail";
+import { redis } from "../utils/redis";
+import { accessTokenOptions, refreshTokenOptions } from "../utils/jwt";
 
 // Extend the Express Request interface to include the user property
 // declare module "express" {
@@ -129,6 +131,38 @@ const activateUser = CatchAsyncError(async(req:  Request, res: Response, next:Ne
     
   }
 })
+
+const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next:NextFunction)=>{
+  try {
+    const refresh_token = req.cookies.refresh_token as string;
+    
+    const decoded = jwt.verify(refresh_token, process.env.REFRESH_TOKEN as string) as JwtPayload
+    
+    if(!decoded){
+      return next(new ErrorHandler("Invalid refresh token", 400))
+    }
+    const session = await redis.get(decoded.id as string)
+    
+    if(!session){
+      return next(new ErrorHandler("Invalid refresh token", 400))
+    }
+      const user = JSON.parse(session)
+      const accessToken = jwt.sign({id: user._id},process.env.ACCESS_TOKEN as string, {
+        expiresIn: "2h",
+      });
+      const refreshToken = jwt.sign({ id: user._id}, process.env.REFRESH_TOKEN as string, {
+        expiresIn: "5d",
+      })
+      res.cookie("access-token", accessToken, accessTokenOptions);
+      res.cookie("refresh-token", refreshToken, refreshTokenOptions);
+      res.status(200).json({
+        success: "true",
+        accessToken
+        })
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 500))
+  }
+})
 // const createCurrentUser = async (
 //   req: Request,
 //   res: Response,
@@ -224,7 +258,8 @@ const activateUser = CatchAsyncError(async(req:  Request, res: Response, next:Ne
 
 export {
   RegisterUser,
-  activateUser
+  activateUser,
+  updateAccessToken
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,

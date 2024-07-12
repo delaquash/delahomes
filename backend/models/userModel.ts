@@ -64,12 +64,16 @@ UserSchema.pre<IUser>("save", async function (next) {
   })
 // Access Token
 UserSchema.methods.SignAccessToken = function () {
-  return jwt.sign({ id: this._id}, process.env.ACCESS_TOKEN || "")
+  return jwt.sign({ id: this._id}, process.env.ACCESS_TOKEN || "", {
+    expiresIn: "2h"
+  })
 }
 
 // Refresh Token
 UserSchema.methods.SignRefreshToken = function () {
-  return jwt.sign({ id: this._id}, process.env.REFRESH_TOKEN || "")
+  return jwt.sign({ id: this._id}, process.env.REFRESH_TOKEN || "", {
+    expiresIn: "5d"
+  })
   }
 
 // Compare the password
