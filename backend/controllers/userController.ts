@@ -11,7 +11,7 @@ import path from "path";
 import sendEmail from "../utils/SendMail";
 import { redis } from "../utils/redis";
 import { getUserByID } from "../services/user.service";
-import { accessTokenOptions, refreshTokenOptions } from "../utils/jwt";
+import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 
 // Extend the Express Request interface to include the user property
 // declare module "express" {
@@ -173,6 +173,21 @@ export const getUserInfo = CatchAsyncError(async(req:Request, res: Response, nex
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 400))
   }
+})
+
+export const socialAuth = CatchAsyncError(async (req: Request, res:Response, next:NextFunction)=> {
+    try {
+      const { email, name, avatar } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        const newUser = await User.create({ email, name, avatar });
+        sendToken(newUser, 200, res)
+      }else {
+        sendToken(user, 200, res)
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400))
+    }
 })
 
 // const createCurrentUser = async (
