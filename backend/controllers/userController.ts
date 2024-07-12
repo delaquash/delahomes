@@ -10,6 +10,7 @@ import ejs from "ejs";
 import path from "path";
 import sendEmail from "../utils/SendMail";
 import { redis } from "../utils/redis";
+import { getUserByID } from "../services/user.service";
 import { accessTokenOptions, refreshTokenOptions } from "../utils/jwt";
 
 // Extend the Express Request interface to include the user property
@@ -164,6 +165,15 @@ const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next
   }
 })
 
+
+export const getUserInfo = CatchAsyncError(async(req:Request, res: Response, next:NextFunction) => {
+  try {
+    const userID = req.user?._id;
+    getUserByID(userID, res)
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400))
+  }
+})
 
 // const createCurrentUser = async (
 //   req: Request,
