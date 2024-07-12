@@ -163,6 +163,8 @@ const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next
     return next(new ErrorHandler(error.message, 500))
   }
 })
+
+
 // const createCurrentUser = async (
 //   req: Request,
 //   res: Response,
