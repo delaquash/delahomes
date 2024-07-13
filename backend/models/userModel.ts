@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
       type: String,
-      required: [true, "Please enter your password.."],
+      // required: [true, "Please enter your password.."],
       minlength: [6, "Password must be at least 6 characters.."],
       /* The `select: false` option in Mongoose schema is used to specify that a particular field
       should not be returned by default when querying the database. This means that when you query

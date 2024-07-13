@@ -166,7 +166,7 @@ const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next
 })
 
 
-export const getUserInfo = CatchAsyncError(async(req:Request, res: Response, next:NextFunction) => {
+ const getUserInfo = CatchAsyncError(async(req:Request, res: Response, next:NextFunction) => {
   try {
     const userID = req.user?._id;
     getUserByID(userID, res)
@@ -175,26 +175,40 @@ export const getUserInfo = CatchAsyncError(async(req:Request, res: Response, nex
   }
 })
 
-interface ISocialAuth {
+interface IUpdateUserInfo {
   name: string;
   email: string;
-  avatar: string;
 }
 
-export const socialAuth = CatchAsyncError(async (req: Request, res:Response, next:NextFunction)=> {
-    try {
-      const { email, name, avatar } = req.body as ISocialAuth;
-      const user = await User.findOne({ email });
-      if (!user) {
-        const newUser = await User.create({ email, name, avatar });
-        sendToken(newUser, 200, res)
-      }else {
-        sendToken(user, 200, res)
+const updateUserInfo = CatchAsyncError(async(req: Request, res:Response, next:NextFunction)=> {
+  try {
+    const { email, name } = req.body as IUpdateUserInfo;
+    const userID = req.user._id;
+    const user = await User.findById(userID)
+    if(user && email) {
+      const isEmailExist = await User.findOne({ email});
+      if(isEmailExist) {
+        return next(new ErrorHandler("Email already exist", 400))
       }
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, 400))
+      user.email = email;
     }
+    if(name && user){
+      user.name = name
+    }
+
+    await user?.save()
+
+    await redis.set(userID, JSON.stringify(user));
+
+    res.status(201).json({
+      success: true,
+      user
+    })
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400))
+  }
 })
+
 
 // const createCurrentUser = async (
 //   req: Request,
@@ -292,7 +306,8 @@ export const socialAuth = CatchAsyncError(async (req: Request, res:Response, nex
 export {
   RegisterUser,
   activateUser,
-  updateAccessToken
+  updateAccessToken,
+  getUserInfo,
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
