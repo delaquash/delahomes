@@ -1,6 +1,6 @@
 import express from "express";
 import UploadImage from "../utils/CloudinaryStorage";
-import { createRestaurant, getMyRestaurant } from "../controllers/MyRestaurantRoute";
+import { createRestaurant, getMyRestaurant } from "../controllers/CourseController";
 import { validateMyRestaurantRequest } from "../middleware/validation";
 import { jwtParse } from "../middleware/auth";
 
