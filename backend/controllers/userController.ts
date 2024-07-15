@@ -220,8 +220,11 @@ interface IPassword {
 const updatePassword = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
   try {
     const { newPassword, oldPassword } = req.body as IPassword;
+    if(!newPassword || !oldPassword) {
+      return next(new ErrorHandler("Please provide both old and new password", 400))
+    }
     const userID = req.user._id;
-    const user = await User.findById(userID)
+    const user = await User.findById(userID).select("+password")
     if(!user || user?.password === undefined) {
       return next(new ErrorHandler("User not found", 404))
       }
@@ -231,12 +234,14 @@ const updatePassword = CatchAsyncError(async(req: Request, res: Response, next: 
         }
         user.password = newPassword;
         await user?.save()
+        await redis.set(req.user?._id, JSON.stringify(user));
+
         res.status(201).json({
           success: true,
           user
         })
-  } catch (error) {
-    
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400))  
   }
 })
 
@@ -339,7 +344,8 @@ export {
   activateUser,
   updateAccessToken,
   getUserInfo,
-  updateUserInfo
+  updateUserInfo, 
+  updatePassword
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,

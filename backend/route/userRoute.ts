@@ -1,5 +1,5 @@
 import express from "express";
-import { activateUser, getUserInfo, RegisterUser,  updateAccessToken, updateUserInfo } from "../controllers/userController";
+import { activateUser, getUserInfo, RegisterUser,  updateAccessToken, updatePassword, updateUserInfo } from "../controllers/userController";
 
 // import {  admin } from "../middleware/auth";
 
@@ -12,6 +12,7 @@ router.post("/registeruser", ExpressValidator, RegisterUser);
 router.post("/activate-user", activateUser);
 router.get("/refresh_token", updateAccessToken);
 router.get("/me", isUserAuthenticated, getUserInfo);
-router.put("/update-user-info", isUserAuthenticated, updateUserInfo)
+router.put("/update-user-info", isUserAuthenticated, updateUserInfo);
+router.put("/update-user-password", isUserAuthenticated, updatePassword)
 
 export default router;
