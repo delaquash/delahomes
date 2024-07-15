@@ -210,6 +210,34 @@ const updateUserInfo = CatchAsyncError(async(req: Request, res:Response, next:Ne
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 400))
   }
+});
+
+interface IPassword {
+  oldPassword: string;
+  newPassword: string;
+}
+
+const updatePassword = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+  try {
+    const { newPassword, oldPassword } = req.body as IPassword;
+    const userID = req.user._id;
+    const user = await User.findById(userID)
+    if(!user || user?.password === undefined) {
+      return next(new ErrorHandler("User not found", 404))
+      }
+      const isPasswordMatch = await user?.comparePassword(oldPassword)
+      if(!isPasswordMatch) {
+        return next(new ErrorHandler("Old password is incorrect", 400))
+        }
+        user.password = newPassword;
+        await user?.save()
+        res.status(201).json({
+          success: true,
+          user
+        })
+  } catch (error) {
+    
+  }
 })
 
 
