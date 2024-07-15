@@ -17,7 +17,7 @@ interface ITokenOptions {
 
   // options for cookies
   export const accessTokenOptions: ITokenOptions = {
-      expiresIn: new Date(Date.now() + refreshTokenExpire * 60 * 60 * 1000),
+      expiresIn: new Date(Date.now() + accessTokenExpire * 60 * 60 * 1000),
       maxAge: refreshTokenExpire * 60 * 60 * 1000,
       httpOnly: true,
       sameSite: "lax",

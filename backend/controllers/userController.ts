@@ -154,12 +154,15 @@ const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next
       const refreshToken = jwt.sign({ id: user._id}, process.env.REFRESH_TOKEN as string, {
         expiresIn: "5d",
       })
+
+      req.user = user;
+
       res.cookie("access-token", accessToken, accessTokenOptions);
       res.cookie("refresh-token", refreshToken, refreshTokenOptions);
       res.status(200).json({
         success: "true",
         accessToken
-        })
+      })
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 500))
   }
@@ -308,6 +311,7 @@ export {
   activateUser,
   updateAccessToken,
   getUserInfo,
+  updateUserInfo
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
