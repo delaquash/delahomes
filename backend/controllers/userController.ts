@@ -11,6 +11,7 @@ import path from "path";
 import sendEmail from "../utils/SendMail";
 import { redis } from "../utils/redis";
 import { getUserByID } from "../services/user.service";
+import cloudinary from "cloudinary";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 
 // Extend the Express Request interface to include the user property
@@ -242,6 +243,22 @@ const updatePassword = CatchAsyncError(async(req: Request, res: Response, next: 
         })
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 400))  
+  }
+})
+
+interface IProfilePicture {
+  avatar: string;
+}
+
+const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+  try {
+    const { avatar } = req.body;
+
+    const user = req.user;
+
+    
+  } catch (error) {
+    
   }
 })
 
