@@ -234,7 +234,7 @@ const updatePassword = CatchAsyncError(async(req: Request, res: Response, next: 
         return next(new ErrorHandler("Old password is incorrect", 400))
         }
         user.password = newPassword;
-        await user?.save()
+        await user?.save();
         await redis.set(req.user?._id, JSON.stringify(user));
 
         res.status(201).json({

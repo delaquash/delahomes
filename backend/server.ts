@@ -9,6 +9,12 @@ import connectDB from "./config/db";
 import { v2 as cloudinary } from "cloudinary";
 import { RouteError } from  "./middleware/error";
 
+// route
+import authRoute from "./route/authRoute";
+import userRoute from "./route/userRoute";
+import courseRoute from "./route/CourseController";
+import productRoute from "./route/Products"
+import ErrorHandler from "./utils/errorHandler";
 
 const app = express();
 app.use(cookieParser());
@@ -20,12 +26,7 @@ app.use(cors({
   origin: process.env.CLIENT_URL,
 }));
 
-// route
-import authRoute from "./route/authRoute";
-import userRoute from "./route/userRoute";
-import restaurantRoute from "./route/MyRestaurantRoute";
-import productRoute from "./route/Products"
-import ErrorHandler from "./utils/errorHandler";
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -63,7 +64,9 @@ app.get("/", (req: Request, res: Response) => {
 
 
 app.use("/api/v1/user", userRoute);
-app.use("/api/v1/auth", authRoute)
+app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/course", courseRoute);
+
 // app.use("/api/v1/restaurant", restaurantRoute);
 // app.use("/api/v1/product", productRoute);
 
