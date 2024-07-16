@@ -26,23 +26,11 @@ app.use(cors({
   origin: process.env.CLIENT_URL,
 }));
 
-
-
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
-
-
-
-
-/* `app.use(cookieParser());` is a middleware function that parses cookies attached to the incoming
-request object. It adds a `cookies` property to the `req` object, which contains the parsed cookies.
-This allows you to access and manipulate cookies in your application. */
-
-
-
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -61,14 +49,10 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");
 });
 
-
-
+// Route
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/course", courseRoute);
-
-// app.use("/api/v1/restaurant", restaurantRoute);
-// app.use("/api/v1/product", productRoute);
 
 // error
 app.use(RouteError)
