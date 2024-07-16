@@ -6,5 +6,5 @@ import { isUserAuthenticated, authorization } from "../middleware/auth";
 // import { jwtParse } from "../middleware/auth";
 
 const router = express.Router();
-router.post("/create-course", isUserAuthenticated, authorization("admin"))
+router.post("/create-course", isUserAuthenticated, authorization("admin"), uploadCourse)
 export default router;

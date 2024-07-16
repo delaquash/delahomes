@@ -4,6 +4,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 interface IComment extends Document {
   user: object;
   comment: string;
+  commentReplies? : IComment[]; 
 }
 
 interface IReview extends Document {
@@ -21,7 +22,7 @@ interface ILink extends Document {
 interface ICourseData extends Document {
   title: string;
   description: string;
-  links: ILink;
+  links: ILink[];
   videoUrl: string;
   videoThumbnail: object;
   videoSection: string;
@@ -57,12 +58,12 @@ const reviewSchema = new Schema<IReview>({
     comment: String,
 });
 
-const linkSchema = new Schema({
+const linkSchema = new Schema<ILink>({
   title: String,
   url: String
-})
+});
 
-const commentSchema = new Schema ({
+const commentSchema = new Schema<IComment> ({
   user: Object,
   comment: String,
   commentReplies: [Object]

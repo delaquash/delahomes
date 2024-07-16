@@ -17,17 +17,16 @@ declare global {
 
 export const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
   const access_token = req.cookies.access_token;
-  console.log(access_token, "this is access token");
   if(!access_token){
     return next(new ErrorHandler("Please login to access this resources", 400))
   }
   const decoded = jwt.verify(access_token, process.env.ACCESS_TOKEN as string) as JwtPayload
-  console.log(decoded, "this is decoded token")
+  // console.log(decoded, "this is decoded token")
   if(!decoded) {
     return next(new ErrorHandler("access token not valid", 400))
   }
   const user = await redis.get(decoded.id);
-  console.log(user, "this user is from redis")
+  // console.log(user, "this user is from redis")
   if(!user) {
     return next(new ErrorHandler("User not found", 400))
   }
