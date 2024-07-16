@@ -17,7 +17,6 @@ export type RootState = {
   // Add other slices if you have more reducers
 };
 
-const authTokenHere = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQ0NzU1ZjliYjAxY2IzMDUwMzQ0MSIsImlhdCI6MTcwMTg1MTg2Nn0.AHqhLVpNZ-HrYP70tIhU_xT2MFEEYr3DkuwCez70qMk; Path=/; HttpOnly";
 
 function Profile() {
   const dispatch = useDispatch();
