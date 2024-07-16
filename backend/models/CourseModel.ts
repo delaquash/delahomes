@@ -70,7 +70,6 @@ const commentSchema = new Schema ({
 
 const courseDataSchema = new Schema<ICourseData>({
   videoUrl: String,
-  videoThumbnail: Object,
   videoSection: String,
   videoLength: Number,
   videoPlayers: String,
