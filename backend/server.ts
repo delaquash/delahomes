@@ -12,7 +12,7 @@ import { RouteError } from  "./middleware/error";
 // route
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
-import courseRoute from "./route/CourseController";
+import courseRoute from "./route/CourseRoute";
 import productRoute from "./route/Products"
 import ErrorHandler from "./utils/errorHandler";
 
