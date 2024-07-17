@@ -25,4 +25,12 @@ export const uploadCourse = CatchAsyncError(async(req: Request, res:Response, ne
         return next (new ErrorHandler(error.message, 500))
         
     }
+});
+
+export const editCourse = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+    try {
+        
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 500))
+    }
 })
