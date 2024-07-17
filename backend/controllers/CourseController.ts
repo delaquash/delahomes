@@ -5,6 +5,7 @@ import { createCourse } from "../services/course.service";
 import CourseModel from "../models/CourseModel";
 import cloudinary from "cloudinary";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
+import { redis } from "../utils/redis";
 
 // To upload a course
 export const uploadCourse = CatchAsyncError(async(req: Request, res:Response, next:NextFunction)=> {
@@ -27,6 +28,7 @@ export const uploadCourse = CatchAsyncError(async(req: Request, res:Response, ne
     }
 });
 
+// Edit Course
 export const editCourse = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
     try {
         const data = req.body;
@@ -57,4 +59,49 @@ export const editCourse = CatchAsyncError(async(req: Request, res: Response, nex
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 500))
     }
-})
+});
+
+// Get single course without purchasing
+// redis was added to cache the request
+export const getSingleCourse = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const courseID = req.params.id;
+      const isCachedExist = await redis.get(courseID);
+
+      if (isCachedExist) {
+        const course = JSON.parse(isCachedExist);
+        res.status(200).json(course);
+      } else {
+        const course = await CourseModel.findById(req.params.id).select(
+          "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
+        );
+        await redis.set(courseID, JSON.stringify(course));
+        res.status(200).json({
+          success: true,
+          course,
+        });
+      }
+    } catch (error: any) {
+      next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+// get all courses
+export const getAllCourse = CatchAsyncError(
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const course = await CourseModel.find().select(
+          "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
+        );
+        res.status(200).json({
+          success: true,
+          course,
+        });
+      } catch (error: any) {
+        next(new ErrorHandler(error.message, 500));
+      }
+    }
+  );
+
