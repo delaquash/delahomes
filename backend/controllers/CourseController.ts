@@ -90,8 +90,17 @@ export const getSingleCourse = CatchAsyncError(
 
 // get all courses
 export const getAllCourse = CatchAsyncError(
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const isCachedExist = await redis.get("allCourses");
+
+      if (isCachedExist) {
+        const courses = JSON.parse(isCachedExist);
+        res.status(200).json({
+          success: true,
+          courses
+        });
+      } else {
         const course = await CourseModel.find().select(
           "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
         );
@@ -99,9 +108,10 @@ export const getAllCourse = CatchAsyncError(
           success: true,
           course,
         });
-      } catch (error: any) {
-        next(new ErrorHandler(error.message, 500));
       }
+    } catch (error: any) {
+      next(new ErrorHandler(error.message, 500));
     }
-  );
+  }
+);
 
