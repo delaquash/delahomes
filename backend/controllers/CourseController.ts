@@ -71,11 +71,13 @@ export const getSingleCourse = CatchAsyncError(
 
       if (isCachedExist) {
         const course = JSON.parse(isCachedExist);
+        
         res.status(200).json(course);
       } else {
         const course = await CourseModel.findById(req.params.id).select(
           "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
         );
+        
         await redis.set(courseID, JSON.stringify(course));
         res.status(200).json({
           success: true,
@@ -96,6 +98,7 @@ export const getAllCourse = CatchAsyncError(
 
       if (isCachedExist) {
         const courses = JSON.parse(isCachedExist);
+        
         res.status(200).json({
           success: true,
           courses
@@ -104,6 +107,8 @@ export const getAllCourse = CatchAsyncError(
         const course = await CourseModel.find().select(
           "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
         );
+        
+        await redis.set("allCourses", JSON.stringify(course));
         res.status(200).json({
           success: true,
           course,
@@ -115,3 +120,29 @@ export const getAllCourse = CatchAsyncError(
   }
 );
 
+// get course content --- only for valid user
+export const getCourseByUser = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const courseID = req.params.id; // Extract course ID from request parameters
+      const userCourseList = req.user?.courses; // Retrieve user's course list from req.user in auth.ts
+
+        // Check if the user has access to the course
+      const isCourseExist = userCourseList?.find(
+        (course: any) => course._id.toString() === courseID
+      );
+      // If the course is not in the user's course list, return an error
+      if(!isCourseExist){
+        return next(new ErrorHandler("You are not eligible to access this course", 404));
+      };
+      // Find and return the course details
+      const course = await CourseModel.findById(courseID);
+      res.status(200).json({
+        success: true,
+        course
+        });
+    } catch (error: any) {
+      next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
