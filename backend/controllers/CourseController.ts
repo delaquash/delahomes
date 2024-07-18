@@ -186,6 +186,12 @@ export const addQuestion = CatchAsyncError(
       // add this question to our course content
       courseContent?.questions.push(newQuestion);
       // save the course
+      await course?.save();
+      // Response
+      res.status(200).json({
+        success: true,
+        course
+        });
     } catch (error: any) {
       next(new ErrorHandler(error.message, 500));
     }
