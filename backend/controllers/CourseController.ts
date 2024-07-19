@@ -295,4 +295,12 @@ interface IReviewData {
   userID: string;
 }
 
-export const 
+export const addReview = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+  try {
+    const {review, rating, userID} = req.body as IReviewData;
+    const userCourseList = req.user?.courses;
+    const userId = req.params.id;
+  } catch (error: any) {
+    next(new ErrorHandler(error.message, 500));
+  }
+})
