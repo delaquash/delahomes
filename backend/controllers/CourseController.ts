@@ -6,6 +6,9 @@ import CourseModel from "../models/CourseModel";
 import cloudinary from "cloudinary";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
 import { redis } from "../utils/redis";
+import ejs from "ejs";
+import path from "path";
+
 
 // To upload a course
 export const uploadCourse = CatchAsyncError(async(req: Request, res:Response, next:NextFunction)=> {
@@ -243,7 +246,25 @@ export const addAnswer = CatchAsyncError(async(req: Request, res: Response, next
 
     // save the question
     await course?.save();
+    
+    if(req.user?._id === question.user._id) {
+      // create a notification
+    } else {
+      const data = {
+        name: question.user.name,
+        title: courseContent.title,
+      }
 
+      const html = await ejs.renderFile(
+        path.join(__dirname, "../mail/question-replies.ejs"),
+      )
+
+      try {
+        
+      } catch (error: any) {
+        next(new ErrorHandler(error.message, 500));
+      }
+    }
     // Response
     res.status(201).json({
       success: true,
