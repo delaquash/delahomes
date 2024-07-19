@@ -1,8 +1,9 @@
 require("dotenv").config();
 import mongoose, { Schema, Model, Document } from "mongoose";
+import { IUser } from "../types/ModelTypes/UserModel";
 
 interface IComment extends Document {
-  user: object;
+  user: IUser;
   question: string;
   questionReplies? : IComment[]; 
 }

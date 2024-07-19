@@ -199,3 +199,57 @@ export const addQuestion = CatchAsyncError(
     }
   }
 );
+
+
+interface IAnswer {
+  answer: string;
+  questionID: string;
+  courseID: string;
+  contentID: string
+}
+
+export const addAnswer = CatchAsyncError(async(req: Request, res: Response, next:NextFunction)=> {
+  try {
+    const { answer, contentID, courseID, questionID} = req.body as IAnswer;
+
+    const course = await CourseModel.findById(courseID);
+
+    /* This code snippet is checking if the `contentID` provided in the request body is a valid MongoDB
+    ObjectId. In MongoDB, each document has a unique identifier called ObjectId. */
+    if (!mongoose.Types.ObjectId.isValid(contentID)) {
+      return next(new ErrorHandler("Invalid content ID", 404));
+    }
+    // This array method below are the same
+    const courseContent = course?.courseData.find((item: any)=> item._id.equals(contentID))
+    // const courseContent = course?.courseData.find(
+    //   (course: any) => course._id === courseID
+    // );
+    if(!courseContent){
+      return next(new ErrorHandler("Invalid content ID", 400));
+    };
+
+    const question = courseContent?.questions?.find((item: any) => item._id.equals(questionID))
+    
+    if(!question){
+      return next(new ErrorHandler("Invalid question ID", 400));
+    }
+    // create a new answer object
+    const newAnswer: any  = {
+      user: req.user,
+      answer,
+    };
+    // add answer to the course content
+    question.questionReplies?.push(newAnswer);
+
+    // save the question
+    await course?.save();
+
+    // Response
+    res.status(201).json({
+      success: true,
+      question
+    })
+  }  catch (error: any) {
+      next(new ErrorHandler(error.message, 500));
+    }
+})
