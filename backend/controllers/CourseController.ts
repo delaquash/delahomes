@@ -6,6 +6,7 @@ import CourseModel from "../models/CourseModel";
 import cloudinary from "cloudinary";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
 import { redis } from "../utils/redis";
+import sendEmail from "../utils/SendMail";
 import ejs from "ejs";
 import path from "path";
 
@@ -256,11 +257,16 @@ export const addAnswer = CatchAsyncError(async(req: Request, res: Response, next
       }
 
       const html = await ejs.renderFile(
-        path.join(__dirname, "../mail/question-replies.ejs"),
+        path.join(__dirname, "../mail/question-replies.ejs"),data
       )
 
       try {
-        
+        await sendEmail({
+          email: question.user.email,
+          subject: "Question Reply",
+          template: "question-replies.ejs",
+          data
+        })
       } catch (error: any) {
         next(new ErrorHandler(error.message, 500));
       }
@@ -268,7 +274,7 @@ export const addAnswer = CatchAsyncError(async(req: Request, res: Response, next
     // Response
     res.status(201).json({
       success: true,
-      question
+      course
     })
   }  catch (error: any) {
       next(new ErrorHandler(error.message, 500));
