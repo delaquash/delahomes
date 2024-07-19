@@ -299,7 +299,13 @@ export const addReview = CatchAsyncError(async(req: Request, res: Response, next
   try {
     const {review, rating, userID} = req.body as IReviewData;
     const userCourseList = req.user?.courses;
-    const userId = req.params.id;
+    const courseId = req.params.id;
+
+    // check if courses exist
+    const courseExist = userCourseList.some((course:any)=> course._id.toString() === courseId.toString());
+    if (!courseExist) {
+      return next(new ErrorHandler("Course does not exist", 404));
+      }
   } catch (error: any) {
     next(new ErrorHandler(error.message, 500));
   }
