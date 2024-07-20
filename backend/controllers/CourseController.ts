@@ -306,6 +306,7 @@ export const addReview = CatchAsyncError(async(req: Request, res: Response, next
     if (!courseExist) {
       return next(new ErrorHandler("Course does not exist", 404));
       }
+    const course = await CourseModel.findById(courseId);
   } catch (error: any) {
     next(new ErrorHandler(error.message, 500));
   }
