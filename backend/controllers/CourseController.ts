@@ -306,7 +306,48 @@ export const addReview = CatchAsyncError(async(req: Request, res: Response, next
     if (!courseExist) {
       return next(new ErrorHandler("Course does not exist", 404));
       }
-    const course = await CourseModel.findById(courseId);
+
+      const courses = await CourseModel.findById(courseId);
+      if (!courses) {
+        return next(new ErrorHandler("Course does not exist", 404));
+        }
+
+      const reviewData: any = {
+        user: req.user,
+        comment: review,
+        rating
+      }
+
+    courses?.reviews?.push(reviewData);
+    
+    // ratings
+    /* The code snippet you provided is calculating the average rating for a course based on the
+    ratings given in the reviews. Here's a breakdown of what the code is doing: */
+    let avg = 0;
+
+    courses?.reviews.forEach((rev: any)=> {
+      avg += rev.rating;
+    })
+
+    if(courses){
+      courses.ratings = avg / courses.reviews.length;
+    }
+    
+    await courses?.save();
+
+    const notifications = {
+      title: "New Review Received",
+      message: `${req.user?.name} has given a review in ${courses?.name}`
+    }
+
+    // create notification
+    
+    res.status(200).json({
+      success: true,
+      courses
+    });
+
+    
   } catch (error: any) {
     next(new ErrorHandler(error.message, 500));
   }
