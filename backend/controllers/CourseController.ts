@@ -379,7 +379,11 @@ export const addReplyToReview = CatchAsyncError(async(req: Request, res:Response
       comment,
     }
 
-    course?.reviews.push(reviewData);
+    if(!review.commentReplies){
+      review.commentReplies = [];
+    }
+    // course?.reviews.push(reviewData);
+    review?.commentReplies?.push(reviewData);
 
     await course?.save()
 
