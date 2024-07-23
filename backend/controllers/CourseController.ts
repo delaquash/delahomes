@@ -297,7 +297,10 @@ interface IReviewData {
 
 export const addReview = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
   try {
-    const {review, rating, userID} = req.body as IReviewData;
+    const {review, rating} = req.body as IReviewData;
+    if(!review && !rating){
+      return next(new ErrorHandler("Please add a review and rating", 400));
+    }
     const userCourseList = req.user?.courses;
     const courseId = req.params.id;
 
@@ -347,7 +350,7 @@ export const addReview = CatchAsyncError(async(req: Request, res: Response, next
       courses
     });
 
-    
+
   } catch (error: any) {
     next(new ErrorHandler(error.message, 500));
   }

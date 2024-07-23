@@ -13,5 +13,7 @@ router.get("/get-courses", getAllCourse);
 router.get("/user-course-content/:id", isUserAuthenticated, getCourseByUser);
 router.post("/add-question",isUserAuthenticated, addQuestion);
 router.post("/add-answer", isUserAuthenticated, addAnswer);
-router.put("/add-review", isUserAuthenticated, addReview);
+router.put("/add-review/:id", isUserAuthenticated, addReview);
 export default router;
+
+// 08101638681
