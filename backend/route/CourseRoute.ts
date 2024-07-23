@@ -1,6 +1,6 @@
 import express from "express";
 import UploadImage from "../utils/CloudinaryStorage";
-import { uploadCourse, editCourse, getSingleCourse, getAllCourse, getCourseByUser, addQuestion, addAnswer, addReview } from "../controllers/CourseController";
+import { uploadCourse, editCourse, getSingleCourse, getAllCourse, getCourseByUser, addQuestion, addAnswer, addReview, addReplyToReview } from "../controllers/CourseController";
 import { validateMyCourseRequest } from "../middleware/validation";
 import { isUserAuthenticated, authorization } from "../middleware/auth";
 // import { jwtParse } from "../middleware/auth";
@@ -14,6 +14,7 @@ router.get("/user-course-content/:id", isUserAuthenticated, getCourseByUser);
 router.post("/add-question",isUserAuthenticated, addQuestion);
 router.post("/add-answer", isUserAuthenticated, addAnswer);
 router.put("/add-review/:id", isUserAuthenticated, addReview);
+router.put("/add-reply/", isUserAuthenticated, authorization("admin"), addReplyToReview);
 export default router;
 
 // 08101638681
