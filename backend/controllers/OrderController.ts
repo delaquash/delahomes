@@ -15,14 +15,20 @@ import User from "../models/userModel";
 
 
 export const createOrder = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
-    const {courseID, payment_info} = req.body as IOrder;
+    try {
+        const {courseID, payment_info} = req.body as IOrder;
 
     /* The line `const user = await User.findById(req.user?._id);` 
     is querying the database to find a user based on the `_id` 
     property of the `req.user` object. */
     const user = await User.findById(req.user?._id);
 
+    if(!user) return next(new ErrorHandler("User not found", 404));
+
+    const courseExistInUser = user?.courses.some((course: any)=>course._id.toString() === courseID);
+    if(!courseExistInUser) return next(new ErrorHandler("Course not found", 404));
     
-
-
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 500))
+    }
 })
