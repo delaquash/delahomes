@@ -175,8 +175,26 @@
                     <td>
                         Order #: <%= order._id %>
                     </td>
+                    <td>
+                        Order Date: <%= order.date %>
+                    </td>
                 </tr>
             </table>
+            <table style="width:90%; margin: auto; display: block">
+                <tr>
+                    <td class="first-td">Item</td>
+                    <td class="first-td">Quantity</td>
+                    <td class="first-td">Cost</td>
+                </tr>
+            </table>
+            <table style="width:90%; margin: auto; display: block">
+                <tr>
+                    <td class="second-td"><%= order.name %></td>
+                    <td class="second-td">1</td>
+                    <td class="second-td"><%= order.price %></td>
+                </tr>
+            </table>
+
         </div>
     </div>
 </body>
