@@ -13,7 +13,7 @@ import { RouteError } from  "./middleware/error";
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
 import courseRoute from "./route/CourseRoute";
-import productRoute from "./route/OrderRoute"
+import orderRoute from "./route/OrderRoute"
 import ErrorHandler from "./utils/errorHandler";
 
 const app = express();
@@ -53,6 +53,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/course", courseRoute);
+app.use("/api/v1/order", orderRoute)
 
 // error
 app.use(RouteError)

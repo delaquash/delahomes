@@ -12,17 +12,17 @@ import User from "../models/userModel";
 import ejs from "ejs";
 import path from "path";
 
-
-
 export const createOrder = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { courseID, payment_info } = req.body as IOrder;
+      console.log(courseID, "this is courseID")
 
       /* The line `const user = await User.findById(req.user?._id);` 
     is querying the database to find a user based on the `_id` 
     property of the `req.user` object. */
       const user = await User.findById(req.user?._id);
+      console.log(user, "this is user ID")
 
       if (!user) return next(new ErrorHandler("User not found", 404));
 
@@ -32,15 +32,18 @@ export const createOrder = CatchAsyncError(
       const courseExistInUser = user?.courses.some(
         (course: any) => course._id.toString() === courseID
       );
+      console.log(courseExistInUser, "this is existing user")
       if (!courseExistInUser)
         return next(new ErrorHandler("Course not found", 404));
 
       const course = await CourseModel.findById(courseID);
+      console.log(course)
       if (!course) return next(new ErrorHandler("Course not found", 404));
 
       const data: any = {
         userID: user?._id,
         courseID: course._id,
+        payment_info
       };
 
       createOrder(data, res, next);
@@ -49,7 +52,7 @@ export const createOrder = CatchAsyncError(
         order: {
           name: course.name,
           price: course.price,
-          _id: course._id.splice(0, 6),
+          _id: course._id.toString().splice(0, 6),
           date: new Date().toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
@@ -86,10 +89,8 @@ export const createOrder = CatchAsyncError(
         message: `You have a new order for ${course.name} course`,
       })
 
-      res.status(201).json({
-        success: true,
-        order: course
-      })
+      createOrder(data, res, next)
+     
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
