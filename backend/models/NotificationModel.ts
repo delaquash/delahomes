@@ -1,7 +1,6 @@
 require("dotenv").config();
 import mongoose, { Schema, Model, Document } from "mongoose";
 
-
 export interface INotification extends Document {
     title: string;
     message: string;
