@@ -166,8 +166,8 @@
             <h1>Your ELearning order is confirmed</h1>
             <p>And we're just as excited as you are.</p>
         </div>
-        <br>
-        <br>
+            <br>
+            <br>
         <div class="course-info">
             <h4>Here is what you ordered</h4>
             <table style="border-bottom: 1px solid #0000002f">
@@ -194,7 +194,23 @@
                     <td class="second-td"><%= order.price %></td>
                 </tr>
             </table>
-
+            <table class="table-row" style="border-top: 1px solid #00000029">
+                <tr>
+                    <td class="col-2">Subtotal</td>
+                    <td class="col-2">$<%= order.price %></td>
+                </tr>
+            </table>
+            <table class="table-row" style="margin-top: -20px;">
+                <tr>
+                    <td class="col-2">Total</td>
+                    <td class="col-2">$<%= order.price %></td>
+                </tr>
+                </table>
+        </div>
+        <div class="footer">
+                <p>If you have any question, please contact our support team at <a href="mailto:olaidemmanuel0@gmail.com">support@olaide.com</a></p>
+                <p>&copy: 2024 Elearning. All rights reserved.</p>
         </div>
     </div>
 </body>
+</html>
