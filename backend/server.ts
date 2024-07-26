@@ -13,7 +13,7 @@ import { RouteError } from  "./middleware/error";
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
 import courseRoute from "./route/CourseRoute";
-import productRoute from "./route/Products"
+import productRoute from "./route/OrderRoute"
 import ErrorHandler from "./utils/errorHandler";
 
 const app = express();
