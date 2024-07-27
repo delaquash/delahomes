@@ -2,13 +2,13 @@ require("dotenv").config();
 import mongoose, { Schema, Model, Document } from "mongoose";
 
 export interface IOrder extends Document {
-  courseID:string;
+  courseId:string;
   userID: string;
   payment_info: object
 }
 
 const orderSchema = new Schema<IOrder> ({
-  courseID: {
+  courseId: {
     type: String,
     required: true
   },

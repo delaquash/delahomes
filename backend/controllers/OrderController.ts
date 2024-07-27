@@ -15,14 +15,14 @@ import path from "path";
 export const createOrder = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { courseID, payment_info } = req.body as IOrder;
-      console.log(courseID, "this is courseID")
+      const { courseId, payment_info } = req.body as IOrder;
+    //   console.log(courseID, "this is courseID")
 
       /* The line `const user = await User.findById(req.user?._id);` 
     is querying the database to find a user based on the `_id` 
     property of the `req.user` object. */
       const user = await User.findById(req.user?._id);
-      console.log(user, "this is user ID")
+    //   console.log(user, "this is user ID")
 
       if (!user) return next(new ErrorHandler("User not found", 404));
 
@@ -30,14 +30,14 @@ export const createOrder = CatchAsyncError(
     courseID);` is checking if a course with a specific `courseID` exists in the `courses` array of
     the `user` object. */
       const courseExistInUser = user?.courses.some(
-        (course: any) => course._id.toString() === courseID
+        (course: any) => course._id.toString() === courseId
       );
-      console.log(courseExistInUser, "this is existing user")
+    //   console.log(courseExistInUser, "this is existing user")
       if (!courseExistInUser)
         return next(new ErrorHandler("Course not found", 404));
 
-      const course = await CourseModel.findById(courseID);
-      console.log(course)
+      const course = await CourseModel.findById(courseId);
+    //   console.log(course)
       if (!course) return next(new ErrorHandler("Course not found", 404));
 
       const data: any = {
@@ -45,6 +45,7 @@ export const createOrder = CatchAsyncError(
         courseID: course._id,
         payment_info
       };
+      console.log(data)
 
       createOrder(data, res, next);
 
