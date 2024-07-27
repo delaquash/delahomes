@@ -17,10 +17,10 @@ import orderRoute from "./route/OrderRoute"
 import ErrorHandler from "./utils/errorHandler";
 
 const app = express();
-app.use(cookieParser());
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.json({ limit: "50mb" }));
-
+app.use(cookieParser());
 
 
 app.use(cors({
