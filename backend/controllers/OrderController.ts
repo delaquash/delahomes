@@ -12,11 +12,16 @@ import User from "../models/userModel";
 import ejs from "ejs";
 import path from "path";
 
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
 export const createOrder = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { courseId, payment_info } = req.body as IOrder;
-    //   console.log(courseID, "this is courseID")
+      const { courseId, payment_info } = req.body;
+      console.log(courseId, "this is courseID")
 
       /* The line `const user = await User.findById(req.user?._id);` 
     is querying the database to find a user based on the `_id` 
@@ -32,13 +37,14 @@ export const createOrder = CatchAsyncError(
       const courseExistInUser = user?.courses.some(
         (course: any) => course._id.toString() === courseId
       );
-    //   console.log(courseExistInUser, "this is existing user")
+      console.log(courseExistInUser, "this is existing user")
       if (!courseExistInUser)
         return next(new ErrorHandler("Course not found", 404));
 
       const course = await CourseModel.findById(courseId);
-    //   console.log(course)
+      console.log(course)
       if (!course) return next(new ErrorHandler("Course not found", 404));
+
 
       const data: any = {
         userID: user?._id,
