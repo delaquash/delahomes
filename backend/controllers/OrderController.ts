@@ -17,7 +17,6 @@ export const createOrder = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { courseId, payment_info } = req.body;
-      // console.log(courseId, "this is courseID")
 
       /* The line `const user = await User.findById(req.user?._id);` 
     is querying the database to find a user based on the `_id` 
