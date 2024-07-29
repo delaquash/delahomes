@@ -24,7 +24,7 @@ export const createOrder = CatchAsyncError(
       const user = await User.findById(req.user?._id);
     //   console.log(user, "this is user ID")
 
-      if (!user) return next(new ErrorHandler("User not found", 404));
+      // if (!user) return next(new ErrorHandler("User not found", 404));
 
       /* The line `const courseExistInUser = user?.courses.some((course: any)=>course._id.toString() ===
     courseID);` is checking if a course with a specific `courseID` exists in the `courses` array of
@@ -33,8 +33,8 @@ export const createOrder = CatchAsyncError(
         (course: any) => course._id.toString() === courseId
       );
       // console.log(courseExistInUser, "this is existing user")
-      if (!courseExistInUser)
-        return next(new ErrorHandler("Course not found", 404));
+      if (courseExistInUser)
+        return next(new ErrorHandler("You have already purchased this course", 400));
 
       const course = await CourseModel.findById(courseId);
       if (!course) return next(new ErrorHandler("Course not found", 404));
@@ -45,15 +45,12 @@ export const createOrder = CatchAsyncError(
         courseId: course._id,
         payment_info
       };
-  
-
-      createOrder(data, res, next);
 
       const mailData = {
         order: {
           name: course.name,
           price: course.price,
-          _id: course._id.toString().splice(0, 6),
+          _id: course._id.toString().slice(0, 6),
           date: new Date().toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
@@ -88,7 +85,11 @@ export const createOrder = CatchAsyncError(
         userID: user?._id,
         title: "New Order",
         message: `You have a new order for ${course.name} course`,
-      })
+      });
+
+      course.purchased ? course.purchased +=1 : course.purchased;
+
+      await course.save();
 
       createOrder(data, res, next)
      
