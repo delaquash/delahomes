@@ -9,6 +9,7 @@ import { redis } from "../utils/redis";
 import sendEmail from "../utils/SendMail";
 import ejs from "ejs";
 import path from "path";
+import NotificationModel from "../models/NotificationModel";
 
 
 // To upload a course
@@ -188,6 +189,12 @@ export const addQuestion = CatchAsyncError(
 
       // add this question to our course content
       courseContent?.questions.push(newQuestion);
+
+      await NotificationModel.create({
+        userID:req.user?._id,
+        title: "New Question Received",
+        message: `You have a new order for ${courseContent.title} course`,
+      });
 
       // save the course
       await course?.save();
