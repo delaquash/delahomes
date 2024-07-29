@@ -51,10 +51,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Route
-app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/course", courseRoute);
