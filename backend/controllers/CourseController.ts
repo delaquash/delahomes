@@ -260,7 +260,12 @@ export const addAnswer = CatchAsyncError(
       await course?.save();
 
       if (req.user?._id === question.user._id) {
-        // create a notification
+        // create a notification'
+        await NotificationModel.create({
+          userID:req.user?._id,
+          title: "New Answer Received",
+          message: `You have a new order for ${courseContent.title} course`,
+        });
       } else {
         const data = {
           name: question.user.name,
