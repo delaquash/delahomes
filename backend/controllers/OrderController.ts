@@ -8,6 +8,7 @@ import User from "../models/userModel";
 import { getAllOrderServices } from "../services/Order.services";
 import ejs from "ejs";
 import path from "path";
+import { redis } from "../utils/redis";
 
 
 export const createOrder = CatchAsyncError(
@@ -98,11 +99,36 @@ export const createOrder = CatchAsyncError(
 
 
 // get all users ---only for admin
-export const getAllOrders = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
-  try {
-    getAllOrderServices(res)
-  } catch (error: any) {
-    return next(new ErrorHandler(error.message, 400))
+export const getAllOrders = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllOrderServices(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
   }
-})
+);
 
+
+export const deleteUser = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const user = await User.findOne({ id });
+
+      if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+      // delete from MongoDB
+      await User.deleteOne({ id });
+      // delete from redis
+      await redis.del(id);
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
