@@ -23,10 +23,10 @@ export const getUserByID = async (id: string, res: Response) => {
 };
 
 export const getAllUserServices = async (res: Response) => {
-  const AllUserJSON = await User.find().sort({ createdAt: -1 });
+  const users = await User.find().sort({ createdAt: -1 });
   res.status(201).json({
     success: true,
-    AllUserJSON,
+    users,
   });
 };
 

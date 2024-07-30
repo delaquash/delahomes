@@ -291,7 +291,7 @@ const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, 
 })
 
 // get all users ---only for admin
- const getAllUsers = CatchAsyncError(async( res: Response, next: NextFunction)=> {
+ const getAllUsers = CatchAsyncError(async( req: Request, res: Response, next: NextFunction)=> {
   try {
     getAllUserServices(res)
   } catch (error: any) {
@@ -313,7 +313,7 @@ const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, n
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const user = await User.findOne({ id });
+      const user = await User.findById(id);
 
       if (!user) {
         return next(new ErrorHandler("User not found", 404));
