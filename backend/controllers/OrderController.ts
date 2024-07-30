@@ -1,14 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import ErrorHandler from "../utils/errorHandler";
-import mongoose, { Mongoose } from "mongoose";
 import CourseModel from "../models/CourseModel";
 import NotificationModel from "../models/NotificationModel";
-import cloudinary from "cloudinary";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
-import { redis } from "../utils/redis";
-import { IOrder } from "../models/OrderModel"; 
 import sendEmail from "../utils/SendMail";
 import User from "../models/userModel";
+import { getAllOrderServices } from "../services/Order.services";
 import ejs from "ejs";
 import path from "path";
 
@@ -98,3 +95,14 @@ export const createOrder = CatchAsyncError(
     }
   }
 );
+
+
+// get all users ---only for admin
+const getAllOrders = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+  try {
+    getAllOrderServices(res)
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400))
+  }
+})
+
