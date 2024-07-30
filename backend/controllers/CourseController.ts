@@ -418,7 +418,7 @@ export const getAllCourses = CatchAsyncError(async(req: Request, res: Response, 
 })
 
 // delete course
-const deleteCourse = CatchAsyncError(
+export const deleteCourse = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
