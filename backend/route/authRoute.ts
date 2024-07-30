@@ -2,8 +2,6 @@ import express from "express";
 import { signin, signout, socialAuth } from "../controllers/authController";
 import { isUserAuthenticated } from "../middleware/auth";
 
-// import { admin } from "../middleware/auth";
-
 const router = express.Router();
 
 router.post("/signin",  signin);
