@@ -1,5 +1,5 @@
 import express from "express";
-import { activateUser,updateUserByAdmin,getAllUsers, getUserInfo, RegisterUser,  updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo } from "../controllers/userController";
+import {deleteUser, activateUser,updateUserByAdmin,getAllUsers, getUserInfo, RegisterUser,  updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo } from "../controllers/userController";
 
 // import {  admin } from "../middleware/auth";
 
@@ -16,6 +16,7 @@ router.put("/update-user-info", isUserAuthenticated, updateUserInfo);
 router.put("/update-user-password", isUserAuthenticated, updatePassword)
 router.put("/update-profile-avatar", isUserAuthenticated, updateProfilePicture)
 router.get("/get-all-user", isUserAuthenticated,authorization("admin"), getAllUsers)
-router.put("/admin-update-user", isUserAuthenticated,authorization("admin"), updateUserByAdmin)
+router.put("/admin-update-user", isUserAuthenticated,authorization("admin"), updateUserByAdmin);
+router.put("/deleteuser", isUserAuthenticated,authorization("admin"), deleteUser);
 
 export default router;
