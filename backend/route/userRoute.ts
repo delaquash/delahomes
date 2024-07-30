@@ -1,10 +1,10 @@
 import express from "express";
-import { activateUser, getUserInfo, RegisterUser,  updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo } from "../controllers/userController";
+import { activateUser,getAllUsers, getUserInfo, RegisterUser,  updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo } from "../controllers/userController";
 
 // import {  admin } from "../middleware/auth";
 
 import { ExpressValidator } from "../middleware/validation";
-import { isUserAuthenticated } from "../middleware/auth";
+import { authorization, isUserAuthenticated } from "../middleware/auth";
 
 const router = express.Router();
 
@@ -15,5 +15,6 @@ router.get("/me", isUserAuthenticated, getUserInfo);
 router.put("/update-user-info", isUserAuthenticated, updateUserInfo);
 router.put("/update-user-password", isUserAuthenticated, updatePassword)
 router.put("/update-profile-avatar", isUserAuthenticated, updateProfilePicture)
+router.get("/get-all-user", isUserAuthenticated,authorization("admin"), getAllUsers)
 
 export default router;
