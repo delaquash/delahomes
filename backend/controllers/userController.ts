@@ -10,7 +10,7 @@ import ejs from "ejs";
 import path from "path";
 import sendEmail from "../utils/SendMail";
 import { redis } from "../utils/redis";
-import { getUserByID } from "../services/user.service";
+import { getAllUserServices, getUserByID } from "../services/user.service";
 import cloudinary from "cloudinary";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 
@@ -290,6 +290,14 @@ const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, 
   }
 })
 
+// get all users ---only for admin
+export const getAllUsers = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+  try {
+    getAllUserServices(res)
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400))
+  }
+})
 
 
 export {
