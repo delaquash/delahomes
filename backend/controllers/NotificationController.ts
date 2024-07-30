@@ -44,7 +44,7 @@ export const updateNotification = CatchAsyncError(async(req: Request, res: Respo
 })
 
 // delete notification by admin only
-cron.schedule("0, 0, 0, *, *, *", async()=> {
+cron.schedule("0 0 0 * * *", async()=> {
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
     await NotificationModel.deleteMany({status: "read", createdAt: {$lt: thirtyDaysAgo}})
     console.log("Read notifications deleted")
