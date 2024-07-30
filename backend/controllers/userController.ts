@@ -309,6 +309,29 @@ const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, n
   }
 })
 
+ const deleteUser = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const user = await User.findOne({ id });
+
+      if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+      // delete from MongoDB
+      await User.deleteOne({ id });
+      // delete from redis
+      await redis.del(id);
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
 export {
   RegisterUser,
   activateUser,
@@ -318,7 +341,8 @@ export {
   updatePassword,
   updateProfilePicture,
   getAllUsers,
-  updateUserByAdmin
+  updateUserByAdmin,
+  deleteUser
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
