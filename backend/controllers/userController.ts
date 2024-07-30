@@ -291,7 +291,7 @@ const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, 
 })
 
 // get all users ---only for admin
-export const getAllUsers = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+ const getAllUsers = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
   try {
     getAllUserServices(res)
   } catch (error: any) {
@@ -307,7 +307,8 @@ export {
   getUserInfo,
   updateUserInfo, 
   updatePassword,
-  updateProfilePicture
+  updateProfilePicture,
+  getAllUsers
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
