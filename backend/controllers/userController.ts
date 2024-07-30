@@ -10,7 +10,7 @@ import ejs from "ejs";
 import path from "path";
 import sendEmail from "../utils/SendMail";
 import { redis } from "../utils/redis";
-import { getAllUserServices, getUserByID } from "../services/user.service";
+import { getAllUserServices, getUserByID, updateUserRoleServices } from "../services/user.service";
 import cloudinary from "cloudinary";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 
@@ -291,7 +291,7 @@ const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, 
 })
 
 // get all users ---only for admin
- const getAllUsers = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+ const getAllUsers = CatchAsyncError(async( res: Response, next: NextFunction)=> {
   try {
     getAllUserServices(res)
   } catch (error: any) {
@@ -299,6 +299,15 @@ const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, 
   }
 })
 
+// update user --- only for admin
+const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, next: NextFunction)=>{
+  try {
+    const { id, role } = req.body
+    updateUserRoleServices(res, id, role)
+  } catch (error: any) {
+    return next(new ErrorHandler(error.message, 400))
+  }
+})
 
 export {
   RegisterUser,
@@ -308,7 +317,8 @@ export {
   updateUserInfo, 
   updatePassword,
   updateProfilePicture,
-  getAllUsers
+  getAllUsers,
+  updateUserByAdmin
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
