@@ -15,7 +15,7 @@ router.post("/add-question",isUserAuthenticated, addQuestion);
 router.post("/add-answer", isUserAuthenticated, addAnswer);
 router.put("/add-review/:id", isUserAuthenticated, addReview);
 router.put("/add-reply/", isUserAuthenticated, authorization("admin"), addReplyToReview);
-router.put("/get-all-courses/", isUserAuthenticated, authorization("admin"), getAllCourses);
+router.get("/get-all-courses", isUserAuthenticated, authorization("admin"), getAllCourses);
 export default router;
 
 
