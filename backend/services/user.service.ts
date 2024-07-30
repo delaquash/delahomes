@@ -2,7 +2,6 @@ import { Response } from "express";
 import { redis } from "../utils/redis";
 import User from "../models/userModel";
 
-
 /**
  * The function `getUserByID` retrieves a user by ID from a Redis database and sends a JSON response
  * with the user data if found.
@@ -23,11 +22,24 @@ export const getUserByID = async (id: string, res: Response) => {
   }
 };
 
-
-export const getAllUserServices = async(res: Response) => {
+export const getAllUserServices = async (res: Response) => {
   const AllUserJSON = await User.find().sort({ createdAt: -1 });
   res.status(201).json({
     success: true,
-    AllUserJSON
-  })
-}
+    AllUserJSON,
+  });
+};
+
+export const updateUserProfileServices = async (
+  res: Response,
+  id: string,
+  role: string
+) => {
+  const updateProfile = await User.findById(
+    id,
+    { role },
+    {
+      new: true,
+    }
+  );
+};
