@@ -1,8 +1,9 @@
 import express from "express";
 
 import { isUserAuthenticated, authorization } from "../middleware/auth";
-import { generateUserAnalytics } from "../controllers/analyticsController";
+import { generateCourseAnalytics, generateUserAnalytics } from "../controllers/analyticsController";
 
 const router = express.Router();
-router.get("/analytics", generateUserAnalytics)
+router.get("/get-user-analytics", isUserAuthenticated, authorization("admin"), generateUserAnalytics);
+router.get("/get-course-analytics", isUserAuthenticated, authorization("admin"), generateCourseAnalytics);
 export default router;
