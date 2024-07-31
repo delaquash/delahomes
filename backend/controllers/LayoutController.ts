@@ -9,6 +9,13 @@ import cloudinary from "cloudinary";
 export const createLayout = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=>{
     try {
         const { type } = req.body;
+        const isAnyTypeExist = await LayoutModel.findOne({ type });
+
+        if (isAnyTypeExist) {
+            return next(new ErrorHandler(`${type} already exist`, 400));
+            }
+
+
         if(type === "Banner"){
             const { title, image, subTitle } = req.body;
             const myCloud = await cloudinary.v2.uploader.upload(image, {
@@ -27,12 +34,33 @@ export const createLayout = CatchAsyncError(async(req: Request, res: Response, n
 
         if(type === "FAQ"){
             const { faq } = req.body;
-            await LayoutModel.create(faq)
+            const faqItems = await Promise.all(
+                faq.map(async(item: any) => {
+                    return {
+                        question: item.question,
+                        answer: item.answer
+                        }
+                    })
+            )
+            await LayoutModel.create({
+                type: "FAQ",
+                faq: faqItems
+            })
         }
 
         if(type === "Categories"){
             const { categories } = req.body;
-            await LayoutModel.create(categories)
+            const categoriesItems = await Promise.all(
+                categories.map(async(category: any) => {
+                    return {
+                        title: category.title
+                    }
+                })
+            )
+            await LayoutModel.create({
+                type: "Categories",
+                categories: categoriesItems
+            })
         }
 
         res.status(201).json({
