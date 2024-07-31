@@ -5,14 +5,14 @@ import { IUser } from "../types/ModelTypes/UserModel";
 interface IComment extends Document {
   user: IUser;
   question: string;
-  questionReplies? : IComment[]; 
+  questionReplies?: IComment[];
 }
 
 interface IReview extends Document {
   user: IUser;
   rating: number;
   comment: string;
-  commentReplies?: IComment[]
+  commentReplies?: IComment[];
 }
 
 interface ILink extends Document {
@@ -30,7 +30,7 @@ interface ICourseData extends Document {
   videoPlayers: string;
   links: ILink[];
   suggestion: string;
-  questions:IComment[]
+  questions: IComment[];
 }
 
 interface ICourse extends Document {
@@ -42,8 +42,8 @@ interface ICourse extends Document {
   tags: string;
   level: string;
   demoUrl: string;
-  benefits: {title: string}[];
-  prerequisites: {title: string}[];
+  benefits: { title: string }[];
+  prerequisites: { title: string }[];
   reviews: IReview[];
   courseData: ICourseData[];
   ratings?: number;
@@ -53,21 +53,21 @@ const reviewSchema = new Schema<IReview>({
   user: Object,
   rating: {
     type: Number,
-    default: 0
+    default: 0,
   },
   comment: String,
-  commentReplies: [Object]
+  commentReplies: [Object],
 });
 
 const linkSchema = new Schema<ILink>({
   title: String,
-  url: String
+  url: String,
 });
 
 const commentSchema = new Schema<IComment>({
   user: Object,
   question: String,
-  questionReplies: [Object]
+  questionReplies: [Object],
 });
 
 const courseDataSchema = new Schema<ICourseData>({
@@ -80,62 +80,63 @@ const courseDataSchema = new Schema<ICourseData>({
   videoLength: Number,
   videoPlayers: String,
   suggestion: String,
-  questions: [commentSchema]
+  questions: [commentSchema],
 });
 
-const courseSchema = new Schema<ICourse>({
-  name: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  price: {
-    type: Number,
-    required: true
-  },
-  estimatedPrice: {
-    type: Number
-  },
-  thumbnail: {
-    public_id: {
-      type: String,
-      // required: true
-    },
-    url: {
-      type: String,
-      // required: true
-    }
-  },
-  tags: {
-    type: String,
-    required: true
-  },
-  level: {
-    type: String,
-    required: true
-  },
-  demoUrl: {
-    type: String,
-    required: true
-  },
-  benefits: [{ title: String }],
-  prerequisites: [{ title: String }],
-  reviews: [reviewSchema],
-  courseData: [courseDataSchema],
-  ratings: {
-    type: Number,
-    default: 0
-  },
-  purchased: {
-    type: Number,
-    default: 0
-  }
-},
+const courseSchema = new Schema<ICourse>(
   {
-    timestamps: true
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    estimatedPrice: {
+      type: Number,
+    },
+    thumbnail: {
+      public_id: {
+        type: String,
+        // required: true
+      },
+      url: {
+        type: String,
+        // required: true
+      },
+    },
+    tags: {
+      type: String,
+      required: true,
+    },
+    level: {
+      type: String,
+      required: true,
+    },
+    demoUrl: {
+      type: String,
+      required: true,
+    },
+    benefits: [{ title: String }],
+    prerequisites: [{ title: String }],
+    reviews: [reviewSchema],
+    courseData: [courseDataSchema],
+    ratings: {
+      type: Number,
+      default: 0,
+    },
+    purchased: {
+      type: Number,
+      default: 0,
+    },
+  },
+  {
+    timestamps: true,
   }
 );
 
