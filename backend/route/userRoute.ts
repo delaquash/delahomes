@@ -1,7 +1,16 @@
 import express from "express";
-import {deleteUser, activateUser,updateUserByAdmin,getAllUsers, getUserInfo, RegisterUser,  updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo } from "../controllers/userController";
-
-// import {  admin } from "../middleware/auth";
+import {
+    deleteUser, 
+    activateUser,
+    updateUserByAdmin,
+    getAllUsers, 
+    getUserInfo, 
+    RegisterUser,  
+    updateAccessToken, 
+    updatePassword,
+    updateProfilePicture, 
+    updateUserInfo 
+} from "../controllers/userController";
 
 import { ExpressValidator } from "../middleware/validation";
 import { authorization, isUserAuthenticated } from "../middleware/auth";

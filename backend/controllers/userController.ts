@@ -14,12 +14,6 @@ import { getAllUserServices, getUserByID, updateUserRoleServices } from "../serv
 import cloudinary from "cloudinary";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 
-// Extend the Express Request interface to include the user property
-// declare module "express" {
-//   interface Request {
-//     user?: any; // Replace 'any' with the actual type of your user object
-//   }
-// }
 
 interface IRegistrationBody {
   name: string;
