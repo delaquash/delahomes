@@ -15,6 +15,7 @@ import userRoute from "./route/userRoute";
 import courseRoute from "./route/CourseRoute";
 import orderRoute from "./route/OrderRoute"
 import notificationRoute from "./route/NotificationRoute";
+import analyticsRoute from "./route/analyticsRouter";
 import ErrorHandler from "./utils/errorHandler";
 
 const app = express();
@@ -57,6 +58,7 @@ app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/notifications", notificationRoute);
 app.use("/api/v1/order", orderRoute);
+app.use("/api/v1/analytics", analyticsRoute);
 
 // error
 app.use(RouteError)
