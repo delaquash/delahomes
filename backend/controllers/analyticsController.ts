@@ -4,6 +4,7 @@ import { CatchAsyncError } from "../middleware/CatchAsyncError";
 import User from "../models/userModel";
 import { generateLast12MonthsData } from "../utils/analytics.generator";
 import CourseModel from "../models/CourseModel";
+import OrderModel from "../models/OrderModel";
 
 export const generateUserAnalytics = CatchAsyncError(async(req: Request, res: Response, next:NextFunction)=> {
     try {
@@ -23,6 +24,20 @@ export const generateCourseAnalytics = CatchAsyncError(async(req: Request, res: 
         res.status(200).json({
             success: true,
             course
+        })
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 500));
+      }
+})
+
+
+
+export const generateOrderAnalytics = CatchAsyncError(async(req: Request, res: Response, next:NextFunction)=> {
+    try {
+        const order = generateLast12MonthsData(OrderModel)
+        res.status(200).json({
+            success: true,
+            order
         })
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 500));
