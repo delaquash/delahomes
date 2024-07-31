@@ -3,7 +3,6 @@ import { NextFunction, Request, Response } from "express";
 import User from "../models/userModel";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
 import ErrorHandler from "../utils/errorHandler";
-import Restaurant from "../models/restaurant";
 import { IUser } from "../types/ModelTypes/UserModel";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import ejs from "ejs";
@@ -64,7 +63,7 @@ const RegisterUser = CatchAsyncError(
         return next(new ErrorHandler(error.message, 400));
       }
     } catch (error: any) {
-      return next(new ErrorHandler(error.message, 400));
+      return next(new ErrorHandler(error.message, 500));
     }
   }
 );
