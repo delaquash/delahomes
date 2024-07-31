@@ -7,15 +7,16 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
 
 import { v2 as cloudinary } from "cloudinary";
-import { RouteError } from  "./middleware/error";
+import { RouteError } from "./middleware/error";
 
 // route
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
 import courseRoute from "./route/CourseRoute";
-import orderRoute from "./route/OrderRoute"
+import orderRoute from "./route/OrderRoute";
 import notificationRoute from "./route/NotificationRoute";
 import analyticsRoute from "./route/analyticsRouter";
+import layoutRoute from "./route/layoutRoute";
 import ErrorHandler from "./utils/errorHandler";
 
 const app = express();
@@ -25,9 +26,11 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-}));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -59,9 +62,10 @@ app.use("/api/v1/course", courseRoute);
 app.use("/api/v1/notifications", notificationRoute);
 app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/analytics", analyticsRoute);
+app.use("/api/v1/layout", layoutRoute);
 
 // error
-app.use(RouteError)
+app.use(RouteError);
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || "Something went wrong";
