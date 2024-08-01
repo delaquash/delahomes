@@ -76,27 +76,27 @@ export const editLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { type } = req.body;
-      if (type === "Banner") {
-        const bannerData: any = await LayoutModel.findOne({ type: "Banner" });
-        const { image, title, subTitle } = req.body;
-        if (bannerData) {
-          await cloudinary.v2.uploader.destroy(bannerData.image.public_id);
-          const myCloud = await cloudinary.v2.uploader.upload(image, {
-            folder: "layout",
-          });
+            if (type === "Banner") {
+                const bannerData: any = await LayoutModel.findOne({ type: "Banner" });
+                const { image, title, subTitle } = req.body;
+                if (bannerData) {
+                        await cloudinary.v2.uploader.destroy(bannerData.image.public_id);
+                        const myCloud = await cloudinary.v2.uploader.upload(image, {
+                            folder: "layout",
+                        });
 
-          const banner = {
-            type: "Banner",
-            image: {
-              public_id: myCloud.public_id,
-              url: myCloud.secure_url,
-            },
-            title,
-            subTitle,
-          };
-          await LayoutModel.findByIdAndUpdate(bannerData._id, { banner });
-        }
-
+                            const banner = {
+                                type: "Banner",
+                                image: {
+                                public_id: myCloud.public_id,
+                                url: myCloud.secure_url,
+                                },
+                                title,
+                                subTitle,
+                            };
+                            await LayoutModel.findByIdAndUpdate(bannerData._id, { banner });
+                }
+            }
         if (type === "FAQ") {
           const { faq } = req.body;
           const FaqItem = await LayoutModel.findOne({ type: "FAQ" });
@@ -108,31 +108,29 @@ export const editLayout = CatchAsyncError(
               };
             })
           );
-          await LayoutModel.findByIdAndUpdate(FaqItem?._id, {
+         await LayoutModel.findByIdAndUpdate(FaqItem?._id, {
             faq: faqItems,
             type: "FAQ",
           });
         }
-        if (type === "Categories") {
-          const { categories } = req.body;
-          const categoriesData = await LayoutModel.findOne({
-            type: "Categories",
-          });
-          const categoriesItems = await Promise.all(
-            categories.map(async (category: any) => {
-              return {
-                title: category.title,
-              };
-            })
-          );
-          await LayoutModel.findByIdAndUpdate(categoriesData?._id, {
-            categories: categoriesItems,
-            type: "Categories",
-          });
-        }
-      }
+              
+    
+        res.status(201).json({
+        status: "success",
+        message: "Update layout created successfully",
+        // data: updatedFAQ
+      });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
   }
 );
+
+
+export const editLayoutType = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+    try {
+        const layoutType = await LayoutModel.findOne(req.body.type)
+    } catch (error) {
+        
+    }
+})
