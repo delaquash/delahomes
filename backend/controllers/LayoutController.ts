@@ -96,7 +96,7 @@ export const editLayout = CatchAsyncError(async(req: Request, res: Response, nex
                     title,
                     subTitle
                 }
-                await LayoutModel.findByIdAndUpdate(bannerData._id, (banner))
+                await LayoutModel.findByIdAndUpdate(bannerData._id, {banner})
             }
 
             if( type === "FAQ"){
@@ -111,9 +111,22 @@ export const editLayout = CatchAsyncError(async(req: Request, res: Response, nex
                     })
                 )
                 await LayoutModel.findByIdAndUpdate(FaqItem?._id, {
-                    faq: faqItems
+                    faq: faqItems,
                     type: "FAQ"
                 })
+            }
+            if(type === "Categories"){
+                const { categories } = req.body;
+                const categoriesData = await LayoutModel.findOne({
+                    type: "Categories"
+                })
+                const categoriesItems = await Promise.all(
+                    categories.map(async (category: any) => {
+                        return {
+                            title: category.title,
+                        }
+                    })
+                )
             }
         }
     } catch (error: any) {
