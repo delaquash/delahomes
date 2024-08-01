@@ -9,7 +9,7 @@ import connectDB from "./config/db";
 import { v2 as cloudinary } from "cloudinary";
 import { RouteError } from "./middleware/error";
 
-// route
+// imported route
 import authRoute from "./route/authRoute";
 import userRoute from "./route/userRoute";
 import courseRoute from "./route/CourseRoute";
@@ -19,24 +19,28 @@ import analyticsRoute from "./route/analyticsRouter";
 import layoutRoute from "./route/layoutRoute";
 import ErrorHandler from "./utils/errorHandler";
 
+// middlewares
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
+
+// cors
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
   })
 );
 
+// cloudinary config
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -72,8 +76,10 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   return res.status(status).json({ message, status, success: false });
 });
 
+// DB Connection
 connectDB();
 
+// Port
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
