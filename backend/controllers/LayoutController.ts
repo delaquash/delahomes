@@ -9,8 +9,8 @@ export const createLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { type } = req.body;
+      
       const isAnyTypeExist = await LayoutModel.findOne({ type });
-
       if (isAnyTypeExist) {
         return next(new ErrorHandler(`${type} already exist`, 400));
       }
@@ -48,21 +48,21 @@ export const createLayout = CatchAsyncError(
       }
 
       if (type === "Categories") {
-        const { categories } = req.body;
-        const categoriesItems = await Promise.all(
-          categories.map(async (category: any) => {
-            return {
-              title: category.title,
-            };
-          })
-        );
-        await LayoutModel.create({
-          type: "Categories",
-          categories: categoriesItems,
-        });
-      }
+            const { categories } = req.body;
+            const categoriesItems = await Promise.all(
+                categories.map(async (category: any) => {
+                    return {
+                        title: category.title,
+                    };
+                })
+            );
+            await LayoutModel.create({
+                type: "Categories",
+                categories: categoriesItems,
+            });
+        }
 
-      res.status(201).json({
+      res.status(200).json({
         status: "success",
         message: "Layout created successfully",
       });
@@ -115,7 +115,7 @@ export const editLayout = CatchAsyncError(
         }
               
     
-        res.status(201).json({
+        res.status(200).json({
         status: "success",
         message: "Update layout created successfully",
         // data: updatedFAQ
@@ -127,10 +127,42 @@ export const editLayout = CatchAsyncError(
 );
 
 
-export const editLayoutType = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+export const getLayout = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
     try {
-        const layoutType = await LayoutModel.findOne(req.body.type)
-    } catch (error) {
-        
-    }
+        const { type } = req.body;
+        const layout = await LayoutModel.findOne({type})
+    
+        res.status(201).json({
+            status: "success",
+             layout
+        })
+    } catch  (error: any) {
+        return next(new ErrorHandler(error.message, 500));
+      }
 })
+
+export const deleteLayout = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { type } = req.body;
+      // Find the layout document by type
+      const layout = await LayoutModel.findOne({ type });
+    //   if (!layout) {
+    //     return next(new ErrorHandler(`No layout found with type ${type}`, 404));
+    //   }
+      if (type === "FAQ" || type === "Categories") {
+        await LayoutModel.deleteOne({ type });
+      }
+
+      // Delete the layout document
+      await LayoutModel.deleteOne({ type });
+
+      res.status(200).json({
+        status: "success",
+        message: `${type} layout deleted successfully`,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);

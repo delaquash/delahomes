@@ -22,7 +22,7 @@ interface Layout extends Document {
   banner: {
     image: BannerImage;
     title: string;
-    subTitile: string;
+    subTitle: string;
   };
 }
 
@@ -50,7 +50,7 @@ const bannerImageSchema = new Schema<BannerImage>({
   },
 });
 
-const layoutSchema = new Schema({
+const layoutSchema = new Schema<Layout>({
   type: {
     type: String,
   },
@@ -61,10 +61,10 @@ const layoutSchema = new Schema({
     title: {
       type: String,
     },
-    subTitile: {
+    subTitle: {
       type: String,
     },
   },
 });
 
-export const LayoutModel = model("Layout", layoutSchema);
+export const LayoutModel = model<Layout>("Layout", layoutSchema);
