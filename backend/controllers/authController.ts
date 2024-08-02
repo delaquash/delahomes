@@ -10,6 +10,7 @@ import { createActivationToken } from "./userController";
 import ejs from "ejs";
 import path from "path";
 import sendEmail from "../utils/SendMail";
+import { IUser } from "../types/ModelTypes/UserModel";
 
 const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
   const access_token = req.cookies.access_token;
