@@ -14,66 +14,14 @@ import cloudinary from "cloudinary";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 
 
-interface IRegistrationBody {
-  name: string;
-  email: string;
-  password: string;
-  avatar?: string;
-}
 
-const RegisterUser = CatchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { name, email, password } = req.body;
-      const isEmailExist = await User.findOne({ email });
-      if (isEmailExist) {
-        return next(new ErrorHandler("Email already exist", 400));
-      }
-      const user: IRegistrationBody = {
-        name,
-        email,
-        password,
-      };
-
-      const activationToken = createActivationToken(user);
-
-      const activationCode = activationToken.activationCode;
-
-      const data = { user: { name: user.name }, activationCode };
-      
-      const html = await ejs.renderFile(
-        path.join(__dirname, "../mail/activation-mail.ejs"),data
-      );
-      console.log("This is html")
-      try {
-        await sendEmail({
-          email: user.email,
-          subject: "Account Activation",
-          template: "activation-mail.ejs",
-          data
-        });
-        console.log(user.email)
-        res.status(201).json({
-          success: true,
-          message:
-            `User created successfully! Please check your mail: ${user.email} to activate`,
-          activationToken: activationToken.token,
-        });
-      } catch (error:any) {
-        return next(new ErrorHandler(error.message, 400));
-      }
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  }
-);
 
 interface IActivationToken {
   token: string;
   activationCode: string;
 }
 
-const createActivationToken = (user: any): IActivationToken => {
+export const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
   const token = jwt.sign(
     { activationCode, user },
@@ -328,7 +276,6 @@ const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, n
 );
 
 export {
-  RegisterUser,
   activateUser,
   updateAccessToken,
   getUserInfo,
