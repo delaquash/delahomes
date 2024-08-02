@@ -5,7 +5,6 @@ import {
   updateUserByAdmin,
   getAllUsers,
   getUserInfo,
-  RegisterUser,
   updateAccessToken,
   updatePassword,
   updateProfilePicture,
@@ -17,7 +16,7 @@ import { authorization, isUserAuthenticated } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/registeruser", RegisterUser);
+
 router.post("/activate-user", activateUser);
 router.get("/refresh_token", updateAccessToken);
 router.get("/me", isUserAuthenticated, getUserInfo);
