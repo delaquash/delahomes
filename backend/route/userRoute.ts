@@ -17,7 +17,7 @@ import { authorization, isUserAuthenticated } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/registeruser", ExpressValidator, RegisterUser);
+router.post("/registeruser", RegisterUser);
 router.post("/activate-user", activateUser);
 router.get("/refresh_token", updateAccessToken);
 router.get("/me", isUserAuthenticated, getUserInfo);
