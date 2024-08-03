@@ -9,12 +9,10 @@ jest.mock('../models/userModel');
 const app = express();
 app.use(express.json());
 
-
-
 require("dotenv").config();
 app.use("/api/v1/auth", authRoute);
 
-describe("POST /api/v1/auth", ()=> {
+describe("POST /api/v1/auth/signin", ()=> {
     it('should return 400 if email or password is missing', async () => {
       const response = await request(app).post('/api/v1/auth/signin').send({});
       expect(response.status).toBe(400);
@@ -52,4 +50,12 @@ describe("POST /api/v1/auth", ()=> {
         .send(mockUser)
         expect(200);
     })
+})
+
+
+describe("DELETE /api/v1/auth/signout",()=> {
+  it("should return a 400 if user is not logged in", async ()=> {
+    const response = await request(app).delete('/api/v1/auth/signout').send();
+    expect(response.status).toBe(400);
+  })
 })
