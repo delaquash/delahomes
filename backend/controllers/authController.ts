@@ -129,15 +129,16 @@ const signin = CatchAsyncError( async (req: Request, res: Response, next: NextFu
       return next(new ErrorHandler("Please enter email and password", 400));
     }
     
-    const validUser = await User.findOne({ email })./* In the provided code snippet, the `select`
+    /* In the provided code snippet, the `select`
     method is used in a Mongoose query to explicitly
     include or exclude certain fields from the query
     result. */
+    const validUser = await User.findOne({ email }).
     select("+password");
     if (!validUser) return next(new ErrorHandler( "User not found...", 404,));
 
     const isComparePassword = await validUser.comparePassword(password);
-    if (!isComparePassword) return next(new ErrorHandler("Password is incorrect...", 404,));
+    if (!isComparePassword) return next(new ErrorHandler("Password is incorrect...", 400,));
     
     sendToken(validUser, 200, res)
   } catch (error:any) {

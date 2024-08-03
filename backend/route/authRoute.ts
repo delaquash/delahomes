@@ -12,3 +12,4 @@ router.post("/social-auth", socialAuth);
 router.get("/signout", isUserAuthenticated, signout);
 
 export default router;
+
