@@ -50,6 +50,15 @@ describe("POST /api/v1/auth/signin", ()=> {
         .send(mockUser)
         expect(200);
     })
+
+
+    it.only('should return 500 if there is a server error', async () => {
+      (User.findOne as jest.Mock).mockRejectedValue(new Error('Server error'));
+  
+      const response = await request(app).post('/api/signin').send({ email: 'test@example.com', password: 'password123' });
+      expect(500);
+      expect(response.body.message).toBe('Server error');
+    });
 })
 
 
