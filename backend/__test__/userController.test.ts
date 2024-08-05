@@ -1,9 +1,25 @@
-// import request from "supertest";
-// import express from "express";
-// import userRoute from "../route/userRoute";
+import request from "supertest";
+import express from "express";
+import userRoute from "../route/userRoute";
+import mongoose from "mongoose";
 
-// const app = express();
-// app.use(express.json());
+const app = express();
+app.use(express.json());
+
+describe("User ", () => {
+       beforeEach(async () => {
+        try {
+         await mongoose.connect(String(process.env.MONGO_URI_TEST));
+        } catch (error: any) {
+          console.log(error.message);
+        }
+      });
+    
+      afterEach(async () => {
+        await mongoose.disconnect();
+        await mongoose.connection.close();
+     });
+});
 
 // app.use("/api/v1/user", userRoute);
 
