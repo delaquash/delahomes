@@ -1,31 +1,89 @@
-import mongoose from "mongoose";
-import { UserSchemaProps } from "../types/ModelTypes/UserModel";
+require("dotenv").config();
+import mongoose, { Schema, Model, Document } from "mongoose";
+import bcrypt from "bcryptjs";
+import { IUser } from "../types/ModelTypes/UserModel";
+import jwt from "jsonwebtoken";
+const emailRegexPattern: RegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const userSchema = new mongoose.Schema(
-  {
-    username: {
+const UserSchema = new mongoose.Schema({
+    name: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, "Please enter your name.."]
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      validate: {
+        validator: function (value: string) {
+          return emailRegexPattern.test(value)
+      },
+      message: "Please enter a valid email.."
+      }
     },
     password: {
       type: String,
-      required: true,
+      // required: [true, "Please enter your password.."],
+      minlength: [6, "Password must be at least 6 characters.."],
+      /* The `select: false` option in Mongoose schema is used to specify that a particular field
+      should not be returned by default when querying the database. This means that when you query
+      for documents of this schema, the field marked with `select: false` will not be included in
+      the results unless explicitly requested. */
+      select: false
     },
-    avatar: {
+    role: {
       type: String,
-      default:
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      default: "user"
     },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+    courses: [
+      {
+        courseId: String
+      }
+    ],
+    avatar:{
+      public_id: String,
+      url: String
+    }
+    
+    
   },
   { timestamps: true }
 );
 
-const User = mongoose.model<UserSchemaProps>("User", userSchema);
+// Hash the password
+UserSchema.pre<IUser>("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  })
+// Access Token
+UserSchema.methods.SignAccessToken = function () {
+  return jwt.sign({ id: this._id}, process.env.ACCESS_TOKEN || "", {
+    expiresIn: "2h"
+  })
+}
 
+// Refresh Token
+UserSchema.methods.SignRefreshToken = function () {
+  return jwt.sign({ id: this._id}, process.env.REFRESH_TOKEN || "", {
+    expiresIn: "5d"
+  })
+  }
+
+// Compare the password
+UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean>{
+  return await bcrypt.compare(candidatePassword, this.password);
+  }
+
+
+const User = mongoose.model<IUser>("User", UserSchema);
 export default User;
+
+
+
