@@ -8,7 +8,7 @@
     "dev": "nodemon server.ts",
     "start": "nodemon server.ts",
     "compile": "tsc",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --detectOpenHandles",
     "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "author": "Olaide Emmanuel",

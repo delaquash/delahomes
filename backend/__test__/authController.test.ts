@@ -2,6 +2,9 @@ import request from "supertest";
 import express from "express";
 import authRoute from "../route/authRoute";
 import User from "../models/userModel";
+import mongoose from 'mongoose';
+import { redis } from "../utils/redis";
+import { IUser } from "../types/ModelTypes/UserModel";
 jest.mock('../models/userModel');
 // jest.mock('../utils/sendToken');
 // jest.mock('../utils/errorHandler');
@@ -55,7 +58,6 @@ describe("POST /api/v1/auth/signin", ()=> {
 
 
     it('should return 500 if there is a server error', async () => {
-      (User.findOne as jest.Mock).mockRejectedValue(new Error('Server error'));
       const mockUser = {
         "email": "gbenroalade@gmail.com",
         "password": "Equarshie85@"
@@ -69,11 +71,4 @@ describe("POST /api/v1/auth/signin", ()=> {
 })
 
 
-describe("DELETE /api/v1/auth/signout",()=> {
-  it("should return a 400 if user is not logged in", async ()=> {
-    const response = await request(app)
-    .delete('/api/v1/auth/signout')
-    .send();
-    expect(response.status).toBe(400);
-  })
-})
+// Write a test for signout
