@@ -8,21 +8,26 @@ app.use(express.json());
 app.use("/api/v1/user", userRoute);
 
 describe("User /api/v1/user ", () => {
-       beforeEach(async () => {
-        try {
-         await mongoose.connect(String(process.env.MONGO_URI_TEST));
-        } catch (error: any) {
-          console.log(error.message);
-        }
-      });
+    //    beforeEach(async () => {
+    //     try {
+    //      await mongoose.connect(String(process.env.MONGO_URI_TEST));
+    //     } catch (error: any) {
+    //       console.log(error.message);
+    //     }
+    //   });
     
-      afterEach(async () => {
-        await mongoose.disconnect();
-        await mongoose.connection.close();
-     });
+    //   afterEach(async () => {
+    //     await mongoose.disconnect();
+    //     await mongoose.connection.close();
+    //  });
 
      it("should return a 400 Invalid refresh token if there is no token", async ()=>{
-        const response = await request(app).post("/api/v1/user/refresh-token").send({
+        const response = await request(app)
+        .post("/api/v1/user/refresh-token")
+        .send({
+          refreshToken: ""
+          });
+          
      } )
 });
 
