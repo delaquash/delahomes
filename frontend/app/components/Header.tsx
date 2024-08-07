@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import React, { FC, useState } from "react";
+import NavItems from "./NavItems";
 
 type Props = {
     open: Boolean;
@@ -8,7 +9,7 @@ type Props = {
     activeItem: number;
 }
 
-const Header:FC<Props> = () => {
+const Header:FC<Props> = ({ activeItem }) => {
     const [active, setActive] = useState(false)
     const [openSideBar, setOpenSideBar] = useState(false)
 
@@ -34,16 +35,21 @@ const Header:FC<Props> = () => {
                     <div className="w-full h-[80px] flex items-center justify-between p-3">
                         <div>
                             <Link 
-                                className={`text-[25px] font-Poppins font-[500] text-black dark:te`}
+                                className={`text-[25px] font-Poppins font-[500] text-black dark:text-white`}
                                 href={"/"}
                             >
-                                Delacourse
+                                DelaCourse LMS
                             </Link>
+                        </div>
+                        <div className="flex items-center">
+                            <NavItems 
+                                activeItem={activeItem}
+                                isMobile={false}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-            Header
         </div>
     )
 }
