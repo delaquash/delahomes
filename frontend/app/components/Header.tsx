@@ -88,6 +88,11 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
                             className="cursor-pointer ml-5 my-2 text-black dark:text-white"
                             onClick={()=> setOpen(true)}
                         />
+                        <br/>
+                        <br/>
+                        <p className="text-[16px] dark:text-white text-black px-2 pl-5">
+                          Copyright © 2024 DelaCourse Inc.
+                        </p>
                     </div>
                 </div>
             )}
