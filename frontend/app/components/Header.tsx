@@ -65,7 +65,7 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
               </div>
               <HiOutlineUserCircle
                 size={25}
-                className="cursor-pointer dark:text-white text-black"
+                className="hidden 800px:block cursor-pointer dark:text-white text-black"
                 onClick={() => setOpen(true)}
               />
             </div>
@@ -85,12 +85,12 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
                         />
                         <HiOutlineUserCircle
                             size={25}
-                            className="cursor-pointer ml-5 my-2 text-black dark:text-white"
+                            className="cursor-pointer  my-2 text-black dark:text-white"
                             onClick={()=> setOpen(true)}
                         />
                         <br/>
                         <br/>
-                        <p className="text-[16px] dark:text-white text-black px-2 pl-5">
+                        <p className="text-[20px] dark:text-white text-black">
                           Copyright © 2024 DelaCourse Inc.
                         </p>
                     </div>
