@@ -2,6 +2,7 @@
 import React, {FC, useState} from 'react';
 import Heading from './utils/Heading';
 import Header from './components/Header';
+import Hero from './components/Hero';
 
 interface Props {}
 
@@ -20,6 +21,7 @@ const Page: FC<Props> = () => {
         setOpen={setOpen}
         activeItem={activeItem}
       />
+      <Hero />
     </div>
   )
 }
