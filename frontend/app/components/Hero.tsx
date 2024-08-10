@@ -16,8 +16,7 @@ const Hero: FC<Props> = (props) => {
                     // image not added
                         // src="https://ebay-react.hibootstrap.com/images/banner/banner-img-1.png"
                         src={"/images.jpg"}
-                        width={1500}
-                        height={500}
+                        
                         alt=""
                         className="object-contain 1100px:max-w-[90%] w-[90%] 1500px:max-w-[85%] h-[auto] z-[10]"
                     />
