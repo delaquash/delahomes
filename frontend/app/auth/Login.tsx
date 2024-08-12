@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import React, { FC, useState } from "react";
 import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { styles } from "../../../app/styles/style";
+import { styles } from "../styles/style";
 
 type Props = {
   setRoute: (route: string) => void;
