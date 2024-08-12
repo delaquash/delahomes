@@ -3,15 +3,18 @@ import Link from "next/link";
 import React, { FC, useState } from "react";
 import NavItems from "./NavItems";
 import ThemeSwitcher from "../utils/ThemeSwitcher";
+import CustomModal from "../utils/CustomModal";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 
 type Props = {
-  open: Boolean;
+  open: boolean;
   setOpen: (open: boolean) => void;
   activeItem: number;
+  route: string;
+  setRoute: (route: string ) => void;
 };
 
-const Header: FC<Props> = ({ activeItem, setOpen }) => {
+const Header: FC<Props> = ({ activeItem, setOpen, route, open }) => {
   const [active, setActive] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
 
@@ -97,6 +100,17 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
                 </div>
             )}
       </div>
+      {
+        route === "Login" && (
+          <>
+            {
+              open && (
+                <CustomModal />
+              )
+            }
+          </>
+        )
+      }
     </div>
   );
 };
