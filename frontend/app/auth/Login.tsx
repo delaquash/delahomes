@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import React, { FC, useState } from 'react';
 import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { styles } from "../styles/styles";
 
 type Props = {
     setRoute: (route: string) => void;
@@ -24,9 +25,15 @@ const Login:FC<Props> = (props: Props) => {
         onSubmit: async({ email, password}) => {
             console.log(email, password)
         }
-    })
+    });
+
+    const { errors, touched, values, handleChange, handleSubmit} = formik;
   return (
-    <div>Login</div>
+    <div className='w-full'>
+        <h1 className={`${styles.title}`}>
+
+        </h1>
+    </div>
   )
 }
 
