@@ -18,13 +18,13 @@ const Hero: FC<Props> = (props) => {
         //   height={500}
           priority
           alt=""
-          className="object-contain 1100px:max-w-[90%] w-[90%] 1500px:max-w-[80%] h-[auto] z-[10]"
+          className="object-contain 1100px:max-w-[90%] w-[90%] 1500px:max-w-[85%] h-[auto] z-[10]"
         />
       </div>
 
       <div className="1000px:w-[60%] flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px]">
         {/* css not finished */}
-        <h2 className="dark:text-white text:-[#000000c7] text-[30px] px-3 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[58%] right-0">
+        <h2 className="dark:text-white text:-[#000000c7] text-[30px] px-3 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[58%]">
           Improve Your online Learning Experience better Instantly.
         </h2>
         <br />
