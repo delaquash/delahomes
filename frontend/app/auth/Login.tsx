@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import React, { FC, useState } from "react";
 import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { style } from "../styles/styles";
+import { styles } from "../../../app/styles/style";
 
 type Props = {
   setRoute: (route: string) => void;
@@ -33,9 +33,9 @@ const Login: FC<Props> = (props: Props) => {
   const { errors, touched, values, handleChange, handleSubmit } = formik;
   return (
     <div className="w-full">
-      <h1 className={`${style.title}`}>Learning with DelaCourse</h1>
+      <h1 className={`${styles.title}`}>Learning with DelaCourse</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email" className={`${style.label}`}>
+        <label htmlFor="email" className={`${styles.label}`}>
           Enter your Email
         </label>
         <input
@@ -46,14 +46,14 @@ const Login: FC<Props> = (props: Props) => {
           onChange={handleChange}
           placeholder="Please type your email"
           className={`${errors.email && touched.email && "border-red-500"} ${
-            style.input
+            styles.input
           }`}
         />
         {errors.email && touched.email && (
           <span className="text-red-500 pt-2 block">{errors.email}</span>
         )}
         <div className="w-full mt-5 relative mb-1">
-          <label htmlFor="password" className={`${style.label}`}>
+          <label htmlFor="password" className={`${styles.label}`}>
             Enter your Password
           </label>
           <input
@@ -65,12 +65,20 @@ const Login: FC<Props> = (props: Props) => {
             placeholder="Please type your password"
             className={`${
               errors.password && touched.password && "border-red-500"
-            } ${style.input}`}
+            } ${styles.input}`}
           />
           {!show ? (
-            <AiOutlineEyeInvisible size={20} onClick={() => setShow(true)} />
+            <AiOutlineEyeInvisible 
+              size={20} 
+              onClick={() => setShow(true)} 
+              className="absolute bottom-3 right-2 z-1 cursor-pointer"
+            />
           ) : (
-            <AiOutlineEye size={20} onClick={() => setShow(true)} />
+            <AiOutlineEye
+               className="absolute bottom-3 right-2 z-1 cursor-pointer"
+               size={20} 
+               onClick={() => setShow(true)} 
+            />
           )}
         </div>
       </form>
