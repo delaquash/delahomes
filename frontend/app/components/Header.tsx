@@ -4,7 +4,7 @@ import React, { FC, useState } from "react";
 import NavItems from "./NavItems";
 import ThemeSwitcher from "../utils/ThemeSwitcher";
 import CustomModal from "../utils/CustomModal";
-import Login from "../auth/Login"
+import Login from "../auth/Login";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 
 type Props = {
