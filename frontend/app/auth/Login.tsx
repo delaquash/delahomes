@@ -31,8 +31,22 @@ const Login:FC<Props> = (props: Props) => {
   return (
     <div className='w-full'>
         <h1 className={`${styles.title}`}>
-
+            Learning with DelaCourse
         </h1>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="email" className={`${styles.label}`}>
+                Enter your Email
+            </label>
+            <input 
+                type="email"
+                id="email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                placeholder='Please type your email'
+                className={`${errors.email && touched.email && "border-red-500"} w-full text-black dark:text-white bg-transparent rounded h-[40px] px-2 outline-none mt-[10px font-Poppins]`}
+            />
+        </form>
     </div>
   )
 }
