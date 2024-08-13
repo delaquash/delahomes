@@ -5,7 +5,9 @@ import NavItems from "./NavItems";
 import ThemeSwitcher from "../utils/ThemeSwitcher";
 import CustomModal from "../utils/CustomModal";
 import Login from "../auth/Login";
+
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
+import SignUp from "../auth/SignUp";
 
 type Props = {
   open: boolean;
@@ -112,6 +114,23 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   activeItem={activeItem}
                   setRoute={setRoute}
                   component={Login}
+                />
+              )
+            }
+          </>
+        )
+      }
+      {
+        route === "SignUp" && (
+          <>
+            {
+              open && (
+                <CustomModal 
+                  open={open}
+                  setOpen={setOpen}
+                  activeItem={activeItem}
+                  setRoute={setRoute}
+                  component={SignUp}
                 />
               )
             }
