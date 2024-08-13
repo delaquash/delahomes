@@ -12,13 +12,14 @@ type Props = {
 };
 
 const YupSchema = Yup.object().shape({
+  name: Yup.string().required("Please enter your name"),
   email: Yup.string()
     .email("Invalid email")
     .required("Please enter your email!"),
   password: Yup.string().required("Please enter your password!").min(6),
 });
 
-const Login: FC<Props> = ({setRoute}) => {
+const SignUp: FC<Props> = ({setRoute}) => {
   const [show, setShow] = useState(false);
 
   const formik = useFormik({
@@ -97,12 +98,12 @@ const Login: FC<Props> = ({setRoute}) => {
             <AiFillGithub size={30} className="cursor-pointer ml-2" />
         </div>
         <h4 className="text-center pt-4 font-Poppins text-[16px]">
-          You do not have an account? Not to worry{" "}
+          ALready have an account? {" "}
           <span 
             className="text-[#2190ff] pl-1 cursor-pointer"
             onClick={()=> setRoute("Sign-Up")}
           >
-            Sign Up
+            Sign In
           </span>
         </h4>
       </form>
@@ -110,4 +111,4 @@ const Login: FC<Props> = ({setRoute}) => {
   );
 };
 
-export default Login;
+export default SignUp;
