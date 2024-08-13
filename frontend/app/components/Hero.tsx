@@ -14,8 +14,8 @@ const Hero: FC<Props> = (props) => {
         <Image
           // image not added
           src={require("../../public/images/images.jpg")}
-        //   width={500}
-        //   height={500}
+          width={500}
+          height={500}
           priority
           alt=""
           className="object-contain 1100px:max-w-[90%] w-[90%] 1500px:max-w-[85%] h-[auto] z-[10]"

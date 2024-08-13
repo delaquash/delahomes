@@ -6,6 +6,8 @@ import { AiFillGithub, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/a
 import { styles } from "../styles/style";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import SignUp from "./SignUp";
+
 
 type Props = {
   setRoute: (route: string) => void;
@@ -35,7 +37,7 @@ const Login: FC<Props> = ({setRoute}) => {
   const { errors, touched, values, handleChange, handleSubmit } = formik;
   return (
     <div className="w-full">
-      <h1 className={`${styles.title}`}>Learning with DelaCourse</h1>
+      <h1 className={`${styles.title}`}>Login</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email" className={`${styles.label}`  }>
           Enter your Email
@@ -80,9 +82,11 @@ const Login: FC<Props> = ({setRoute}) => {
                onClick={() => setShow(false)} 
             />
           )}
+          <div>
           {errors.password && touched.password && (
             <span className="text-red-500 pt-2 block">{errors.password}</span>
           )}
+          </div>
         </div>
         {/* <div className="w-full mt-5"></div> */}
         <div className="w-full mt-5">
@@ -100,7 +104,7 @@ const Login: FC<Props> = ({setRoute}) => {
           You do not have an account? Not to worry{" "}
           <span 
             className="text-[#2190ff] pl-1 cursor-pointer"
-            onClick={()=> setRoute("Sign-Up")}
+            onClick={()=> setRoute("SignUp")}
           >
             Sign Up
           </span>
