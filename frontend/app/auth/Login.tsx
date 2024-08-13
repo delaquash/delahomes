@@ -82,7 +82,10 @@ const Login: FC<Props> = (props: Props) => {
             <span className="text-red-500 pt-2 block">{errors.password}</span>
           )}
         </div>
-        <div className="w-full mt-5"></div>
+        {/* <div className="w-full mt-5"></div> */}
+        <div className="w-full mt-5">
+          <button className={`${styles.button}`}>Login</button>
+        </div>
       </form>
     </div>
   );
