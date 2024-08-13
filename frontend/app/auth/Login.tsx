@@ -32,7 +32,7 @@ const Login: FC<Props> = (props: Props) => {
 
   const { errors, touched, values, handleChange, handleSubmit } = formik;
   return (
-    <div className="w-full">
+    <div className="w-full mb-[40px]">
       <h1 className={`${styles.title}`}>Learning with DelaCourse</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email" className={`${styles.label}`}>
@@ -45,9 +45,7 @@ const Login: FC<Props> = (props: Props) => {
           value={values.email}
           onChange={handleChange}
           placeholder="Please type your email"
-          className={`${errors.email && touched.email && "border-red-500"} ${
-            styles.input
-          }`}
+          className={`${errors.email && touched.email && "border-red-500"} ${styles.input}`}
         />
         {errors.email && touched.email && (
           <span className="text-red-500 pt-2 block">{errors.email}</span>
@@ -77,7 +75,7 @@ const Login: FC<Props> = (props: Props) => {
             <AiOutlineEye
                className="absolute bottom-3 right-2 z-1 cursor-pointer"
                size={20} 
-               onClick={() => setShow(true)} 
+               onClick={() => setShow(false)} 
             />
           )}
         </div>
