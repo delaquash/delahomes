@@ -24,20 +24,38 @@ const SignUp: FC<Props> = ({setRoute}) => {
 
   const formik = useFormik({
     initialValues: {
+      name: "",
       email: "",
       password: "",
     },
     validationSchema: YupSchema,
     onSubmit: async ({ email, password }) => {
-      console.log(email, password);
+      setRoute("Verification")
     },
   });
 
   const { errors, touched, values, handleChange, handleSubmit } = formik;
   return (
     <div className="w-full">
-      <h1 className={`${styles.title}`}>Learning with DelaCourse</h1>
+      <h1 className={`${styles.title}`}>Sign Up</h1>
       <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+      <label htmlFor="name" className={`${styles.label}`  }>
+          Enter your Name
+        </label>
+        <input
+          type="text"
+          id=""
+          name=""
+          value={values.name}
+          onChange={handleChange}
+          placeholder="Please type your name"
+          className={`${errors.name && touched.name && "border-red-500"} ${styles.input}`}
+        />
+        {errors.email && touched.email && (
+          <span className="text-red-500 pt-2 block">{errors.email}</span>
+        )}
+      </div>
         <label htmlFor="email" className={`${styles.label}`  }>
           Enter your Email
         </label>
@@ -81,13 +99,15 @@ const SignUp: FC<Props> = ({setRoute}) => {
                onClick={() => setShow(false)} 
             />
           )}
+          <div>
           {errors.password && touched.password && (
             <span className="text-red-500 pt-2 block">{errors.password}</span>
           )}
+          </div>
         </div>
         {/* <div className="w-full mt-5"></div> */}
         <div className="w-full mt-5">
-          <input type="submit" className={`${styles.button}`} value="Login" />
+          <input type="submit" className={`${styles.button}`} value="Sign Up" />
         </div>
         <br />
         <h5 className="text-center pt-4 font-Poppins text-[18px] text-black dark:text-white">
@@ -101,7 +121,7 @@ const SignUp: FC<Props> = ({setRoute}) => {
           ALready have an account? {" "}
           <span 
             className="text-[#2190ff] pl-1 cursor-pointer"
-            onClick={()=> setRoute("Sign-Up")}
+            onClick={()=> setRoute("Login")}
           >
             Sign In
           </span>
