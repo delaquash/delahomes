@@ -6,6 +6,7 @@ import { AiFillGithub, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/a
 import { styles } from "../styles/style";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
 
 type Props = {
   setRoute: (route: string) => void;
@@ -21,6 +22,7 @@ const YupSchema = Yup.object().shape({
 
 const SignUp: FC<Props> = ({setRoute}) => {
   const [show, setShow] = useState(false);
+  const [register, {isLoading,isSuccess,isError}] = useRegisterMutation();
 
   const formik = useFormik({
     initialValues: {
@@ -29,8 +31,12 @@ const SignUp: FC<Props> = ({setRoute}) => {
       password: "",
     },
     validationSchema: YupSchema,
-    onSubmit: async ({ email, password }) => {
-      setRoute("Verification")
+    onSubmit: async ({ name, email, password }) => {
+      const data = {
+        name,
+        email,
+        password,
+      }
     },
   });
 
