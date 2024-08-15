@@ -27,18 +27,18 @@ const SignUp: FC<Props> = ({setRoute}) => {
 
   useEffect(()=> {
     if(isSuccess) { 
-      const message = data.message || "Registration Successful"
+      const message = data?.message || "Registration Successful"
       toast.success(message)
       setRoute("Verification")
     }
     if(error) {
       if("data" in error){
         const errorData = error as any;
-        const message = errorData.data.message || "Registration Failed"
+        const message = errorData.data?.message || "Registration Failed"
         toast.error(message)
       }
     }
-  },[isSuccess, error,  setRoute])
+  },[isSuccess, error, setRoute, data?.message])
 
   const formik = useFormik({
     initialValues: {
