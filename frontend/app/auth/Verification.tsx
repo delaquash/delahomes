@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {toast} from 'react-hot-toast';
 import { VscWorkspaceTrusted } from 'react-icons/vsc';
 import { styles } from '../styles/style';
@@ -22,7 +22,22 @@ const Verification:React.FC<Props> = ({ setRoute }) => {
     const [invalidError, setInvalidError] = useState<boolean>(false);
     const [activation, {isSuccess, error }] = useActivationMutation();
 
-    
+    useEffect(()=> {
+        if (isSuccess) {
+            const message = "User activated successfully."
+            toast.success(message)
+            setRoute("Login")
+        }
+        if(error){
+            if("data" in error){
+                const errorData = error as any
+                toast.error(errorData.data.message)
+                setInvalidError(true)
+            } else {
+                console.log("This is activation error:", error)
+            }
+        }
+    }, [error, isSuccess, setRoute])
     const [verifyNumber, setVerifyNumber] = useState<VerifyNumber>({
         "0": "",
         "1": "",
@@ -39,7 +54,15 @@ const Verification:React.FC<Props> = ({ setRoute }) => {
     ]
 
     const verificationHandler = async () => {
-        setInvalidError(true)
+        const verificationNumber = Object.values(verifyNumber).join("");
+        if(verificationNumber.length !== 4){
+            setInvalidError(true)
+            return;
+        }
+        await activation({
+            activation_token: token,
+            activation_code: verificationNumber
+        })
     }
 
 
