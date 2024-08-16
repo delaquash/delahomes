@@ -40,6 +40,16 @@ export const authApi = apiSlice.injectEndpoints({
                     activation_code
                 },
             })
+        }),
+        login: builder.mutation({
+            query:({email, password}) => ({
+                url: "http://localhost:5000/api/v1/auth/login",
+                method: "POST",
+                body: {
+                    email,
+                    password
+                },
+            })
         })
     })
 });
