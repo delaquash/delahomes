@@ -68,15 +68,15 @@ const SignUp: FC<Props> = ({setRoute}) => {
         </label>
         <input
           type="text"
-          id=""
-          name=""
+          id="name"
+          name="name"
           value={values.name}
           onChange={handleChange}
           placeholder="Please type your name"
           className={`${errors.name && touched.name && "border-red-500"} ${styles.input}`}
         />
         {errors.email && touched.email && (
-          <span className="text-red-500 pt-2 block">{errors.email}</span>
+          <span className="text-red-500 pt-2 block">{errors.name}</span>
         )}
       </div>
         <label htmlFor="email" className={`${styles.label}`  }>
