@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import {toast} from 'react-hot-toast';
 import { VscWorkspaceTrusted } from 'react-icons/vsc';
 import { styles } from '../styles/style';
+import { useSelector } from 'react-redux';
+import { useActivationMutation } from "../../redux/features/auth/authApi";
 
 type Props = {
     setRoute: (route: string) => void;
@@ -12,17 +14,21 @@ type VerifyNumber = {
     "1": string;
     "2": string;
     "3": string;
-    "4": string;
+    // "4": string;
 }
 
 const Verification:React.FC<Props> = ({ setRoute }) => {
+    const { token } = useSelector((state: any)=> state.auth)
     const [invalidError, setInvalidError] = useState<boolean>(false);
+    const [activation, {isSuccess, error }] = useActivationMutation();
+
+    
     const [verifyNumber, setVerifyNumber] = useState<VerifyNumber>({
         "0": "",
         "1": "",
         "2": "",
         "3": "",
-        "4": ""
+        // "4": ""
     })
     const inputRefs = [
         useRef<HTMLInputElement>(null),
