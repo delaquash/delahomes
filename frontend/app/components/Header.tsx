@@ -8,6 +8,7 @@ import Login from "../auth/Login";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 import SignUp from "../auth/SignUp";
 import Verification from "../auth/Verification";
+import { useSelector } from "react-redux";
 
 
 type Props = {
@@ -21,7 +22,7 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
-
+  const { userInfo } = useSelector((state: any)=> state.auth) 
   /* This code snippet is adding an event listener to the `scroll` event on the `window` object. 
   When the user scrolls the page, the event listener checks the `window.scrollY` property, which
   represents the vertical scroll position of the window. */
@@ -40,6 +41,9 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
         setOpenSideBar(false)
     }
   }
+
+  console.log(userInfo);
+
   return (
     <div className="w-full relative">
       <div
