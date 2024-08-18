@@ -170,7 +170,6 @@ const signout = CatchAsyncError(async( req: Request, res: Response, next: NextFu
       }
     }
 
-    // const google = async (req: Request, res: Response, next: NextFunction) => {
     //   try {
     //     const user = await User.findOne({ email: req.body.email });
     //     if (user) {

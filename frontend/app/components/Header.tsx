@@ -26,7 +26,9 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
   const { user } = useSelector((state: any)=> state.auth);
-  const { data: session} = useSession()
+  const { data: session} = useSession();
+
+  console.log(session)
   /* This code snippet is adding an event listener to the `scroll` event on the `window` object. 
   When the user scrolls the page, the event listener checks the `window.scrollY` property, which
   represents the vertical scroll position of the window. */
