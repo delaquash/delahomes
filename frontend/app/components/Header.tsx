@@ -10,6 +10,7 @@ import SignUp from "../auth/SignUp";
 import Verification from "../auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import avatar from "../../public/images/avatar.png"
 
 
@@ -24,7 +25,8 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
-  const { user } = useSelector((state: any)=> state.auth) 
+  const { user } = useSelector((state: any)=> state.auth);
+  const { data: session} = useSession()
   /* This code snippet is adding an event listener to the `scroll` event on the `window` object. 
   When the user scrolls the page, the event listener checks the `window.scrollY` property, which
   represents the vertical scroll position of the window. */
