@@ -50,7 +50,7 @@ const Custom: React.FC<{children: React.ReactNode}> = ({children}) => {
   const {isLoading} = useLoadUserQuery({});
   return (
     <>
-      {isLoading ? <Loader /> : {children}}
+      {isLoading ? <Loader /> : <>{children}</>}
     </>
   )
 }
