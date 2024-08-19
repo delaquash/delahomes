@@ -30,7 +30,9 @@ const Page: FC<Props> = () => {
             setRoute={setRoute}
             route={route}
         />
-        <Profile />
+        <Profile 
+            user={user}
+        />
       </ProtectedRoute>
     </div>
   );
