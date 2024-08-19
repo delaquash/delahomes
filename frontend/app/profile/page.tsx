@@ -1,8 +1,10 @@
+"use client"
 import React, { FC, useState } from "react";
 import Heading from "../utils/Heading";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import ProtectedRoute from "../hooks/useProtected";
+import Profile from "../components/Profile/Profile";
 
 interface Props {}
 
@@ -26,7 +28,7 @@ const Page: FC<Props> = () => {
             setRoute={setRoute}
             route={route}
         />
-        <Hero />
+        <Profile />
       </ProtectedRoute>
     </div>
   );
