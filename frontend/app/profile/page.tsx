@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import ProtectedRoute from "../hooks/useProtected";
 import Profile from "../components/Profile/Profile";
+import { useSelector } from "react-redux";
 
 interface Props {}
 
@@ -12,12 +13,13 @@ const Page: FC<Props> = () => {
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
   const [route, setRoute] = useState("Login");
+  const { user } = useSelector((state: any)=> state.auth)  
   return (
     <div>
       {" "}
       <ProtectedRoute>
         <Heading
-            title="DelaCourse E-Learning Platform"
+            title={`${user?.name} profile` }
             description="This is a platform for determined minds to learn software engineering and tech related course"
             keywords="Software Engineering, Machine Learning, Data Structure and Algorithms, Database, Backend, Frontend"
         />
