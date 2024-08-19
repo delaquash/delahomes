@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import NavItems from "./NavItems";
 import ThemeSwitcher from "../utils/ThemeSwitcher";
 import CustomModal from "../utils/CustomModal";
@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import avatar from "../../public/images/avatar.png"
+import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 
 type Props = {
@@ -26,9 +28,26 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
   const { user } = useSelector((state: any)=> state.auth);
-  const { data: session} = useSession();
+  const { data } = useSession();
+  const [socialAuth, {isSuccess, error}] = useSocialAuthMutation();
 
-  console.log(session)
+  useEffect(()=> {
+    if(!user){
+      if(data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data?.user?.image
+  
+        })
+      }
+    }
+    if(isSuccess){
+      toast.success("Login successfully...")
+    }
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data,  user])
   /* This code snippet is adding an event listener to the `scroll` event on the `window` object. 
   When the user scrolls the page, the event listener checks the `window.scrollY` property, which
   represents the vertical scroll position of the window. */
