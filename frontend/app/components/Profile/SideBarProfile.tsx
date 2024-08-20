@@ -48,7 +48,7 @@ const SideBarProfile = ({ user,active,avatar,logoutHandler,setActive }: Props) =
             </h5>
         </div>
         <div
-            onClick={()=> setActive(4)} 
+            onClick={()=> logoutHandler()} 
             className={`w-full flex items-center px-3 py-4 cursor-pointer ${active === 4 ? "bg-slate-800" : "bg-transparent"}`}
         >
             <AiOutlineLogout size={30} fill="#fff" />
