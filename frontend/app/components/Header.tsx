@@ -11,7 +11,7 @@ import Verification from "../auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import avatar from "../../public/images/avatar.png"
+import avatarImage from "../../public/images/avatar.png"
 import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
 
@@ -101,7 +101,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               {user ? (
                 <Link href={"/profile"}>
                   <Image
-                    src={user.avatar ? user.avatar : avatar}
+                    src={user.avatar ? user.avatar : avatarImage}
                     alt=""
                     className="rounded-full w-[30px] h-[30px] cursor-pointer"
                   />
