@@ -20,7 +20,6 @@ const Profile = ({user}: Props) => {
     })
 
     const logoutHandler = async () => {
-         
         setLogout(true)
         await signOut();
     }
