@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import avatarImage from "../../../public/images/avatar.png";
+import avatarImage from "../../../public/images/avatarImage.png";
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { SiCoursera } from 'react-icons/si';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -60,4 +60,4 @@ const SideBarProfile = ({ user,active,avatar,logoutHandler,setActive }: Props) =
   )
 }
 
-export default SideBarProfile
+export default SideBarProfile;

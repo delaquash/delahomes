@@ -11,8 +11,8 @@ import Verification from "../auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import avatarImage from "../../public/images/avatar.png"
-import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
+import avatarImage from "../../public/images/avatarImage.png"
+import { useLogoutQuery, useSocialAuthMutation } from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
 
 
@@ -30,6 +30,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const { user } = useSelector((state: any)=> state.auth);
   const { data } = useSession();
   const [socialAuth, {isSuccess, error}] = useSocialAuthMutation();
+  const [logout, setLogout] = useState(false)
+  const {} = useLogoutQuery(undefined, {
+      skip: !logout ? true : false
+  })
+
 
   useEffect(()=> {
     if(!user){
@@ -42,10 +47,14 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
         })
       }
     }
+   if(data === null) {
     if(isSuccess){
       toast.success("Login successfully...")
     }
-  
+   }
+    if(data === null) {
+      setLogout(true)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data,  user])
   /* This code snippet is adding an event listener to the `scroll` event on the `window` object. 
