@@ -18,7 +18,7 @@ const authSlice = createSlice({
             state.user = action.payload.user,
             state.token = action.payload.accessToken
         },
-        userLoggedOut: (state, action) => {
+        userLoggedOut: (state) => {
             state.token = "",
             state.user = ""
         }
