@@ -3,7 +3,8 @@ import React, { FC, useState } from "react";
 import avatarImage from "../../../public/images/avatarImage.png";
 import { AiOutlineCamera } from "react-icons/ai";
 import { styles } from "@/app/styles/style";
-import { useUpdateAvatarMutation } from "../../../redux/features/user/userApi";
+import { useUpdateAvatarMutation } from "@/redux/features/user/userApi";
+
 
 type Props = {
   avatar: string | null;
