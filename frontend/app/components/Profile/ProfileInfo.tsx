@@ -16,7 +16,8 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   const [name, setName] = useState(user && user.name);
   const [loadUser, setLoadUser] = useState(false)
   const {} = useLoadUserQuery(undefined, {skip: loadUser ? false : true})
-const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation()
+const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation();
+
   const imageHandler = async (e: any) => {
     const file = e.target.file[0]
 
@@ -24,11 +25,13 @@ const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation()
 
     fileReader.onload= () => {
       if(fileReader.readyState === 2){
+        const avatar = fileReader.result
         updateAvatar({
-          avatar: fileReader.result
+          avatar
         })
       }
     }
+    fileReader.readAsDataURL(e.target.files[0])
   };
 
   useEffect(()=> {
@@ -44,6 +47,7 @@ const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation()
   const handleSubmit = async (e: any) => {
     console.log("This is handleSubmit");
   };
+  
   return (
     <>
       <div className="w-full flex justify-center">
@@ -53,6 +57,8 @@ const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation()
               user.avatar || avatar ? user.avatar.url || avatar : avatarImage
             }
             alt=""
+            height={120}
+            width={120}
             className="w-[120px] h-[120px] cursor-pointer border-[#37a39a] rounded-full"
           />
           <input
