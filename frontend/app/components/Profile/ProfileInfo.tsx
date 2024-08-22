@@ -3,6 +3,7 @@ import React, { FC, useState } from "react";
 import avatarImage from "../../../public/images/avatarImage.png";
 import { AiOutlineCamera } from "react-icons/ai";
 import { styles } from "@/app/styles/style";
+import { useUpdateAvatarMutation } from "../../../redux/features/user/userApi";
 
 type Props = {
   avatar: string | null;
@@ -11,7 +12,7 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   const [name, setName] = useState(user && user.name);
-
+const [] = useUpdateAvatarMutation
   const inputHandler = async (e: any) => {
     console.log("This is iinput handler");
   };
