@@ -1,9 +1,10 @@
 import Image from "next/image";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import avatarImage from "@/public/images/avatarImage.png";
 import { AiOutlineCamera } from "react-icons/ai";
 import { styles } from "@/app/styles/style";
 import { useUpdateAvatarMutation } from "@/redux/features/user/userApi";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 
 type Props = {
@@ -13,10 +14,32 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   const [name, setName] = useState(user && user.name);
+  const [loadUser, setLoadUser] = useState(false)
+  const {} = useLoadUserQuery(undefined, {skip: loadUser ? false : true})
 const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation()
   const imageHandler = async (e: any) => {
-    console.log("This is iinput handler");
+    const file = e.target.file[0]
+
+    const fileReader = new FileReader()
+
+    fileReader.onload= () => {
+      if(fileReader.readyState === 2){
+        updateAvatar({
+          avatar: fileReader.result
+        })
+      }
+    }
   };
+
+  useEffect(()=> {
+    if(isSuccess){
+      setLoadUser(true)
+    }
+
+    if(error){
+      console.log(error)
+    }
+  }, [error, isSuccess])
 
   const handleSubmit = async (e: any) => {
     console.log("This is handleSubmit");
