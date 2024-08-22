@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { FC, useState } from "react";
-import avatarImage from "../../../public/images/avatarImage.png";
+import avatarImage from "@/public/images/avatarImage.png";
 import { AiOutlineCamera } from "react-icons/ai";
 import { styles } from "@/app/styles/style";
 import { useUpdateAvatarMutation } from "@/redux/features/user/userApi";
@@ -13,8 +13,8 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   const [name, setName] = useState(user && user.name);
-const [] = useUpdateAvatarMutation
-  const inputHandler = async (e: any) => {
+const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation()
+  const imageHandler = async (e: any) => {
     console.log("This is iinput handler");
   };
 
@@ -37,7 +37,7 @@ const [] = useUpdateAvatarMutation
             name=""
             id="avatar"
             className="hidden"
-            onChange={inputHandler}
+            onChange={imageHandler}
             accept="image/png, image/jpg, image/jpeg, image/webp"
           />
           <label htmlFor="avatar">
