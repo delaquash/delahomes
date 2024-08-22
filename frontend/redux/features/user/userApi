@@ -13,4 +13,4 @@ export const userApi = apiSlice.injectEndpoints({
     })
 });
 
-export const {useUpdateAvatarMutation} = userApi
+export const { useUpdateAvatarMutation } = userApi
