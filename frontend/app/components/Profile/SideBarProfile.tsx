@@ -21,8 +21,10 @@ const SideBarProfile = ({ user,active,avatar,logoutHandler,setActive }: Props) =
             className={`w-full flex items-center px-3 py-4 cursor-pointer ${active === 1 ? "bg-slate-800" : "bg-transparent"}`}
         >
             <Image 
-                src={user.avatar || avatar ? user.avatar || avatar:avatarImage }
+                src={user.avatar || avatar ? user.avatar.url || avatar:avatarImage }
                 alt=''
+                width={20}
+                height={20}
                 className="w-[20px] h-[20px] 800px:w-[30px] 800px:h-[30px] cursor-pointer rounded-full"
             />
             <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
