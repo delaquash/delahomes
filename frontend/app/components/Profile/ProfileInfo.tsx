@@ -59,6 +59,11 @@ const [editProfile, {isSuccess:success, error:isError}] = useUpdateAvatarMutatio
     if(name !== ""){
       await editProfile({
         name,
+        /* The line `email: user.email` in the `editProfile` function call is passing the `email`
+        property from the `user` object as a parameter to the `editProfile` function. This is used
+        to update the user's profile with the existing email address associated with the user. The
+        `email` property is being used to ensure that the email address remains unchanged during the
+        profile update process. */
         email: user.email
       })
     }
