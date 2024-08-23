@@ -15,8 +15,14 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   const [name, setName] = useState(user && user.name);
+/* The code snippet you provided is managing the state of `loadUser` 
+using the `useState` hook and a custom hook `useLoadUserQuery`.
+ Here's what each part is doing: */
   const [loadUser, setLoadUser] = useState(false);
   
+/* The line `const {} = useLoadUserQuery(undefined, {skip: loadUser ? false : true})` in the provided
+TypeScript React code snippet is using the `useLoadUserQuery` custom hook to fetch user data. Here's
+what it is doing: */
   const {} = useLoadUserQuery(undefined, {skip: loadUser ? false : true})
 const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation();
 const [editProfile, {isSuccess:success, error:isError}] = useUpdateAvatarMutation();
