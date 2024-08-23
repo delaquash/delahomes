@@ -52,6 +52,11 @@ const Profile = ({user}: Props) => {
                 />
             </div>
             )}
+        {active == 2 && (
+            <div className="w-full h-full bg-transparent mt-[80px]">
+                <ChangePassword />
+            </div>
+            )}
     </div>
   )
 }
