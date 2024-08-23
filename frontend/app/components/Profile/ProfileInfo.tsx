@@ -3,8 +3,9 @@ import React, { FC, useEffect, useState } from "react";
 import avatarImage from "@/public/images/avatarImage.png";
 import { AiOutlineCamera } from "react-icons/ai";
 import { styles } from "@/app/styles/style";
-import { useUpdateAvatarMutation } from "@/redux/features/user/userApi";
+import { useEditProfileMutation, useUpdateAvatarMutation } from "@/redux/features/user/userApi";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import toast from "react-hot-toast";
 
 
 type Props = {
@@ -18,6 +19,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   
   const {} = useLoadUserQuery(undefined, {skip: loadUser ? false : true})
 const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation();
+const [editProfile, {isSuccess:success, error:isError}] = useUpdateAvatarMutation();
 
   const imageHandler = async (e: any) => {
     const file = e.target.file[0]
@@ -36,17 +38,30 @@ const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation();
   };
 
   useEffect(()=> {
-    if(isSuccess){
+    if(isSuccess || success){
       setLoadUser(true)
     }
+    if(success){
+      toast.success("Profile updated successfully....")
+    }
 
-    if(error){
+    if(error || isError){
       console.log(error)
     }
-  }, [error, isSuccess])
+  }, [error, isSuccess, isError, success])
 
+/**
+ * The `handleSubmit` function in TypeScript React is used to handle form submissions by editing a
+ * user's name and not email since we are getting email from a defferent state if the name is not empty.
+ **/
   const handleSubmit = async (e: any) => {
-    console.log("This is handleSubmit");
+    e.preventDefault();
+    if(name !== ""){
+      await editProfile({
+        name,
+        email: user.email
+      })
+    }
   };
   
   return (
