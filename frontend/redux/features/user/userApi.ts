@@ -9,8 +9,15 @@ export const userApi = apiSlice.injectEndpoints({
                 body: {avatar},
                 credentials: "include" as const
             })
+        }),
+        editrProfile: builder.mutation({
+            query: ({email, name }) => ({
+                url: "/user/updateuser-info",
+                method: "PUT",
+                body: {email, name},
+                credentials: "include" as const
+            })
         })
     })
 });
-
-export const { useUpdateAvatarMutation } = userApi
+export const { useUpdateAvatarMutation,useEditrProfileMutation } = userApi
