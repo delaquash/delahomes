@@ -14,7 +14,8 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   const [name, setName] = useState(user && user.name);
-  const [loadUser, setLoadUser] = useState(false)
+  const [loadUser, setLoadUser] = useState(false);
+  
   const {} = useLoadUserQuery(undefined, {skip: loadUser ? false : true})
 const [updateAvatar, {isSuccess, error}] = useUpdateAvatarMutation();
 
