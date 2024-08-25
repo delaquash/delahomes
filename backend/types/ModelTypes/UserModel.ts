@@ -1,22 +1,24 @@
+import { Document } from "mongoose";
+
+
 interface MongoResult {
   _doc: any;
 }
 
-namespace Express {
-  interface Request {
-    userId: string;
-    auth0Id: string;
-  }
+export interface IUser extends Document {
+  courses: Array<{courseId: string}>;
+  name: string;
+  avatar: {
+    public_id: string;
+    url: string;
+  };
+  role: string;
+  isVerified: boolean;
+  email: string;
+  password: string;
+  comparePassword: (password: string) => Promise<boolean>;
+  SignAccessToken: () => string;
+  SignRefreshToken: () => string;
 }
 
 
-export interface UserSchemaProps extends MongoResult {
-  username?: string;
-  name?: string;
-  addressLine1?: string;
-  city?: string;
-  country?: string;
-  email?: string;
-  password?: string;
-  avatar?: string;
-}

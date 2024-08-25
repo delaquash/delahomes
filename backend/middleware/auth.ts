@@ -1,45 +1,50 @@
 import { NextFunction, Request, Response } from 'express';
-import { auth } from 'express-oauth2-jwt-bearer';
-import jwt, { Jwt } from "jsonwebtoken";
-import { errorHandler } from '../utils/errorHandler';
-import User from '../models/userModel';
+import jwt, { JwtPayload } from "jsonwebtoken";
+import  ErrorHandler  from '../utils/errorHandler';
+import { CatchAsyncError } from './CatchAsyncError';
+import { redis } from '../utils/redis';
+import { IUser } from '../types/ModelTypes/UserModel';
 
+// Extend the Express Request interface to include the user property
 declare global {
   namespace Express {
-    interface Request {
-      userId: string;
-      auth0Id: string;
-    }
+      interface Request {
+          user?: IUser;
+      }
   }
 }
 
-export const jwtCheck = auth({
-    audience: process.env.VITE_AUTH0_URI,
-    issuerBaseURL: process.env.VITE_AUTH0_ISSUER_BASE_URL,
-    tokenSigningAlg: process.env.VITE_AUTH0_TOKEN_SIGNING_ALG
-  });
 
-export const JwtParser = async (req: Request, res: Response, next: NextFunction) => {
-   const { authorization } = req.headers;
-   if(!authorization || !authorization.startsWith("Bearer ")) {
-    return res.sendStatus(401)
-   }
+export const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
+  const access_token = req.cookies.access_token;
+  if(!access_token){
+    return next(new ErrorHandler("Please login to access this resources", 400))
+  }
+  const decoded = jwt.verify(access_token, process.env.ACCESS_TOKEN as string) as JwtPayload
+  if(!decoded) {
+    return next(new ErrorHandler("access token not valid", 400))
+  }
+  const user = await redis.get(decoded.id);
+  // console.log(user, "this user is from redis")
+  if(!user) {
+    return next(new ErrorHandler("User not found! Please sign up to access this resources", 400))
+  }
+  req.user = JSON.parse(user);
+  next();
+})
 
-   const token = authorization.split(" ")[1]
 
-   try {
-    const decoded = jwt.decode(token) as jwt.JwtPayload
-    const auth0Id = decoded.sub;
-
-    const user = await User.findOne({ auth0Id })
-
-    if(!user) {
-      return next(errorHandler(404, "User not found!!!"))
+export const authorization = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!roles.includes(req.user?.role || "")) {
+      return next(
+        new ErrorHandler(
+          `This ${req.user?.role} is not authorized to perform this operation`,
+          403
+        )
+      );
     }
-    req.userId = user._id.toString();
-    req.auth0Id = auth0Id as string;
-    next()
-   } catch (error) {
-    return next(errorHandler(401, "User not authorized..."))
-   }
-}
+    next();
+  };
+};
+

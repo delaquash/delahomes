@@ -1,4 +1,5 @@
 import mongoose, { InferSchemaType } from "mongoose";
+import { Restaurant } from "../types/ModelTypes/Restaurant";
 
 const menuItemSchema = new mongoose.Schema({
   _id: {
@@ -24,6 +25,8 @@ const restaurantSchema = new mongoose.Schema({
   imageUrl: { type: String, required: true },
   lastUpdated: { type: Date, required: true },
 });
+
+type RestaurantType = InferSchemaType<typeof restaurantSchema>;
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 export default Restaurant;
