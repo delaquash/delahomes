@@ -30,7 +30,8 @@ app.use(bodyParser.json({ limit: "50mb" }));
 // cors
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: ['http://localhost:3000/'],
+    credentials: true,
   })
 );
 

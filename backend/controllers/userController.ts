@@ -13,9 +13,6 @@ import { getAllUserServices, getUserByID, updateUserRoleServices } from "../serv
 import cloudinary from "cloudinary";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 
-
-
-
 interface IActivationToken {
   token: string;
   activationCode: string;
@@ -248,5 +245,5 @@ export {
 //     createCurrentUser,
 //     updateUser,
 //     getUser,
-//     getUserList
+//     getUserList ED35D4D
 };

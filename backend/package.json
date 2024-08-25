@@ -8,7 +8,7 @@
     "dev": "nodemon server.ts",
     "start": "nodemon server.ts",
     "compile": "tsc",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --detectOpenHandles",
     "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "author": "Olaide Emmanuel",
@@ -18,19 +18,20 @@
     "@types/node-cron": "^3.0.11",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.2.0",
-    "cookie-parser": "^1.4.6",
-    "nodemon": "^3.0.1",
-    "@types/multer": "^1.4.11",
-    "cloudinary": "^1.41.3",
     "concurrently": "^8.2.2",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cron": "^3.1.7",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.10",
     "express": "^4.18.2",
+    "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.1",
-    "nodemon": "^3.0.1"
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.14",
+    "nodemon": "^3.0.1",
+    "supertest": "^7.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -43,9 +44,12 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mocha": "^10.0.7",
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^20.14.9",
+    "@types/node": "^20.14.14",
     "@types/nodemailer": "^6.4.15",
     "@types/nodemon": "^1.19.5",
-    "typescript": "^5.3.2"
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
+    "typescript": "^5.5.4"
   }
 }
