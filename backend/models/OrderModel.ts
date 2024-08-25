@@ -1,28 +1,30 @@
-import mongoose from "mongoose";
+require("dotenv").config();
+import mongoose, { Schema, Model, Document } from "mongoose";
 
-const orderSchema = new mongoose.Schema({
-  restaurant: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  deliveryDetails: {
-    email: { type: String, required: true },
-    name: { type: String, required: true },
-    addressLine1: { type: String, required: true },
-    city: { type: String, required: true },
-  },
-  cartItems: [
-    {
-      menuItemId: { type: String, required: true },
-      quantity: { type: Number, required: true },
-      name: { type: String, required: true },
+export interface IOrder extends Document {
+  courseId: string;
+  userId: string;
+  payment_info: object;
+}
+
+const orderSchema = new Schema<IOrder>(
+  {
+    courseId: {
+      type: String,
+      required: true,
     },
-  ],
-  totalAmount: Number,
-  status: {
-    type: String,
-    enum: ["placed", "paid", "inProgress", "outForDelivery", "delivered"],
+    userId: {
+      type: String,
+      required: true,
+    },
+    payment_info: {
+      type: Object,
+    },
   },
-  createdAt: { type: Date, default: Date.now },
-});
+  {
+    timestamps: true,
+  }
+);
 
-const Order = mongoose.model("Order", orderSchema);
-export default Order;
+const OrderModel: Model<IOrder> = mongoose.model("Order", orderSchema);
+export default OrderModel;
