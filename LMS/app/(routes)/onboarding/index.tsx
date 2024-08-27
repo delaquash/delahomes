@@ -1,11 +1,14 @@
+import OnboardingScreen from '@/screens/OnboardingScreen'
 import React from 'react'
 
 type Props = {}
 
-const index = (props: Props) => {
+const Onboarding = (props: Props) => {
   return (
-    <div>index</div>
+    <div>
+      <OnboardingScreen />
+    </div>
   )
 }
 
-export default index
+export default Onboarding
