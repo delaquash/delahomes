@@ -1,7 +1,7 @@
 require("dotenv").config();
 import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
-import cors from "cors";
+
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
@@ -18,22 +18,21 @@ import notificationRoute from "./route/NotificationRoute";
 import analyticsRoute from "./route/analyticsRouter";
 import layoutRoute from "./route/layoutRoute";
 import ErrorHandler from "./utils/errorHandler";
+import cors from "cors";
 
 // middlewares
 const app = express();
+// cors
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.json({ limit: "50mb" }));
-
-
-// cors
-app.use(
-  cors({
-    origin: ['http://localhost:3000'],
-    credentials: true,
-  })
-);
 
 // cloudinary config
 cloudinary.config({
