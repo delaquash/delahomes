@@ -12,16 +12,7 @@ import path from "path";
 import sendEmail from "../utils/SendMail";
 import { IUser } from "../types/ModelTypes/UserModel";
 
-const isUserAuthenticated = CatchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const access_token = req.cookies.access_token;
-    if (!access_token) {
-      return next(
-        new ErrorHandler("Please login to access this resources", 400)
-      );
-    }
-  }
-);
+
 
 interface IRegistrationBody {
   name: string;
@@ -174,59 +165,6 @@ declare module "express" {
     user?: any; // Replace 'any' with the actual type of your user object
   }
 }
-
-//   try {
-//     const user = await User.findOne({ email: req.body.email });
-//     if (user) {
-//       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string);
-//       // destructured password from the other attribute so we wont be seein password in DB
-//       const { password: pass, ...rest } = user._doc;
-//       res
-//         .cookie("access_token", token, { httpOnly: true })
-//         .status(200)
-//         .json(rest);
-//     } else {
-//       const generatedPassword =
-//         /* `Math.random().toString(36).slice(-8)` is generating a random string of 8 characters. */
-//         Math.random() /* The `toString(36)` method is converting a number to a string representation
-//         using base 36. In base 36, the digits range from 0 to 9 and then from A to Z.
-//         This method is commonly used to generate random alphanumeric strings. */
-//           .toString(
-//             36
-//           ) /* The `slice(-8)` method is used to extract the last 8 characters from a string.
-//         In the given code, it is used to generate a random alphanumeric string of
-//         length 8. The `Math.random().toString(36)` generates a random number between 0
-//         and 1 and converts it to a string representation using base 36. The `slice(-8)`
-//         then extracts the last 8 characters from this string, resulting in a random
-//         string of length 8. */
-//           .slice(-8) + Math.random().toString(36).slice(-8);
-//       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
-//       const newUserPassword = new User({
-//         /* The code `username: req.body.name.split(" ").join("").toLowerCase() +
-//         Math.random().toString(36).slice(-4)` is generating a unique username for the user based on
-//         their name. */
-//         username:
-//           req.body.name.split(" ").join("").toLowerCase() +
-//           Math.random().toString(36).slice(-4),
-//         email: req.body.email,
-//         password: hashedPassword,
-//         avatar: req.body.imageUrl,
-//       });
-//       await newUserPassword.save();
-//       const token = jwt.sign(
-//         { id: newUserPassword._id },
-//         process.env.JWT_SECRET
-//       );
-//       const { password: pass, ...rest } = newUserPassword._doc;
-//       res
-//         .cookie("access_token", token, { httpOnly: true })
-//         .status(200)
-//         .json(rest);
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 interface ISocialAuth {
   name: string;

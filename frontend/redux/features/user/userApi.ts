@@ -25,8 +25,11 @@ export const userApi = apiSlice.injectEndpoints({
             query:({ newPassword, oldPassword }) => ({
                 url: "http://localhost:5000/api/v1/user/update-user-password",
                 method: "PUT",
-                body: {newPassword, oldPassword },
-                credential: "include" as const
+                body: JSON.stringify({ newPassword, oldPassword }),
+                headers: {
+                    'Content-Type': 'application/json', // Explicitly set Content-Type header
+                  },
+                credentials: "include" as const
             })
         })
     })

@@ -144,6 +144,7 @@ const updatePassword = CatchAsyncError(async(req: Request, res: Response, next: 
           user
         })
   } catch (error: any) {
+    console.log(error)
     return next(new ErrorHandler(error.message, 400))  
   }
 })
