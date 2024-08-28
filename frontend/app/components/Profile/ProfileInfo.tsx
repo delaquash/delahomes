@@ -133,7 +133,7 @@ what it is doing: */
               type="submit"
               required
               value="Update Info"
-              className={`w-full 800px:w-[250px] h-[40px] border-[#37a39a] text-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer text-[25px]`}
+              className="w-[100%] h-[40px] border 800px:w-[250px]  border-[#37a39a] text-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer text-[25px]"
             />
           </div>
         </form>
