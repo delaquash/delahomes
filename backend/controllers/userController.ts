@@ -91,8 +91,9 @@ const updateUserInfo = CatchAsyncError(async(req: Request, res:Response, next:Ne
     const user = await User.findById(userID)
     if(user && email) {
       const isEmailExist = await User.findOne({ email});
-      if(isEmailExist) {
-        return next(new ErrorHandler("Email already exist", 400))
+      if(isEmailExist  && isEmailExist._id.toString() !== userID) {
+
+        return next(new ErrorHandler("Email already exist...", 400))
       }
       user.email = email;
     }
@@ -109,7 +110,8 @@ const updateUserInfo = CatchAsyncError(async(req: Request, res:Response, next:Ne
       user
     })
   } catch (error: any) {
-    return next(new ErrorHandler(error.message, 400))
+    console.error("Error updating user info:", error);
+    return next(new ErrorHandler(error.message, 500))
   }
 });
 

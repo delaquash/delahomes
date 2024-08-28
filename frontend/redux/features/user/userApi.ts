@@ -4,23 +4,26 @@ export const userApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         updateAvatar: builder.mutation({
             query: (avatar) => ({
-                url: "/user/update-profile-avatar",
+                url: "http://localhost:5000/api/v1/user/update-profile-avatar",
                 method: "PUT",
                 body: {avatar},
                 credentials: "include" as const
             })
         }),
         editProfile: builder.mutation({
-            query: ({email, name }) => ({
-                url: "/user/updateuser-info",
+            query: ({ name, email }) => ({
+                url: "http://localhost:5000/api/v1/user/update-user-info",
                 method: "PUT",
-                body: {email, name},
+                body: JSON.stringify({ name, email }), // Ensure JSON.stringify is used
+                headers: {
+                  'Content-Type': 'application/json', // Explicitly set Content-Type header
+                },
                 credentials: "include" as const
             })
         }),
         updatePassword: builder.mutation({
             query:({ newPassword, oldPassword }) => ({
-                url: "/update-user-password",
+                url: "http://localhost:5000/api/v1/user/update-user-password",
                 method: "PUT",
                 body: {newPassword, oldPassword },
                 credential: "include" as const
