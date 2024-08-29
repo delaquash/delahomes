@@ -47,7 +47,7 @@ const SideBarProfile = ({
           active === 2 ? "bg-slate-800" : "bg-transparent"
         }`}
       >
-        <RiLockPasswordLine size={30} fill="#fff" />
+        <RiLockPasswordLine size={30}  className="dark:text-white text-black" />
         <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
           Change Password
         </h5>
@@ -58,7 +58,7 @@ const SideBarProfile = ({
           active === 3 ? "bg-slate-800" : "bg-transparent"
         }`}
       >
-        <SiCoursera size={30} fill="#fff" />
+        <SiCoursera size={30} className="dark:text-white text-black"/>
         <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
           Enrolled Courses
         </h5>
@@ -71,7 +71,7 @@ const SideBarProfile = ({
               active === 6 ? "bg-slate-800" : "bg-transparent"
             }`}
           >
-            <MdOutlineAdminPanelSettings size={30} fill="#fff" />
+            <MdOutlineAdminPanelSettings size={30}  className="dark:text-white text-black" />
             <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
               Admin Dashboard
             </h5>
@@ -84,7 +84,7 @@ const SideBarProfile = ({
           active === 4 ? "bg-slate-800" : "bg-transparent"
         }`}
       >
-        <AiOutlineLogout size={30} fill="#fff" />
+        <AiOutlineLogout size={30}  className="dark:text-white text-black"/>
         <h5 className="pl-2 800px:block hidden font-Poppins dark:text-white text-black">
           Log Out
         </h5>
