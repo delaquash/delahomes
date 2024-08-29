@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import Heading from '../utils/Heading';
 import AdminSideBar from '../components/admin/sidebar/AdminSideBar';
@@ -14,7 +15,7 @@ const page = (props: Props) => {
         title='ELearning -- Admin'
         keywords='Programming, Software Engineering, Machine Learning, JavaScript, Python'
     />
-    <div className="flex h-[20px]">
+    <div className="flex h-[200vh]">
         <div className="1500px:w-[16%] w-1/5">
             <AdminSideBar />
         </div>
