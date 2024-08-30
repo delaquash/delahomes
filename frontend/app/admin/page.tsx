@@ -1,32 +1,29 @@
-"use client"
-import React from 'react';
-import Heading from '../utils/Heading';
-import AdminSideBar from '../components/admin/sidebar/AdminSideBar';
+"use client";
+import React from "react";
+import Heading from "../utils/Heading";
+import AdminSideBar from "../components/admin/sidebar/AdminSideBar";
+import DashboardHero from "../components/admin/DashboardHero";
 
-
-type Props = {}
+type Props = {};
 
 const page = (props: Props) => {
   return (
     <div>
-
-          <Heading 
-        description='An online platform where student can learn and interact with a teachers and get real time solution'
-        title='ELearning -- Admin'
-        keywords='Programming, Software Engineering, Machine Learning, JavaScript, Python'
-    />
-    <div className="flex h-[200vh]">
+      <Heading
+        description="An online platform where student can learn and interact with a teachers and get real time solution"
+        title="ELearning -- Admin"
+        keywords="Programming, Software Engineering, Machine Learning, JavaScript, Python"
+      />
+      <div className="flex h-[200vh]">
         <div className="1500px:w-[16%] w-1/5">
-            <AdminSideBar />
+          <AdminSideBar />
         </div>
         <div className="w-[85%]">
-
+          <DashboardHero />
         </div>
+      </div>
     </div>
-  
+  );
+};
 
-    </div>
-  )
-}
-
-export default page
+export default page;

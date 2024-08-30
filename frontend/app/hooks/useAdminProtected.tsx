@@ -9,9 +9,12 @@ interface Props {
 const useAdminProtected = ({ children}: Props) => {
     const { user } = useSelector((state: any)=> state.auth)
     
-    const isAdmin = user.role === "admin"
+    if(user){
+       const isAdmin = user?.role === "admin"
 
-    return isAdmin ? children : redirect("/");
+    return isAdmin ? children : redirect("/"); 
+    }
+    
 }
 
 export default useAdminProtected
