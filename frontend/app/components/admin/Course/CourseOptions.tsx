@@ -10,7 +10,7 @@ const CourseOptions = ({ active, setActive}: Props) => {
     const options = [
         "Course Information",
         "Course Options",
-        "Course Content",
+        "Course Contents",
         "Course Preview"
     ]
   return (
