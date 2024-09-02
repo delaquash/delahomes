@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react'
 
 type Props = {
     courseInfo:any;
@@ -7,7 +8,13 @@ type Props = {
     setActive: (active: number)=> void;
 }
 
-const CourseInformation = (props: Props) => {
+const CourseInformation =({ courseInfo, setCourseInfo, active, setActive}: Props) => {
+    const [dragging, setDragging] = useState(false)
+
+    const handleSubmit= (e: any) => {
+        e.preventDefault();
+        setActive(active+1)
+    }
   return (
     <div>
 
