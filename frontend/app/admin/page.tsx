@@ -3,7 +3,7 @@ import React from "react";
 import Heading from "../utils/Heading";
 import AdminSideBar from "../components/admin/sidebar/AdminSideBar";
 import DashboardHero from "../components/admin/DashboardHero";
-
+import CreateCourse from "@/app/components/admin/Course/CreateCourse"
 type Props = {};
 
 const page = (props: Props) => {
@@ -20,6 +20,7 @@ const page = (props: Props) => {
         </div>
         <div className="w-[85%]">
           <DashboardHero />
+          <CreateCourse />
         </div>
       </div>
     </div>
