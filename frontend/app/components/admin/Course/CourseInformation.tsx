@@ -23,16 +23,17 @@ const CourseInformation = ({
     setActive(active + 1);
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
      const file = e.target.files?.[0];
      if(file) {
         const reader = new FileReader();
 
-        reader.onload= (e: any) => {
+        reader.onload= (e: ProgressEvent<FileReader>) => {
             if(reader.readyState === 2) {
-                setCourseInfo
+                setCourseInfo({...courseInfo, thumbnail: reader.result})
             }
         }
+        reader.readAsDataURL(file);
      }   
   }
   return (
@@ -59,10 +60,10 @@ const CourseInformation = ({
           <textarea
             placeholder="Write something amazing..."
             name=""
-            rows={10}
-            cols={30}
+            rows={8}
+            cols={80}
             value={courseInfo.description}
-            className={`${styles.label} !h-min !py-2`}
+            className={`${styles.input} !h-min !py-2`}
             onChange={(e: any) =>
               setCourseInfo({ ...courseInfo, description: e.target.value })
             }
@@ -132,9 +133,8 @@ const CourseInformation = ({
               className={`${styles.input}`}
             />
           </div>
-
           <div className="w-[50%]">
-            <label className={`${styles.label} w-[50%]">`}>Demo Url</label>
+            <label className={`${styles.label} w-[50%]`}>Demo Url</label>
             <input
               type="text"
               required
@@ -149,6 +149,7 @@ const CourseInformation = ({
             />
           </div>
           <br />
+          </div>
           <div className="w-full">
             <input 
                 type="file"
@@ -158,7 +159,6 @@ const CourseInformation = ({
                 onChange={handleChange}
             />
           </div>
-        </div>
       </form>
     </div>
   );
