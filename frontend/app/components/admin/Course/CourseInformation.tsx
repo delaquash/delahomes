@@ -2,6 +2,7 @@
 import { styles } from "@/app/styles/style";
 import React, { useState } from "react";
 
+// Props from courseInfo Component
 type Props = {
   courseInfo: any;
   setCourseInfo: (course: any) => void;
@@ -21,6 +22,19 @@ const CourseInformation = ({
     e.preventDefault();
     setActive(active + 1);
   };
+
+  const handleChange = (e: any) => {
+     const file = e.target.files?.[0];
+     if(file) {
+        const reader = new FileReader();
+
+        reader.onload= (e: any) => {
+            if(reader.readyState === 2) {
+                setCourseInfo
+            }
+        }
+     }   
+  }
   return (
     <div className="w-[80%] m-auto mt-24">
       <form className={`${styles.label}`} onSubmit={handleSubmit}>
@@ -101,6 +115,49 @@ const CourseInformation = ({
               className={`${styles.input}`}
               id="tags"
             />
+        </div>
+        <br />
+        <div className="w-full flex justify-between">
+          <div className="w-[45%]">
+            <label className={`${styles.label}`}>Course level</label>
+            <input
+              type="text"
+              required
+              value={courseInfo.level}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, level: e.target.value })
+              }
+              id="level"
+              placeholder="beginner/intermediate/expert"
+              className={`${styles.input}`}
+            />
+          </div>
+
+          <div className="w-[50%]">
+            <label className={`${styles.label} w-[50%]">`}>Demo Url</label>
+            <input
+              type="text"
+              required
+              name=""
+              value={courseInfo.demoUrl}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
+              }
+              placeholder=""
+              className={`${styles.input}`}
+              id="demoUrl"
+            />
+          </div>
+          <br />
+          <div className="w-full">
+            <input 
+                type="file"
+                accept="image/*"
+                id="file"
+                className="hidden"
+                onChange={handleChange}
+            />
+          </div>
         </div>
       </form>
     </div>
