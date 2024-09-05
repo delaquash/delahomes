@@ -23,6 +23,29 @@ const CourseInformation = ({
     setActive(active + 1);
   };
 
+  const handleDragOver = (e: any) => {
+    e.preventDefault();
+    setDragging(true);
+  }
+  const handleDragLeave = (e: any) => {
+    e.preventDefault();
+    setDragging(false)
+  }
+
+  const handleDrop = (e: any) => {
+    e.preventDefault();
+    setDragging(false);
+
+    const file = e.dataTransfer.files?.[0];
+    if(file) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            setCourseInfo({...courseInfo, thumbnail: reader.result })
+        }
+        reader.readAsDataURL(file)
+    }
+  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
      const file = e.target.files?.[0];
      if(file) {
