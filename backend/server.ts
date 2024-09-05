@@ -1,11 +1,8 @@
 require("dotenv").config();
 import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
-
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
-
 import { v2 as cloudinary } from "cloudinary";
 import { RouteError } from "./middleware/error";
 
@@ -33,6 +30,7 @@ const corsOptions ={
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
+
 app.use(cors(corsOptions));
 // cloudinary config
 cloudinary.config({

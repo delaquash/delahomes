@@ -74,7 +74,7 @@ const CourseInformation = ({
             }
             id="name"
             placeholder="MERN STACK LMS Course, AI..."
-            className={`${styles.input}`}
+            className={`${styles.input} rounded-full`}
           />
         </div>
         <br />
@@ -105,7 +105,7 @@ const CourseInformation = ({
               }
               id="price"
               placeholder="30"
-              className={`${styles.input}`}
+              className={`${styles.input} rounded-full`}
             />
           </div>
 
@@ -120,7 +120,7 @@ const CourseInformation = ({
                 setCourseInfo({ ...courseInfo, estimatedPrice: e.target.value })
               }
               placeholder="30"
-              className={`${styles.input}`}
+              className={`${styles.input} rounded-full`}
               id="price"
             />
           </div>
@@ -136,7 +136,7 @@ const CourseInformation = ({
                 setCourseInfo({ ...courseInfo, tags: e.target.value })
               }
               placeholder="Software Dev, MERN, Tailwind, CSS, Web, ReactJS, React Native"
-              className={`${styles.input}`}
+              className={`${styles.input} rounded-full`}
               id="tags"
             />
         </div>
@@ -153,7 +153,7 @@ const CourseInformation = ({
               }
               id="level"
               placeholder="beginner/intermediate/expert"
-              className={`${styles.input}`}
+              className={`${styles.input} rounded-full`}
             />
           </div>
           <div className="w-[50%]">
@@ -167,12 +167,12 @@ const CourseInformation = ({
                 setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
               }
               placeholder=""
-              className={`${styles.input}`}
+              className={`${styles.input} rounded-full`}
               id="demoUrl"
             />
           </div>
-          <br />
-          </div>
+         
+          </div> <br />
           <div className="w-full">
             <input 
                 type="file"
@@ -181,7 +181,36 @@ const CourseInformation = ({
                 className="hidden"
                 onChange={handleChange}
             />
+            <label
+                htmlFor="file"
+                className={`w-full min-h-[10vh] rounded-full dark:border-white border-[#00000026] p-3 border flex items-center justify-center mb-5 ${dragging ? "bg-blue-500" : "bg-transparent"}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+            >
+            {courseInfo.thumbnail ? (
+                <img
+                    src={courseInfo.thumbnail}
+                    alt="Course thumbnail"
+                    className="max-h-full w-full object-cover"
+                />
+            ) :(
+                <span className="text-black dark:text-white cursor-pointer">
+                    Drag and drop yur thumbnail here or click to drop
+                </span>
+            )}
+            </label>
           </div>
+            <br />
+            <div className="w-full flex items-center justify-end">
+                <input
+                    value="Next" 
+                    type="submit" 
+                    className="w-full 800px:w-[100px] h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
+                />
+                <br />
+                <br />
+            </div>
       </form>
     </div>
   );
