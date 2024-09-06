@@ -8,7 +8,7 @@ type Props = {
     handleSubmit: any
 }
 
-const CourseContent = (props: Props) => {
+const CourseContent = () => {
   return (
     <div>CourseContent</div>
   )
