@@ -161,7 +161,7 @@ const CourseInformation = ({
             <input
               type="text"
               required
-              name=""
+              // name=""
               value={courseInfo.demoUrl}
               onChange={(e: any) =>
                 setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
@@ -191,6 +191,8 @@ const CourseInformation = ({
             {courseInfo.thumbnail ? (
                 <img
                     src={courseInfo.thumbnail}
+                    width={100}
+                    height={100}
                     alt="Course thumbnail"
                     className="max-h-full w-full object-cover"
                 />

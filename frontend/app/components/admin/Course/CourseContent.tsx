@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 type Props = {
     active: number;
@@ -8,9 +8,18 @@ type Props = {
     handleSubmit: any
 }
 
-const CourseContent = () => {
+const CourseContent = ({ courseContentData, setCourseContentData, active, setActive, handleSubmit:handleCourseSubmit}: Props) => {
+  const [isCollapsed, setIsCollapsed] = useState(Array(courseContentData.length).fill(false));
+
+  const [activeSection, setActiveSection] = useState(1)
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+  }
   return (
-    <div>CourseContent</div>
+    <div >
+
+    </div>
   )
 }
 

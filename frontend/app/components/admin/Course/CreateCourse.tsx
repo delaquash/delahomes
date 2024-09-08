@@ -61,11 +61,11 @@ const CreateCourse = (props: Props) => {
             )}
             {active === 2 && (
                 <CourseContent
-                    // active={active}
-                    // setActive={setActive}
-                    // courseContentData={courseContentData}
-                    // setCourseContentData={setCourseContentData}
-                    // handleSubmit={handleSubmit}
+                    active={active}
+                    setActive={setActive}
+                    courseContentData={courseContentData}
+                    setCourseContentData={setCourseContentData}
+                    handleSubmit={handleSubmit}
                 />
             )}
         </div>
