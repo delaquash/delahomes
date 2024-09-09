@@ -1,7 +1,7 @@
 import { styles } from '@/app/styles/style';
 import React, { useState } from 'react'
-import { AiOutlineDelete } from 'react-icons/ai';
-import { BsPencil } from 'react-icons/bs';
+import { AiOutlineDelete, AiOutlinePlusCircle } from 'react-icons/ai';
+import { BsLink45Deg, BsPencil } from 'react-icons/bs';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 type Props = {
@@ -31,6 +31,16 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
     const updatedCollapsed = [...isCollapsed];
     updatedCollapsed[index] = !updatedCollapsed[index];
     setIsCollapsed(updatedCollapsed)
+  }
+
+  const handleAddLink = (index: number) => {
+    const updatedData = [...courseContentData]
+    updatedData[index].links.push({title: "", url: ""})
+    setCourseContentData(updatedData)
+  }
+
+  const newContentHandler = (item: number) => {
+
   }
   return (
     <div className='w-[80%] m-auto mt-24 p-3'>
@@ -149,12 +159,10 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
                             }}
                           />
                           <br />
-                          <br />
-                          <br />
                       </div>
                       {item?.links.map((link: any, linkIndex: number)=> (
                         <div className="mb-3 block">
-                          <div className="w-full flex items-center justify-center">
+                          <div className="w-full flex items-center justify-between">
                             <label className={styles.label}>
                               Link {linkIndex + 1}
                             </label>
@@ -166,12 +174,49 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
                           <input 
                             type='text'
                             value={link.title}
-                            placeholder='Source Code ... {Link title}'
+                            placeholder='Source Code ... (Link title)'
+                            className={`${styles.input}`}
+                            onChange={(e)=> {
+                              const updatedData = [...courseContentData];
+                              updatedData[index].links[linkIndex].title = e.target.value;
+                              setCourseContentData(updatedData)
+                            }}
                           
                           />
+                           <input 
+                            type='text'
+                            value={link.title}
+                            placeholder='Source Code ... (Link title)'
+                            className={`${styles.input}`}
+                            onChange={(e)=> {
+                              const updatedData = [...courseContentData];
+                              updatedData[index].links[linkIndex].url= e.target.value;
+                              setCourseContentData(updatedData)
+                            }}
+                            />
                         </div>
                       ))}
+                      <br />
+                      {/* add link button */}
+                      <div className="inline-block mb-4">
+                        <p className='flex items-center text-[18px] dark:text-white text-black cursor-pointer'
+                          onClick={()=> handleAddLink(index)}
+                        >
+                          <BsLink45Deg className='mr-2'/> Add Link
+                        </p>
+                      </div>
                     </>
+                  )}
+                  <br />
+                  {/* add new content */}
+                  {index === courseContentData.length - 1 && (
+                    <div>
+                      <p className='flex items-center text-[20px] dark:text-white text-black cursor-pointer'
+                        onClick={(e: any) => newContentHandler(item)}
+                      >
+                        <AiOutlinePlusCircle className='mr-2'/> Add New Content
+                      </p>
+                    </div>
                   )}
                 </div>
               </>
