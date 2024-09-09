@@ -17,8 +17,12 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
     e.preventDefault()
   }
   return (
-    <div >
-
+    <div className='w-[80%] m-auto mt-24 p-3'>
+        <form onSubmit={handleSubmit}>
+          {courseContentData.map((item: any, index: number)=> {
+            
+          })}
+        </form>
     </div>
   )
 }
