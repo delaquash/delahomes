@@ -189,7 +189,7 @@ const handleOptions = () => {
                             type='text'
                             value={item.title}
                             placeholder='Project Plan'
-                            className={`${styles.title}`}
+                            className={`${styles.input}`}
                             onChange={(e)=> {
                               const updatedData = [...courseContentData];
                               updatedData[index].title = e.target.value;
@@ -203,7 +203,7 @@ const handleOptions = () => {
                             type='text'
                             value={item.videoUrl}
                             placeholder='...'
-                            className={`${styles.title}`}
+                            className={`${styles.input}`}
                             onChange={(e)=> {
                               const updatedData = [...courseContentData];
                               updatedData[index].videoUrl = e.target.value;
@@ -299,7 +299,7 @@ const handleOptions = () => {
         </form>
         <br />
         <div className="w-full flex items-center justify-between">
-            <div className=" w-full 800px:w-[100px] flex items-center 
+            <div className=" w-[60px] 800px:w-[100px] flex items-center 
                 h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
                 onClick={()=> prevButton()}
             >
