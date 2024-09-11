@@ -36,7 +36,10 @@ const CreateCourse = (props: Props) => {
         }
     ])
     const [courseData, setCourseData] = useState({});
-    const handleSubmit= async() => {}
+    const handleSubmit= async() => {
+        const formattedBenefit = benefits.map((benefit)=>({ title: benefit.title }))
+        const formattedPrerequisite = prerequisites.map((prerequisite)=>({title: prerequisite.title}))
+    }
   return (
     <div className='w-full flex min-h-screen'>
         <div className="w-[80%]">
