@@ -66,6 +66,7 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
         setCourseContentData({ ...courseContentData, newContent })
       }
   }
+     
 
   const addNewSection =  () => {
       if(
@@ -76,8 +77,37 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
         courseContentData[courseContentData.length - 1].links[0].url === ""
       ) {
         toast.error("Please fill all missing fields...")
+      } else {
+        setActiveSection(activeSection + 1)
+        const newContent = {
+          videoUrl : "",
+          title: "",
+          description: "",
+          videoSection: `Untitled Section ${activeSection}`,
+          links: ({title:"", url: "" })
+        }
       }
   }
+
+  const prevButton = () => {
+    setActive(active -1 )
+}
+
+const handleOptions = () => {
+  if(
+    courseContentData[courseContentData.length - 1].videoUrl === "" ||
+    courseContentData[courseContentData.length - 1].title === "" ||
+    courseContentData[courseContentData.length - 1].description === "" ||
+    courseContentData[courseContentData.length - 1].links[0].title === "" ||
+    courseContentData[courseContentData.length - 1].links[0].url === ""
+  ) {
+    toast.error("Please fill all missing fields...")
+  } else {
+    setActive(active + 1)
+    handleCourseSubmit()
+
+  }
+}
   return (
     <div className='w-[80%] m-auto mt-24 p-3'>
         <form onSubmit={handleSubmit}>
@@ -266,6 +296,21 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
             <AiOutlinePlusCircle className='mr-2' /> Add new Section
           </div>
         </form>
+        <br />
+        <div className="w-full flex items-center justify-between">
+            <div className=" w-full 800px:w-[100px] flex items-center 
+                h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
+                onClick={()=> prevButton()}
+            >
+                Prev
+            </div>
+            <div className=" w-full 800px:w-[100px] flex items-center 
+                h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
+                onClick={()=> handleOptions()}
+            >
+                Next
+            </div>
+        </div>
     </div>
   )
 }
