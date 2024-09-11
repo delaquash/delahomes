@@ -86,6 +86,7 @@ const CourseContent = ({ courseContentData, setCourseContentData, active, setAct
           videoSection: `Untitled Section ${activeSection}`,
           links: ({title:"", url: "" })
         }
+        setCourseContentData({ ...courseContentData, newContent })
       }
   }
 
@@ -311,6 +312,9 @@ const handleOptions = () => {
                 Next
             </div>
         </div>
+        <br />
+        <br />
+        <br />
     </div>
   )
 }
