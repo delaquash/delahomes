@@ -11,6 +11,7 @@ import {
   addReview,
   addReplyToReview,
   deleteCourse,
+  generateVideoUrl,
 } from "../controllers/CourseController";
 import { validateMyCourseRequest } from "../middleware/validation";
 import { isUserAuthenticated, authorization } from "../middleware/auth";
@@ -53,6 +54,13 @@ router.delete(
   authorization("admin"),
   deleteCourse
 );
+
+router.post(
+  "/get-video-otp",
+  isUserAuthenticated,
+  generateVideoUrl
+)
+
 export default router;
 
 //
