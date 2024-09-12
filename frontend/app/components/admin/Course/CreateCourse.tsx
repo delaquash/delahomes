@@ -8,11 +8,12 @@ import CourseContent from './CourseContent'
 type Props = {}
 
 const CreateCourse = (props: Props) => {
-    const [active, setActive] = useState(3)
+    const [active, setActive] = useState(0)
     const [courseInfo, setCourseInfo] = useState({
         name: "",
         description: "",
         price: "",
+        estimatedPrice: "",
         tags: "",
         level: "",
         demoUrl: "",
@@ -39,7 +40,38 @@ const CreateCourse = (props: Props) => {
     const handleSubmit= async() => {
         const formattedBenefit = benefits.map((benefit)=>({ title: benefit.title }))
         const formattedPrerequisite = prerequisites.map((prerequisite)=>({title: prerequisite.title}))
+
+        // format course content array
+        const formattedCourseContentData = courseContentData.map((courseContent)=> ({
+            videoUrl: courseContent.videoUrl,
+            title: courseContent.title,
+            description: courseContent.description,
+            videoSection: courseContent.videoSection,
+            links: courseContent.links.map((link)=>({
+                title: link.title, 
+                url: link.url
+                })),
+            suggestion: courseContent.suggestion
+
+        }))
+        const data = {
+            name: courseInfo.name,
+            description: courseInfo.description,
+            price : courseInfo.price,
+            estimatedPrice: courseInfo.estimatedPrice,
+            tags: courseInfo.tags,
+            level: courseInfo.level,
+            demoUrl: courseInfo.demoUrl,
+            thumbnail: courseInfo.thumbnail,
+            totalVideos: courseContentData.length,
+            benefits: formattedBenefit,
+            prerequisites: formattedPrerequisite,
+            CourseContent: formattedCourseContentData
+            
+    
+        }
     }
+    
   return (
     <div className='w-full flex min-h-screen'>
         <div className="w-[80%]">
