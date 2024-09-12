@@ -94,7 +94,7 @@ const CreateCourse = (props: Props) => {
                     setActive={setActive}
                 />
             )}
-            {active === 3 && (
+            {active === 2 && (
                 <CourseContent
                     active={active}
                     setActive={setActive}
