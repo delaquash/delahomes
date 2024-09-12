@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
 type Props = {
@@ -11,6 +11,14 @@ const CoursePlayer = ({title, videoUrl}: Props) => {
         otp:"",
         playnackInfo: ""
     })
+    useEffect(()=> {
+        axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}`, {
+            videoId: videoUrl
+        }).then((res)=>{
+            setVideoData(res.data)
+        })
+    }, [ videoUrl])
+
   return (
     <div>CoursePlayer</div>
   )
