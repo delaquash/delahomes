@@ -4,6 +4,7 @@ import CourseInformation from './CourseInformation'
 import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
+import CoursePreview from './CoursePreview'
 
 type Props = {}
 
@@ -71,6 +72,10 @@ const CreateCourse = (props: Props) => {
     
         }
     }
+
+    const handleCourseCreate = (e: any) => {
+        const data = courseData
+    }
     
   return (
     <div className='w-full flex min-h-screen'>
@@ -101,6 +106,15 @@ const CreateCourse = (props: Props) => {
                     courseContentData={courseContentData}
                     setCourseContentData={setCourseContentData}
                     handleSubmit={handleSubmit}
+                />
+            )}
+            {active === 3 && (
+                <CoursePreview 
+                    active={active}
+                    setActive={setActive}
+                    courseData={courseData}
+                    handleCourseCreate = {handleCourseCreate}
+                
                 />
             )}
         </div>
