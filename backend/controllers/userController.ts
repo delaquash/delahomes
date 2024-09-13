@@ -31,7 +31,7 @@ export const createActivationToken = (user: any): IActivationToken => {
 };
 
 
-
+// this is a middleware to update access token and not a route, reason for next()
 const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next:NextFunction)=>{
   try {
     const refresh_token = req.cookies.refresh_token as string;
@@ -60,10 +60,7 @@ const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next
       res.cookie("refresh-token", refreshToken, refreshTokenOptions);
 
       await redis.set(user._id, JSON.stringify(user), "EX", 604800)
-      res.status(200).json({
-        success: "true",
-        accessToken
-      })
+     next()
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 500))
   }
