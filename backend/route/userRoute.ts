@@ -18,24 +18,27 @@ const router = express.Router();
 
 
 router.get("/refresh_token", updateAccessToken);
-router.get("/me", isUserAuthenticated, getUserInfo);
-router.put("/update-user-info", isUserAuthenticated, updateUserInfo);
-router.put("/update-user-password", isUserAuthenticated, updatePassword);
-router.put("/update-profile-avatar", isUserAuthenticated, updateProfilePicture);
+router.get("/me", updateAccessToken ,isUserAuthenticated, getUserInfo);
+router.put("/update-user-info", updateAccessToken ,isUserAuthenticated, updateUserInfo);
+router.put("/update-user-password", updateAccessToken ,isUserAuthenticated, updatePassword);
+router.put("/update-profile-avatar", updateAccessToken ,isUserAuthenticated, updateProfilePicture);
 router.get(
   "/get-all-user",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   getAllUsers
 );
 router.put(
   "/admin-update-user",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   updateUserByAdmin
 );
 router.delete(
   "/delete-user/:id",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   deleteUser

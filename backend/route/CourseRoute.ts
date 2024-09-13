@@ -28,30 +28,34 @@ router.post(
 );
 router.put(
   "/edit-course/:id",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   editCourse
 );
 router.get("/single-course/:id", getSingleCourse);
 router.get("/get-courses", getAllCourse);
-router.get("/user-course-content/:id", isUserAuthenticated, getCourseByUser);
-router.post("/add-question", isUserAuthenticated, addQuestion);
-router.post("/add-answer", isUserAuthenticated, addAnswer);
-router.put("/add-review/:id", isUserAuthenticated, addReview);
+router.get("/user-course-content/:id", updateAccessToken,isUserAuthenticated, getCourseByUser);
+router.post("/add-question", updateAccessToken,isUserAuthenticated, addQuestion);
+router.post("/add-answer", updateAccessToken,isUserAuthenticated, addAnswer);
+router.put("/add-review/:id", updateAccessToken,isUserAuthenticated, addReview);
 router.put(
   "/add-reply/",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   addReplyToReview
 );
 router.get(
   "/get-all-courses",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   getAllCourses
 );
 router.delete(
   "/delete-course/:id",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   deleteCourse
@@ -59,6 +63,7 @@ router.delete(
 
 router.post(
   "/get-video-otp",
+  updateAccessToken,
   isUserAuthenticated,
   generateVideoUrl
 )
