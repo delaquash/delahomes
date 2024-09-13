@@ -9,7 +9,7 @@ type Props = {
 const CoursePlayer = ({title, videoUrl}: Props) => {
     const [videoData, setVideoData] = useState({
         otp:"",
-        playnackInfo: ""
+        playbackInfo: ""
     })
     useEffect(()=> {
         axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}`, {
@@ -20,7 +20,25 @@ const CoursePlayer = ({title, videoUrl}: Props) => {
     }, [ videoUrl])
 
   return (
-    <div>CoursePlayer</div>
+    <div style={{ paddingTop: "41%", position: "relative"}}>
+        {videoData.otp && videoData.playbackInfo !== "" && (
+            <iframe
+            src={`https://player.vdocipher.com/v2/?otp=${videoData.otp}&playbackInfo=${videoData.playbackInfo}&player=lCLBFfAFKydjzVlB`}
+            style={{ 
+                border:0,
+                position: "absolute",
+                top:0,
+                left:0,
+                height:"100%",
+                width:"100%"
+            }} 
+            >
+            allowFullScreen={true} 
+            allow="encrypted-media"
+
+            </iframe>
+        )}
+    </div>
   )
 }
 
