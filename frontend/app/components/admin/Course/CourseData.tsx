@@ -112,14 +112,14 @@ const CourseData = ({
                 onClick= {handlePrerequisite}
             />
         </div>
-        <div className="w-full flex items-center justify-between">
+        <div className="w-full flex items-center justify-center">
             <div className="w-[60px] 800px:w-[100px] flex items-center 
                 h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
                 onClick={()=> prevButton()}
             >
                 Prev
             </div>
-            <div className=" w-full 800px:w-[100px] flex items-center 
+            <div className=" w-full 800px:w-[100px] justify-center flex items-center 
                 h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
                 onClick={()=> handleOptions()}
             >

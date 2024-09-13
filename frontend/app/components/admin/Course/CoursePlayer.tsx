@@ -12,7 +12,7 @@ const CoursePlayer = ({title, videoUrl}: Props) => {
         playbackInfo: ""
     })
     useEffect(()=> {
-        axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}`, {
+        axios.post("http://localhost:5000/api/v1/course/generateVideoUrl", {
             videoId: videoUrl
         }).then((res)=>{
             setVideoData(res.data)
