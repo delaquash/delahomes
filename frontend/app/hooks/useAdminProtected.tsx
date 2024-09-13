@@ -6,7 +6,7 @@ interface Props {
     children: React.ReactNode
 }
 
-const useAdminProtected = ({ children}: Props) => {
+const AdminProtected = ({ children}: Props) => {
     const { user } = useSelector((state: any)=> state.auth)
     
     if(user){
@@ -17,4 +17,4 @@ const useAdminProtected = ({ children}: Props) => {
     
 }
 
-export default useAdminProtected
+export default AdminProtected

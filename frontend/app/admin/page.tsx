@@ -3,12 +3,14 @@ import React from "react";
 import Heading from "../utils/Heading";
 import AdminSideBar from "../components/admin/sidebar/AdminSideBar";
 import DashboardHero from "../components/admin/DashboardHero";
+import AdminProtected from "../hooks/useAdminProtected";
 import CreateCourse from "@/app/components/admin/Course/CreateCourse"
 type Props = {};
 
 const page = (props: Props) => {
   return (
     <div>
+      <AdminProtected>
       <Heading
         description="An online platform where student can learn and interact with a teachers and get real time solution"
         title="ELearning -- Admin"
@@ -20,9 +22,9 @@ const page = (props: Props) => {
         </div>
         <div className="w-[85%]">
           <DashboardHero />
-          <CreateCourse />
         </div>
       </div>
+      </AdminProtected>
     </div>
   );
 };
