@@ -5,10 +5,14 @@ import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
 import CoursePreview from './CoursePreview'
+import { useCreateCourseMutation } from '@/redux/features/course/coursesApi'
 
 type Props = {}
 
 const CreateCourse = (props: Props) => {
+    const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
+
+    useEff
     const [active, setActive] = useState(2)
     const [courseInfo, setCourseInfo] = useState({
         name: "",
@@ -75,6 +79,7 @@ const CreateCourse = (props: Props) => {
 
     const handleCourseCreate = (e: any) => {
         const data = courseData
+        createCourse(data)
     }
     
   return (
