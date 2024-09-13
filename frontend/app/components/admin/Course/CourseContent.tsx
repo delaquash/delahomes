@@ -122,14 +122,13 @@ const handleOptions = () => {
             return (
               <>
                 <div className={`w-full bg-[#cdc8c817] p-4 ${showSectionInput ? "mt-10" : "mb-0"}`}>
-                  <>
                     {showSectionInput && (
                       <>
-                      <div>
+                      <div className='flex w-full items-center'>
                         <input 
                           type='text'
                           className={`text-[20px] ${item.videoSection === "Untitled Section" ? "w-[170px]" : "w-min"} font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none`}
-                          value={item.identification}
+                          value={item.videoSection}
                           onChange={(e) => {
                             const updatedData = [...courseContentData];
                             updatedData[index].videoSection = e.target.value;
@@ -141,7 +140,7 @@ const handleOptions = () => {
                       <br />
                       </>
                     )}
-                  </>
+                  
                   <div className="flex w-full items-center justify-between my-0">
                     {isCollapsed[index] ? (
                       <>
@@ -298,14 +297,14 @@ const handleOptions = () => {
           </div>
         </form>
         <br />
-        <div className="w-full flex items-center justify-center">
-            <div className=" w-[60px] 800px:w-[100px] flex items-center 
+        <div className="w-full flex items-center justify-between">
+            <div className=" w-[60px] 800px:w-[100px] justify-center flex items-center 
                 h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
                 onClick={()=> prevButton()}
             >
                 Prev
             </div>
-            <div className=" w-full 800px:w-[100px] flex items-center 
+            <div className=" w-full 800px:w-[100px] flex justify-center items-center 
                 h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
                 onClick={()=> handleOptions()}
             >
