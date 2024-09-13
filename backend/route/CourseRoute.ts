@@ -15,11 +15,13 @@ import {
 } from "../controllers/CourseController";
 import { validateMyCourseRequest } from "../middleware/validation";
 import { isUserAuthenticated, authorization } from "../middleware/auth";
+import { updateAccessToken } from "../controllers/userController";
 
 
 const router = express.Router();
 router.post(
   "/create-course",
+  updateAccessToken,
   isUserAuthenticated,
   authorization("admin"),
   uploadCourse
