@@ -14,7 +14,7 @@ const AllCourses = (props: Props) => {
   const { theme, setTheme } = useTheme();
 
   const { isLoading, data, error } = useGetCoursesQuery({})
-
+  console.log(data)
   const columns = [
     {field: "id", headerName: "ID", flex:0.5},
     {field: "title", headerName: "Course Title", flex:1},
@@ -58,7 +58,7 @@ const AllCourses = (props: Props) => {
 
   const rows: any = []
 
-  {data && data.courses.forEach((item:any)=> {
+  {data && data?.course?.forEach((item:any)=> {
     rows.push({
       id: item._id,
       title: item.name ,
