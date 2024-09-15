@@ -4,15 +4,16 @@ import React from 'react';
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FiEdit2 } from "react-icons/fi"
-import { useGetCoursesMutation } from '@/redux/features/course/coursesApi';
+import { useGetCoursesQuery } from '@/redux/features/course/coursesApi';
 import Loader from '../../Loader/Loader';
+import { format } from "timeago.js"
 
 type Props = {}
 
 const AllCourses = (props: Props) => {
   const { theme, setTheme } = useTheme();
 
-  const { isLoading, data, error } = useGetCoursesMutation({})
+  const { isLoading, data, error } = useGetCoursesQuery({})
 
   const columns = [
     {field: "id", headerName: "ID", flex:0.5},
@@ -63,7 +64,7 @@ const AllCourses = (props: Props) => {
       title: item.name ,
       ratings: item.ratings,
       purchased: item.purchased,
-      created_at: item.createdAt
+      created_at: format(item.createdAt)
     })
   })}
   return (
