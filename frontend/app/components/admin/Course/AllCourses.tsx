@@ -1,4 +1,4 @@
-import { useTheme } from '@emotion/react';
+import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
 import React from 'react';
 import { DataGrid } from "@mui/x-data-grid"
@@ -24,7 +24,7 @@ const AllCourses = (props: Props) => {
     {
       field: "  ", 
       headerName: "Edit", 
-      flex: "0.2", 
+      flex: 0.2, 
       renderCell: (params: any)=> {
         return (
           <>
@@ -41,7 +41,7 @@ const AllCourses = (props: Props) => {
   {
     field: " ", 
     headerName: "Delete", 
-    flex: "0.2", 
+    flex: 0.2, 
     renderCell: (params: any)=> {
       return (
         <>
