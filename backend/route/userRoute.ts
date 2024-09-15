@@ -10,12 +10,9 @@ import {
   updateUserInfo,
 } from "../controllers/userController";
 
-import { ExpressValidator } from "../middleware/validation";
 import { authorization, isUserAuthenticated } from "../middleware/auth";
 
 const router = express.Router();
-
-
 
 router.get("/refresh_token", updateAccessToken);
 router.get("/me", updateAccessToken ,isUserAuthenticated, getUserInfo);

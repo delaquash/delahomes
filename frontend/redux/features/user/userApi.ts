@@ -34,7 +34,7 @@ export const userApi = apiSlice.injectEndpoints({
         }),
         getAllUser: builder.query({
             query: () => ({
-                url: "http://localhost:5000/api/v1/user/getAllUsers",   
+                url: "http://localhost:5000/api/v1/user/get-all-User",   
                 method: "GET",
                 credentials: "include" as const
                 })

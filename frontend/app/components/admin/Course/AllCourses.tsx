@@ -15,7 +15,6 @@ const AllCourses = (props: Props) => {
   const { theme, setTheme } = useTheme();
 
   const { isLoading, data, error } = useGetCoursesQuery({})
-  console.log(data)
 
   const columns = [
     {field: "id", headerName: "ID", flex:0.5},

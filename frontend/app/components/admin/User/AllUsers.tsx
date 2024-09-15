@@ -50,7 +50,7 @@ const AllUsers = () => {
       name: item.name ,
       role: item.role,
       email: item.email,
-      course: item.course,
+      course: item.courses,
       created_at: format(item.createdAt)
     })
   })}
