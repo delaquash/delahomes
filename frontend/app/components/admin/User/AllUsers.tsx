@@ -4,7 +4,7 @@ import React from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
 import { useGetAllUserQuery } from '@/redux/features/user/userApi';
@@ -39,7 +39,24 @@ const AllUsers = () => {
           </Button>
         </>
       )
-  }}
+  }},
+  {
+    field: "  ", 
+    headerName: "Email", 
+    flex: 0.2, 
+    renderCell: (params: any)=> {
+      return (
+        <>
+          <Button>
+            <AiOutlineMail 
+              className='dark:text-white text-black'
+              size={20}
+            />
+          </Button>
+        </>
+      )
+  }},
+  
   ];
 
   const rows: any = []
@@ -50,7 +67,7 @@ const AllUsers = () => {
       name: item.name ,
       role: item.role,
       email: item.email,
-      course: item.courses,
+      course: item.courses.length,
       created_at: format(item.createdAt)
     })
   })}
