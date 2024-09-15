@@ -1,6 +1,7 @@
+"use client"
+import React from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
-import React from 'react';
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FiEdit2 } from "react-icons/fi"
@@ -18,8 +19,9 @@ const AllCourses = (props: Props) => {
   const columns = [
     {field: "id", headerName: "ID", flex:0.5},
     {field: "title", headerName: "Course Title", flex:1},
-    {field: "purchased", headerName: "Purchases", flex:0.5},
     {field: "ratings", headerName: "Ratings", flex:0.5},
+    {field: "purchased", headerName: "Purchases", flex:0.5},
+    
     {field: "created_at", headerName: "Created At", flex:0.5},
     {
       field: "  ", 
@@ -30,7 +32,7 @@ const AllCourses = (props: Props) => {
           <>
             <Button>
               <FiEdit2
-                className='dark:text-white'
+                className='dark:text-white text-black'
                 size={20}
               />
             </Button>
@@ -47,7 +49,7 @@ const AllCourses = (props: Props) => {
         <>
           <Button>
             <AiOutlineDelete 
-              className='dark:text-white'
+              className='dark:text-white text-black'
               size={20}
             />
           </Button>
@@ -58,7 +60,7 @@ const AllCourses = (props: Props) => {
 
   const rows: any = []
 
-  {data && data?.course?.forEach((item:any)=> {
+  {data && data.course.forEach((item:any)=> {
     rows.push({
       id: item._id,
       title: item.name ,
@@ -82,10 +84,10 @@ const AllCourses = (props: Props) => {
               outline: "none"
             },
             "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-              
+              color: theme === "dark" ? "#fff" : "#000"
             }, 
             "& .MuiDataGrid-sortIcon" : {
-              color: theme === "dark" ? "fff" : "#000"
+              color: theme === "dark" ? "#fff" : "#000"
             },
             "& .MuiDataGrid-row": {
               color: theme === "dark" ? "#fff" : "#000",
@@ -101,12 +103,12 @@ const AllCourses = (props: Props) => {
               color: theme === "dark" ? "#fff" : "#000"
             },
             "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme === "dark"? "#3e4396" : "#A4A9FC",
+              backgroundColor: theme === "dark" ? "#3e4396" : "#A4A9FC",
               borderBottom: "none",
               color: theme === "dark" ? "#fff" : "#000"
             },
             "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: theme === "dark"? "#1F2A40" : "#F2F0F0"
+              backgroundColor: theme === "dark" ? "#1F2A40" : "#F2F0F0"
             },
             "& .MuiDataGrid-footerContainer": {
               backgroundColor: theme === "dark"? "#fff" : "#000",
@@ -116,7 +118,7 @@ const AllCourses = (props: Props) => {
             "& .MuiCheckbox-root": {
               color: theme === "dark" ? `#b7ebde !important` :`#000 !important`,
             },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-test" : {
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text" : {
               color: `#fff !important`
             }
           }}
