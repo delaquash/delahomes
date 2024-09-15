@@ -16,6 +16,7 @@ const AllCourses = (props: Props) => {
 
   const { isLoading, data, error } = useGetCoursesQuery({})
   console.log(data)
+
   const columns = [
     {field: "id", headerName: "ID", flex:0.5},
     {field: "title", headerName: "Course Title", flex:1},
@@ -84,10 +85,10 @@ const AllCourses = (props: Props) => {
               outline: "none"
             },
             "& .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon": {
-              color: theme === "dark" ? "#fff" : "#000"
+              color: theme === "dark" ? "#fff" : "#000",
             }, 
             "& .MuiDataGrid-sortIcon" : {
-              color: theme === "dark" ? "#fff" : "#000"
+              color: theme === "dark" ? "#fff" : "#000",
             },
             "& .MuiDataGrid-row": {
               color: theme === "dark" ? "#fff" : "#000",
@@ -102,8 +103,8 @@ const AllCourses = (props: Props) => {
             "& .name-column-cell": {
               color: theme === "dark" ? "#fff" : "#000"
             },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme === "dark" ? "#3e4396" : "#A4A9FC",
+            "&.MuiDataGrid-columnHeaders": {
+              backgroundColor: theme === "dark" ? "#3e4296a6" : "#A4A9FC",
               borderBottom: "none",
               color: theme === "dark" ? "#fff" : "#000"
             },
@@ -111,7 +112,7 @@ const AllCourses = (props: Props) => {
               backgroundColor: theme === "dark" ? "#1F2A40" : "#F2F0F0"
             },
             "& .MuiDataGrid-footerContainer": {
-              backgroundColor: theme === "dark"? "#fff" : "#000",
+              backgroundColor: theme === "dark" ? "#fff" : "#000",
               borderTop: "none",
               color: theme === "dark" ? "#3e4396" : "#A4A9FC"
             },
