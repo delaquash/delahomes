@@ -2,24 +2,26 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { useTheme } from "next-themes";
-import { Box, Button } from '@mui/material';
+import { Box, Button, Modal } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
 import { useGetAllUserQuery,useUpdateUserRoleMutation,useDeleteUserMutation  } from '@/redux/features/user/userApi';
 import toast from 'react-hot-toast';
+import { styles } from '@/app/styles/style';
 
 
 const AllUsers = () => {
   const { theme, setTheme } = useTheme();
+  const [active, setActive] = useState(false)
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("admin");
   const [userId, setUserId] = useState("");
   const [open, setOpen] = useState(false)
   const [updateUserRole, { isSuccess,  error: UpdateUserRoleFail}] = useUpdateUserRoleMutation();
   const [deleteUser, {isSuccess:deleteUserSuccess, error: deleteUserError }] = useDeleteUserMutation()
-  const { isLoading, data, error } = useGetAllUserQuery({});
+  const { isLoading, data, refetch } = useGetAllUserQuery({}, {refetchOnMountOrArgChange: true});
 
   useEffect(()=> {
     if(UpdateUserRoleFail){
@@ -29,11 +31,14 @@ const AllUsers = () => {
         }
     }
     if(isSuccess){
+        refetch()
         toast.success("User role updated successfully...")
+        setActive(false)
     }
 
     if(deleteUserSuccess){
         toast.success("User deleted successfully...")
+        setOpen(false)
     }
     if(deleteUserError){
         if("data" in deleteUserError) {
@@ -43,6 +48,10 @@ const AllUsers = () => {
     }
     
   }, [isSuccess, UpdateUserRoleFail, deleteUserSuccess, deleteUserError ])
+
+  const handleDelete =() => {
+    console.log("Deleting Courses")
+  }
 
   const columns = [
     {field: "id", headerName: "ID", flex: 0.3},
@@ -59,7 +68,12 @@ const AllUsers = () => {
     renderCell: (params: any)=> {
       return (
         <>
-          <Button>
+          <Button
+            onClick={()=> {
+                setOpen(!open)
+                setUserId(params.row.id)
+            }}
+          >
             <AiOutlineDelete 
               className='dark:text-white text-black'
               size={20}
@@ -76,7 +90,7 @@ const AllUsers = () => {
       return (
         <>
           <a
-            href={"mailto:${params.row.email}"}
+            href={`mailto:${params.row.email}`}
           >
             <AiOutlineMail 
               className='dark:text-white text-black'
@@ -157,6 +171,33 @@ const AllUsers = () => {
         >
           <DataGrid checkboxSelection rows={rows} columns={columns} />
         </Box>
+        {open && ( 
+            <Modal
+                open={open}
+                onClose={()=>setOpen(!open)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box className="absolute top-[50%] left-[50%] -translate-x-1/2">
+                    <h1 className={`${styles.title}`}>
+                        Are you sure you want to delete this course?
+                    </h1>
+                    <div className="flex w-full items-center justify-between mb-6 mt-6">
+                        <div className={`${styles.button} !w-[120px] mr-5   dark:bg-[#57c7a3] dark:border dark:border-[#ffffff6c] !h-[30px]`}
+                        onClick={()=> setOpen(!open)}
+                        >
+                            Cancel
+                        </div>
+                        <div
+                            className={`${styles.button} !w-[120px] mr-5   dark:bg-[#c75757] dark:border dark:border-[#ffffff6c] !h-[30px]`}
+                            onClick={handleDelete}
+                        >
+
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
+        )}
       </Box>
       )}
     </div>
