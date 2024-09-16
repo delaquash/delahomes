@@ -1,6 +1,6 @@
 
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
@@ -8,6 +8,7 @@ import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
 import { useGetAllUserQuery,useUpdateUserRoleMutation,useDeleteUserMutation  } from '@/redux/features/user/userApi';
+import toast from 'react-hot-toast';
 
 
 const AllUsers = () => {
@@ -20,6 +21,28 @@ const AllUsers = () => {
   const [deleteUser, {isSuccess:deleteUserSuccess, error: deleteUserError }] = useDeleteUserMutation()
   const { isLoading, data, error } = useGetAllUserQuery({});
 
+  useEffect(()=> {
+    if(UpdateUserRoleFail){
+        if("data" in UpdateUserRoleFail) {
+            const errorMessage = UpdateUserRoleFail as any
+            toast.error(errorMessage.data.error)
+        }
+    }
+    if(isSuccess){
+        toast.success("User role updated successfully...")
+    }
+
+    if(deleteUserSuccess){
+        toast.success("User deleted successfully...")
+    }
+    if(deleteUserError){
+        if("data" in deleteUserError) {
+            const errorMessage = deleteUserError as any
+            toast.error(errorMessage.data.error)
+        }
+    }
+    
+  }, [isSuccess, UpdateUserRoleFail, deleteUserSuccess, deleteUserError ])
 
   const columns = [
     {field: "id", headerName: "ID", flex: 0.3},
