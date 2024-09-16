@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
@@ -15,6 +15,7 @@ type Props = {
 const AllTeam = ({ isTeam } :Props) => {
     const { theme, setTheme } = useTheme();
     const { isLoading, data, error } = useGetAllUserQuery({})
+    const [active, setActive] = useState(false)
   
     const columns = [
       {field: "id", headerName: "ID", flex: 0.3},
@@ -99,7 +100,9 @@ const AllTeam = ({ isTeam } :Props) => {
     return (
       <div className="mt-[120px]">
         <div className="w-full flex justify-end">
-            <div className={`${styles.button} !w-[200px] mr-5 dark:bg-[#57c7a3] dark:border dark:border-[#ffffff6c] !h-[35px]`}>
+            <div className={`${styles.button} !w-[200px] mr-5   dark:bg-[#57c7a3] dark:border dark:border-[#ffffff6c] !h-[35px]`}
+            onClick={() => setActive(!active)}
+            >
                 Add New Member
             </div>
         </div>

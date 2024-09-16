@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
@@ -9,11 +9,17 @@ import { useGetCoursesQuery } from '@/redux/features/course/coursesApi';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
 
-type Props = {}
+type Props = {
+  isTeam: boolean
+}
 
-const AllCourses = (props: Props) => {
+const AllCourses = ({isTeam}: Props) => {
   const { theme, setTheme } = useTheme();
-
+  const [active, setActive] = useState(false)
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("admin");
+  const [userId, setUserId] = useState("");
+  const [open, setOpen] = useState(false)
   const { isLoading, data, error } = useGetCoursesQuery({})
 
   const columns = [
