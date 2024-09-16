@@ -1,5 +1,4 @@
 
-"use client"
 import React from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
@@ -17,12 +16,12 @@ const AllUsers = () => {
   console.log(data)
 
   const columns = [
-    {field: "id", headerName: "ID", flex:0.5},
-    {field: "name", headerName: "Name", flex:1},
+    {field: "id", headerName: "ID", flex:0.3},
+    {field: "name", headerName: "Name", flex:.5},
     {field: "email", headerName: "Email", flex:0.5},
     {field: "role", headerName: "Role", flex:0.5},
     {field: "course", headerName: "Purchased Course", flex:0.5},
-    {field: "created_at", headerName: "Created At", flex:0.5},
+    {field: "created_at", headerName: "Joined At", flex:0.5},
     
   {
     field: " ", 
@@ -41,18 +40,20 @@ const AllUsers = () => {
       )
   }},
   {
-    field: "  ", 
+    field: "    ", 
     headerName: "Email", 
     flex: 0.2, 
     renderCell: (params: any)=> {
       return (
         <>
-          <Button>
+          <a
+            href={"mailto:${params.row.email}"}
+          >
             <AiOutlineMail 
               className='dark:text-white text-black'
               size={20}
             />
-          </Button>
+          </a>
         </>
       )
   }},
@@ -96,7 +97,7 @@ const AllUsers = () => {
               borderBottom: theme === "dark" ? "1px solid #ffffff30!important" : "1px solid #ccc!important"
             },
             "& .MuiTablePagination-root": {
-              color: theme === "dark" ? "#fff" : "#000"
+              color: theme === "dark" ? "#000" : "#000"
             },
             "& .MuiDataGrid-cell": {
               borderBottom: "none"
@@ -107,13 +108,13 @@ const AllUsers = () => {
             "&.MuiDataGrid-columnHeaders": {
               backgroundColor: theme === "dark" ? "#3e4296a6" : "#A4A9FC",
               borderBottom: "none",
-              color: theme === "dark" ? "#fff" : "#000"
+              color: theme === "dark" ? "#3e4396" : "#000"
             },
             "& .MuiDataGrid-virtualScroller": {
               backgroundColor: theme === "dark" ? "#1F2A40" : "#F2F0F0"
             },
             "& .MuiDataGrid-footerContainer": {
-              backgroundColor: theme === "dark" ? "#fff" : "#000",
+              backgroundColor: theme === "dark" ? "#3e4396" : "#000",
               borderTop: "none",
               color: theme === "dark" ? "#3e4396" : "#A4A9FC"
             },
