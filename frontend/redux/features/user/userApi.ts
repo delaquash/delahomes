@@ -39,21 +39,24 @@ export const userApi = apiSlice.injectEndpoints({
                 credentials: "include" as const
                 })
         }),
-        // updateUserRole: builder.mutation({
-        //     query: ({ id, role }) => ({
-        //         url: "http://localhost:5000/api/v1/user/admin-update-user",
-        //         method: "PUT",
-        //         body:  JSON.stringify({ role, id }),
-        //         headers: {
-        //             'Content-Type': 'application/json', // Explicitly set Content-Type header
-        //           },
-        //         credentials: "include" as const
-        //     })
-        // })
+        updateUserRole: builder.mutation({
+            query: ({ id, role }) => ({
+                url: "http://localhost:5000/api/v1/user/admin-update-user",
+                method: "PUT",
+                body:  JSON.stringify({ role, id }),
+                headers: {
+                    // Explicitly set Content-Type header
+                    'Content-Type': 'application/json', 
+                  },
+                credentials: "include" as const
+            })
+        })
     })
 });
-export const {useGetAllUserQuery ,useUpdateAvatarMutation,useEditProfileMutation, useUpdatePasswordMutation, 
-    
-    // useUpdateUserRoleMutation 
-
-} = userApi
+export const {
+  useGetAllUserQuery,
+  useUpdateAvatarMutation,
+  useEditProfileMutation,
+  useUpdatePasswordMutation,
+  useUpdateUserRoleMutation,
+} = userApi;

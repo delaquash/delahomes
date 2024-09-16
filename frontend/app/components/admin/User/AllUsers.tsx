@@ -7,7 +7,7 @@ import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
-import { useGetAllUserQuery,  } from '@/redux/features/user/userApi';
+import { useGetAllUserQuery,useUpdateUserRoleMutation  } from '@/redux/features/user/userApi';
 
 
 const AllUsers = () => {
@@ -16,7 +16,7 @@ const AllUsers = () => {
   const [role, setRole] = useState("admin");
   const [userId, setUserId] = useState("");
   const [open, setOpen] = useState(false)
-//   const [updateUserRole, { isSuccess,  error: UpdateUserRoleFail}] = useUpdateUserRoleMutation()
+  const [updateUserRole, { isSuccess,  error: UpdateUserRoleFail}] = useUpdateUserRoleMutation()
   const { isLoading, data, error } = useGetAllUserQuery({});
 
 
