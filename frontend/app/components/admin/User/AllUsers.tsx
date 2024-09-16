@@ -1,18 +1,24 @@
 
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
-import { useGetAllUserQuery } from '@/redux/features/user/userApi';
+import { useGetAllUserQuery,  } from '@/redux/features/user/userApi';
 
 
 const AllUsers = () => {
   const { theme, setTheme } = useTheme();
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("admin");
+  const [userId, setUserId] = useState("");
+  const [open, setOpen] = useState(false)
+//   const [updateUserRole, { isSuccess,  error: UpdateUserRoleFail}] = useUpdateUserRoleMutation()
+  const { isLoading, data, error } = useGetAllUserQuery({});
 
-  const { isLoading, data, error } = useGetAllUserQuery({})
 
   const columns = [
     {field: "id", headerName: "ID", flex: 0.3},

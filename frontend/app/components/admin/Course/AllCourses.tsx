@@ -15,11 +15,6 @@ type Props = {
 
 const AllCourses = ({isTeam}: Props) => {
   const { theme, setTheme } = useTheme();
-  const [active, setActive] = useState(false)
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("admin");
-  const [userId, setUserId] = useState("");
-  const [open, setOpen] = useState(false)
   const { isLoading, data, error } = useGetCoursesQuery({})
 
   const columns = [
