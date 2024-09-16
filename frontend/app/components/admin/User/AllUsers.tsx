@@ -13,7 +13,6 @@ const AllUsers = () => {
   const { theme, setTheme } = useTheme();
 
   const { isLoading, data, error } = useGetAllUserQuery({})
-  console.log(data)
 
   const columns = [
     {field: "id", headerName: "ID", flex: 0.3},
