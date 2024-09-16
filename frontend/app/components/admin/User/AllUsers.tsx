@@ -17,6 +17,7 @@ const AllUsers = () => {
   const [userId, setUserId] = useState("");
   const [open, setOpen] = useState(false)
   const [updateUserRole, { isSuccess,  error: UpdateUserRoleFail}] = useUpdateUserRoleMutation();
+  const [deleteUser, {isSuccess:deleteUserSuccess, error: deleteUserError }] = useDeleteUserMutation()
   const { isLoading, data, error } = useGetAllUserQuery({});
 
 
