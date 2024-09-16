@@ -219,9 +219,10 @@ const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, n
         return next(new ErrorHandler("User not found", 404));
       }
       // delete from MongoDB
-      await User.deleteOne({ id });
+      await User.findByIdAndDelete(id);
       // delete from redis
       await redis.del(id);
+      // response
       res.status(200).json({
         success: true,
         message: "User deleted successfully",
