@@ -242,9 +242,4 @@ export {
   getAllUsers,
   updateUserByAdmin,
   deleteUser
-//     getCurrentUser,
-//     createCurrentUser,
-//     updateUser,
-//     getUser,
-//     getUserList ED35D4D
 };

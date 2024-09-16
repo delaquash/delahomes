@@ -1,13 +1,14 @@
 "use client"
 import React, { useState } from 'react';
 import { useTheme } from "next-themes";
-import { Box, Button } from '@mui/material';
+import { Box, Button, Modal } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FiEdit2 } from "react-icons/fi"
-import { useGetCoursesQuery } from '@/redux/features/course/coursesApi';
+import { useGetCoursesQuery,useDeleteCoursesMutation } from '@/redux/features/course/coursesApi';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
+import { styles } from '@/app/styles/style';
 
 type Props = {
   isTeam: boolean
@@ -15,6 +16,7 @@ type Props = {
 
 const AllCourses = ({isTeam}: Props) => {
   const { theme, setTheme } = useTheme();
+  const [open, setOpen] = useState(false)
   const { isLoading, data, error } = useGetCoursesQuery({})
 
   const columns = [
@@ -126,6 +128,33 @@ const AllCourses = ({isTeam}: Props) => {
         >
           <DataGrid checkboxSelection rows={rows} columns={columns} />
         </Box>
+        {open && ( 
+            <Modal
+                open={open}
+                onClose={()=>setOpen(!open)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box className="absolute top-[50%] left-[50%] -translate-x-1/2">
+                    <h1 className={`${styles.title}`}>
+                        Are you sure you want to delete this course?
+                    </h1>
+                    <div className="flex w-full items-center justify-between mb-6 mt-6">
+                        <div className={`${styles.button} !w-[120px] mr-5   dark:bg-[#57c7a3] dark:border dark:border-[#ffffff6c] !h-[30px]`}
+                        onClick={()=> setOpen(!open)}
+                        >
+                            Cancel
+                        </div>
+                        <div
+                            className={`${styles.button} !w-[120px] mr-5   dark:bg-[#c75757] dark:border dark:border-[#ffffff6c] !h-[30px]`}
+                            onClick={handleDelete}
+                        >
+
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
+        )}
       </Box>
       )}
     </div>
