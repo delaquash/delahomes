@@ -418,7 +418,7 @@ export const deleteCourse = CatchAsyncError(
         return next(new ErrorHandler("Course not found", 404));
       }
       // delete from MongoDB
-      await course.deleteOne({ id });
+      await CourseModel.findByIdAndDelete(id);
       // delete from redis
       await redis.del(id);
       res.status(200).json({

@@ -18,7 +18,13 @@ export const courseApi = apiSlice.injectEndpoints({
                 credentials: "include" as const
             })
         }),
-        
+        deleteCourses: builder.mutation({
+            query: ({ id }) => ({
+                url: `http://localhost:5000/api/v1/user/delete-user/${id}`,
+                method: "DELETE",
+                credentials: "include" as const
+            }),
+        }) 
     })
 })
 
