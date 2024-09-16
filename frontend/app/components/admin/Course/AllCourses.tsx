@@ -16,7 +16,8 @@ type Props = {
 
 const AllCourses = ({isTeam}: Props) => {
   const { theme, setTheme } = useTheme();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [courseId, setCourseId] = useState("");
   const { isLoading, data, error } = useGetCoursesQuery({})
 
   const columns = [
@@ -50,7 +51,12 @@ const AllCourses = ({isTeam}: Props) => {
     renderCell: (params: any)=> {
       return (
         <>
-          <Button>
+          <Button
+               onClick={()=> {
+                setOpen(!open)
+                setCourseId(params.row.id)
+            }}
+          >
             <AiOutlineDelete 
               className='dark:text-white text-black'
               size={20}
@@ -61,6 +67,9 @@ const AllCourses = ({isTeam}: Props) => {
   }}
   ];
 
+  const handleDelete = () => {
+    console.log("object")
+  }
   const rows: any = []
 
   {data && data.course.forEach((item:any)=> {
