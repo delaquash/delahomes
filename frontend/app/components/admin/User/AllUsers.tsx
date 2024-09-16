@@ -16,17 +16,17 @@ const AllUsers = () => {
   console.log(data)
 
   const columns = [
-    {field: "id", headerName: "ID", flex:0.3},
-    {field: "name", headerName: "Name", flex:.5},
-    {field: "email", headerName: "Email", flex:0.5},
-    {field: "role", headerName: "Role", flex:0.5},
-    {field: "course", headerName: "Purchased Course", flex:0.5},
-    {field: "created_at", headerName: "Joined At", flex:0.5},
+    {field: "id", headerName: "ID", flex: 0.3},
+    {field: "name", headerName: "Name", flex: .5},
+    {field: "email", headerName: "Email", flex: .5},
+    {field: "role", headerName: "Role", flex: 0.5},
+    {field: "course", headerName: "Purchased Course", flex: 0.5},
+    {field: "created_at", headerName: "Joined At", flex: 0.5},
     
   {
     field: " ", 
     headerName: "Delete", 
-    flex: 0.2, 
+    flex: 0.3, 
     renderCell: (params: any)=> {
       return (
         <>
