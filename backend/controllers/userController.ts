@@ -202,8 +202,16 @@ const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, 
 // update user --- only for admin
 const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, next: NextFunction)=>{
   try {
-    const { id, role } = req.body
-    updateUserRoleServices(res, id, role)
+    const { id, email, role } = req.body
+    const isUserExist = await User.findOne({ email })
+    if(isUserExist) {
+      updateUserRoleServices(res, id, role)
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "User not found"
+      })
+    } 
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 400))
   }
