@@ -21,10 +21,10 @@ type Props = {
 const AllUsers = ({ isTeam }:Props) => {
   const { theme, setTheme } = useTheme();
   const [active, setActive] = useState(false);
-  
-  
-  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [open, setOpen] = useState(false);
+  const [role, setRole] = useState("admin")
+  const [userId, setUserId] = useState("");
   const [updateUserRole, { isSuccess, error: UpdateUserRoleFail }] =
     useUpdateUserRoleMutation();
   const [deleteUser, { isSuccess: deleteUserSuccess, error: deleteUserError }] =
@@ -64,11 +64,12 @@ const AllUsers = ({ isTeam }:Props) => {
 
   const handleDelete = async () => {
     const id = userId;
+    console.log(userId, id)
     await deleteUser({id});
   };
-  // const handleSubmit = async () => {
-  //   await updateUserRole({ email, role });
-  // };
+  const handleSubmit = async () => {
+    await updateUserRole({ email, role });
+  };
   const columns = [
     { field: "id", headerName: "ID", flex: 0.3 },
     { field: "name", headerName: "Name", flex: 0.5 },
