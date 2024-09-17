@@ -159,33 +159,35 @@ const AllCourses = ({isTeam}: Props) => {
           <DataGrid checkboxSelection rows={rows} columns={columns} />
         </Box>
         
-        {open && ( 
+        
+        {open && (
             <Modal
-                open={open}
-                onClose={()=>setOpen(!open)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+              open={open}
+              onClose={() => setOpen(!open)}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
             >
-                <Box className="absolute top-[50%] left-[50%] -translate-x-1/2">
-                    <h1 className={`${styles.title}`}>
-                        Are you sure you want to delete this course?
-                    </h1>
-                    <div className="flex w-full items-center justify-between mb-6 mt-6">
-                        <div className={`${styles.button} !w-[120px] mr-5   dark:bg-[#57c7a3] dark:border dark:border-[#ffffff6c] !h-[30px]`}
-                        onClick={()=> setOpen(!open)}
-                        >
-                            Cancel
-                        </div>
-                        <div
-                            className={`${styles.button} !w-[120px] mr-5   dark:bg-[#c75757] dark:border dark:border-[#ffffff6c] !h-[30px]`}
-                            onClick={handleDelete}
-                        >
-                          Yes
-                        </div>
-                    </div>
-                </Box>
+              <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
+                <h1 className={`${styles.title}`}>
+                  Are you sure you want to delete this user?
+                </h1>
+                <div className="flex w-full items-center justify-between mb-6 mt-6">
+                  <div
+                    className={`${styles.button} !w-[120px] mr-5   dark:bg-[#57c7a3] dark:border dark:border-[#ffffff6c] !h-[30px]`}
+                    onClick={() => setOpen(!open)}
+                  >
+                    Cancel
+                  </div>
+                  <div
+                    className={`${styles.button} !w-[120px] mr-5   dark:bg-[#c75757] dark:border dark:border-[#ffffff6c] !h-[30px]`}
+                    onClick={handleDelete}
+                  >
+                    Yes
+                  </div>
+                </div>
+              </Box>
             </Modal>
-        )}
+          )}
       </Box>
       )}
     </div>
