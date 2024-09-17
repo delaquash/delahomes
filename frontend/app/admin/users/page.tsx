@@ -9,6 +9,7 @@ type Props = {};
 
 const page = (props: Props) => {
   return (
+    <>
     <div>
       <AdminProtected>
       <Heading
@@ -22,11 +23,12 @@ const page = (props: Props) => {
         </div>
         <div className="w-[85%]">
           <DashboardHero />
-          <AllUsers />
+          <AllUsers isTeam={true}/>
         </div>
       </div>
       </AdminProtected>
     </div>
+    </>
   );
 };
 
