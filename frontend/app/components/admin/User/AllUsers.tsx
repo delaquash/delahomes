@@ -54,8 +54,8 @@ const AllUsers = () => {
     const id = userId;
     await deleteUser(id)
   }
-const handleSubmit = () => {
-  console.log("This is the submit button")
+const handleSubmit =async () => {
+  
 }
   const columns = [
     {field: "id", headerName: "ID", flex: 0.3},
