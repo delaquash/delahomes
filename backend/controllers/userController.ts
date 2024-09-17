@@ -60,7 +60,7 @@ const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next
       res.cookie("refresh-token", refreshToken, refreshTokenOptions);
 
       await redis.set(user._id, JSON.stringify(user), "EX", 604800)
-     next()
+     return next()
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 500))
   }
@@ -205,6 +205,7 @@ const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, n
     const { id, email, role } = req.body
     const isUserExist = await User.findOne({ email })
     if(isUserExist) {
+      const id = isUserExist._id;
       updateUserRoleServices(res, id, role)
     } else {
       res.status(400).json({
