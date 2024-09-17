@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button, Modal } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
@@ -9,6 +9,8 @@ import { useGetCoursesQuery,useDeleteCoursesMutation } from '@/redux/features/co
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js"
 import { styles } from '@/app/styles/style';
+import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 type Props = {
   isTeam: boolean
@@ -18,7 +20,29 @@ const AllCourses = ({isTeam}: Props) => {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const [courseId, setCourseId] = useState("");
-  const { isLoading, data, error } = useGetCoursesQuery({})
+  const { isLoading, data, refetch } = useGetCoursesQuery({}, {refetchOnMountOrArgChange: true})
+  const [deleteCourse, {isSuccess, error  }] = useDeleteCoursesMutation({});
+
+  useEffect(()=> {
+    if(isSuccess){
+      setOpen(false)
+      refetch()
+      toast.success("User role updated successfully...")
+  }
+
+  if(error) {
+    if("data" in error){
+      const errorMessage = error as any
+      toast.error(errorMessage.data.message)
+    }
+  }
+  }, [isSuccess, error]);
+
+
+  const handleDelete = async () => {
+    const id = courseId;
+    await deleteCourse(id)
+  }
 
   const columns = [
     {field: "id", headerName: "ID", flex:0.5},
@@ -34,12 +58,12 @@ const AllCourses = ({isTeam}: Props) => {
       renderCell: (params: any)=> {
         return (
           <>
-            <Button>
+            <Link href={`/admin/edit-course/${params.row.id}`}>
               <FiEdit2
                 className='dark:text-white text-black'
                 size={20}
               />
-            </Button>
+            </Link>
           </>
         );
       },
@@ -67,9 +91,6 @@ const AllCourses = ({isTeam}: Props) => {
   }}
   ];
 
-  const handleDelete = () => {
-    console.log("object")
-  }
   const rows: any = []
 
   {data && data.course.forEach((item:any)=> {

@@ -27,10 +27,11 @@ const AllUsers = () => {
     if(UpdateUserRoleFail){
         if("data" in UpdateUserRoleFail) {
             const errorMessage = UpdateUserRoleFail as any
-            toast.error(errorMessage.data.error)
+            toast.error(errorMessage.data.message)
         }
     }
     if(isSuccess){
+        setOpen(false)
         refetch()
         toast.success("User role updated successfully...")
         setActive(false)
@@ -49,10 +50,13 @@ const AllUsers = () => {
     
   }, [isSuccess, UpdateUserRoleFail, deleteUserSuccess, deleteUserError ])
 
-  const handleDelete =() => {
-    console.log("Deleting Courses")
+  const handleDelete =async () => {
+    const id = userId;
+    await deleteUser(id)
   }
-
+const handleSubmit = () => {
+  console.log("This is the submit button")
+}
   const columns = [
     {field: "id", headerName: "ID", flex: 0.3},
     {field: "name", headerName: "Name", flex: .5},
@@ -171,6 +175,40 @@ const AllUsers = () => {
         >
           <DataGrid checkboxSelection rows={rows} columns={columns} />
         </Box>
+        {active && (
+           <Modal
+                open={active}
+                onClose={()=>setOpen(!open)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+           <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
+            <h1 className={`${styles.title}`}> Add New Member</h1>
+            <div className="mt-4">
+              <input 
+                type="email"
+                value={email}
+                placeholder='Please enter your email.'
+                className={`${styles.input}`}
+                onChange={(e)=>setEmail(e.target.value)}
+              />
+              <select name="" id="" className={`${styles.input}!mt-4`}>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+              <br />
+              <div className={`${styles.button}my-6 !h-[30px]`}
+                onClick={handleSubmit}
+              >
+                Submit
+              </div>
+            </div>
+           </Box>
+           </Modal>
+        )}
+
+
+
         {open && ( 
             <Modal
                 open={open}
@@ -178,7 +216,7 @@ const AllUsers = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box className="absolute top-[50%] left-[50%] -translate-x-1/2">
+                <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
                     <h1 className={`${styles.title}`}>
                         Are you sure you want to delete this course?
                     </h1>
