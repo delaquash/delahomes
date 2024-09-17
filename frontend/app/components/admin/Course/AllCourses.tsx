@@ -158,6 +158,7 @@ const AllCourses = ({isTeam}: Props) => {
         >
           <DataGrid checkboxSelection rows={rows} columns={columns} />
         </Box>
+        
         {open && ( 
             <Modal
                 open={open}
