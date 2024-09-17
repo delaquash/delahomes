@@ -21,8 +21,8 @@ type Props = {
 const AllUsers = ({ isTeam }:Props) => {
   const { theme, setTheme } = useTheme();
   const [active, setActive] = useState(false);
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("admin");
+  
+  
   const [userId, setUserId] = useState("");
   const [open, setOpen] = useState(false);
   const [updateUserRole, { isSuccess, error: UpdateUserRoleFail }] =
@@ -66,9 +66,9 @@ const AllUsers = ({ isTeam }:Props) => {
     const id = userId;
     await deleteUser({id});
   };
-  const handleSubmit = async () => {
-    await updateUserRole({ email, role });
-  };
+  // const handleSubmit = async () => {
+  //   await updateUserRole({ email, role });
+  // };
   const columns = [
     { field: "id", headerName: "ID", flex: 0.3 },
     { field: "name", headerName: "Name", flex: 0.5 },
@@ -136,15 +136,7 @@ const AllUsers = ({ isTeam }:Props) => {
         <Loader />
       ) : (
         <Box m="20px">
-          {isTeam && (
-            <div className="flex w-full justify-end">
-              <div className={`${styles.button} !w-[200px] !rounded-[10px] dark:bg-[57c7a3] !h-[35px] dark:border dark:border-[#ffffff6c]`}
-                onClick={()=>setActive(!active)}
-              >
-                Add New Member
-              </div>
-            </div>
-          )}
+          
           <Box
             m="40px 0 0 0"
             height="80vh"
@@ -200,38 +192,7 @@ const AllUsers = ({ isTeam }:Props) => {
             <DataGrid checkboxSelection rows={rows} columns={columns} />
           </Box>
 
-           { active && (
-            <Modal
-              open={active}
-              onClose={() => setActive(!active)}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
-                <h1 className={`${styles.title}`}> Add New Member.....</h1>
-                <div className="mt-4">
-                  <input
-                    type="email"
-                    value={email}
-                    placeholder="Please enter your email."
-                    className={`${styles.input}`}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <select name="" id="" className={`${styles.input}!mt-4`}>
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
-                  </select>
-                  <br />
-                  <div
-                    className={`${styles.button}my-6 !h-[30px]`}
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </div>
-                </div>
-              </Box>
-            </Modal>
-          )}
+          
 
           {open && (
             <Modal

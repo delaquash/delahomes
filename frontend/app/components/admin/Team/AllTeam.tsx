@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTheme } from "next-themes";
-import { Box, Button } from '@mui/material';
+import { Box, Button, Modal } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js";
-import { useGetAllUserQuery } from '@/redux/features/user/userApi';
+import { useGetAllUserQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi';
 import { styles } from '@/app/styles/style';
 
 type Props = {
@@ -14,8 +14,12 @@ type Props = {
 
 const AllTeam = ({ isTeam } :Props) => {
     const { theme, setTheme } = useTheme();
+    const [email, setEmail] = useState("");
+    const [role, setRole] = useState("admin");
     const { isLoading, data, error } = useGetAllUserQuery({})
     const [active, setActive] = useState(false)
+    const [updateUserRole, { isSuccess, error: UpdateUserRoleFail }] =
+    useUpdateUserRoleMutation();
   
     const columns = [
       {field: "id", headerName: "ID", flex: 0.3},
@@ -96,20 +100,25 @@ const AllTeam = ({ isTeam } :Props) => {
       }
     }
   
+    const handleSubmit = async () => {
+      await updateUserRole({ email, role });
+    };
    
     return (
       <div className="mt-[120px]">
-        <div className="w-full flex justify-end">
-            <div className={`${styles.button} !w-[200px] mr-5   dark:bg-[#57c7a3] dark:border dark:border-[#ffffff6c] !h-[35px]`}
-            onClick={() => setActive(!active)}
-            >
-                Add New Member
-            </div>
-        </div>
         {isLoading ? (
           <Loader />
         ) : (
           <Box m="20px">
+            {isTeam && (
+            <div className="flex w-full justify-end">
+              <div className={`${styles.button} !w-[200px] !rounded-[10px] dark:bg-[57c7a3] !h-[35px] dark:border dark:border-[#ffffff6c]`}
+                onClick={()=>setActive(!active)}
+              >
+                Add New Member
+              </div>
+            </div>
+          )}
           <Box 
             m="40px 0 0 0"
             height="80vh"
@@ -160,6 +169,38 @@ const AllTeam = ({ isTeam } :Props) => {
           >
             <DataGrid checkboxSelection rows={rows} columns={columns} />
           </Box>
+          { active && (
+            <Modal
+              open={active}
+              onClose={() => setActive(!active)}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
+                <h1 className={`${styles.title}`}> Add New Member.....</h1>
+                <div className="mt-4">
+                  <input
+                    type="email"
+                    value={email}
+                    placeholder="Please enter your email."
+                    className={`${styles.input}`}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <select name="" id="" className={`${styles.input}!mt-4`}>
+                    <option  value="admin">Admin</option>
+                    <option value="user">User</option>
+                  </select>
+                  <br />
+                  <div
+                    className={`${styles.button} my-6 !h-[30px]`}
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </div>
+                </div>
+              </Box>
+            </Modal>
+          )}
         </Box>
         )}
       </div>

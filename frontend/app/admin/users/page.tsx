@@ -23,6 +23,7 @@ const page = (props: Props) => {
         </div>
         <div className="w-[85%]">
           <DashboardHero />
+          
           <AllUsers isTeam={true}/>
         </div>
       </div>

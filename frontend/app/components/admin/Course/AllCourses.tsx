@@ -25,9 +25,9 @@ const AllCourses = ({isTeam}: Props) => {
 
   useEffect(()=> {
     if(isSuccess){
-      setOpen(false)
+      toast.success("Course deleted successfully...")
       refetch()
-      toast.success("User role updated successfully...")
+      setOpen(false)
   }
 
   if(error) {
@@ -41,7 +41,7 @@ const AllCourses = ({isTeam}: Props) => {
 
   const handleDelete = async () => {
     const id = courseId;
-    await deleteCourse(id)
+    await deleteCourse({id})
   }
 
   const columns = [
@@ -180,7 +180,7 @@ const AllCourses = ({isTeam}: Props) => {
                             className={`${styles.button} !w-[120px] mr-5   dark:bg-[#c75757] dark:border dark:border-[#ffffff6c] !h-[30px]`}
                             onClick={handleDelete}
                         >
-
+                          Yes
                         </div>
                     </div>
                 </Box>

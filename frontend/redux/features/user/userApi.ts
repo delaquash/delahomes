@@ -40,10 +40,10 @@ export const userApi = apiSlice.injectEndpoints({
       }),
     }),
     updateUserRole: builder.mutation({
-      query: ({  role, email }) => ({
+      query: ({  role, id }) => ({
         url: "http://localhost:5000/api/v1/user/admin-update-user",
         method: "PUT",
-        body: JSON.stringify({ role, email }),
+        body: JSON.stringify({ role, id }),
         headers: {
           // Explicitly set Content-Type header
           "Content-Type": "application/json",
