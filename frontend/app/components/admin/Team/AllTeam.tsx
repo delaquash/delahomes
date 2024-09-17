@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from "next-themes";
 import { Box, Button, Modal } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
 import Loader from '../../Loader/Loader';
 import { format } from "timeago.js";
-import { useGetAllUserQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi';
+import { useDeleteUserMutation, useGetAllUserQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi';
 import { styles } from '@/app/styles/style';
+import toast from 'react-hot-toast';
 
 type Props = {
     isTeam: boolean
@@ -15,12 +16,46 @@ type Props = {
 const AllTeam = ({ isTeam } :Props) => {
     const { theme, setTheme } = useTheme();
     const [email, setEmail] = useState("");
+    const [open, setOpen] = useState(false);
     const [role, setRole] = useState("admin");
-    const { isLoading, data, error } = useGetAllUserQuery({})
+    const [userId, setUserId] = useState("");
+    const { isLoading, data, refetch } = useGetAllUserQuery(
+      {},
+      { refetchOnMountOrArgChange: true }
+    );
     const [active, setActive] = useState(false)
     const [updateUserRole, { isSuccess, error: UpdateUserRoleFail }] =
     useUpdateUserRoleMutation();
+    const [deleteUser, { isSuccess: deleteUserSuccess, error: deleteUserError }] =
+    useDeleteUserMutation();
+
+    useEffect(() => {
+      if (UpdateUserRoleFail) {
+        if ("data" in UpdateUserRoleFail) {
+          const errorMessage = UpdateUserRoleFail as any;
+          toast.error(errorMessage.data.message);
+        }
+      }
+      if (isSuccess) {
+        setOpen(false);
+        refetch();
+        toast.success("User role updated successfully...");
+        setActive(false);
+      }
   
+      if (deleteUserSuccess) {
+  
+        toast.success("User deleted successfully...");
+        setOpen(false);
+        refetch()
+      }
+      if (deleteUserError) {
+        if ("data" in deleteUserError) {
+          const errorMessage = deleteUserError as any;
+          toast.error(errorMessage.data.error);
+        }
+      }
+    }, [isSuccess, UpdateUserRoleFail, deleteUserSuccess, deleteUserError]);
     const columns = [
       {field: "id", headerName: "ID", flex: 0.3},
       {field: "name", headerName: "Name", flex: .5},
@@ -36,7 +71,12 @@ const AllTeam = ({ isTeam } :Props) => {
       renderCell: (params: any)=> {
         return (
           <>
-            <Button>
+            <Button
+               onClick={() => {
+                setOpen(!open);
+                setUserId(params.row.id);
+              }}
+            >
               <AiOutlineDelete 
                 className='dark:text-white text-black'
                 size={20}
@@ -104,6 +144,10 @@ const AllTeam = ({ isTeam } :Props) => {
       await updateUserRole({ email, role });
     };
    
+    const handleDelete = async () => {
+      const id = userId;
+      await deleteUser({id});
+    };
     return (
       <div className="mt-[120px]">
         {isLoading ? (
