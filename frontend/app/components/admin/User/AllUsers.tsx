@@ -64,7 +64,6 @@ const AllUsers = ({ isTeam }:Props) => {
 
   const handleDelete = async () => {
     const id = userId;
-    console.log(userId, id)
     await deleteUser({id});
   };
   const handleSubmit = async () => {
