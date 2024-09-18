@@ -60,7 +60,7 @@ const CourseData = ({
        * error message if they are empty.
        */
         const handleOptions = () => {
-            if(benefits[benefits.length - 1]?.title !== "" && prerequisites[prerequisites.length - 1]?.title !== "") {
+            if(benefits[benefits?.length - 1]?.title !== "" && prerequisites[prerequisites.length - 1]?.title !== "") {
                 setActive(active + 1)
             } else {
                 toast.error("Please fill the filed before you can proceed")
@@ -95,7 +95,7 @@ const CourseData = ({
                 What are the prerequisites needed to start this course?
             </label>
             <br />
-            {prerequisites.map((prerequisite: any, index: number)=> (
+            {prerequisites?.map((prerequisite: any, index: number)=> (
                 <input 
                 type="text" 
                 key={index}

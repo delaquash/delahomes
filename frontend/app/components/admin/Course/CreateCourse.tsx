@@ -26,7 +26,7 @@ const CreateCourse = (props: Props) => {
                 }          
             }
     }, [isLoading, isSuccess, error])
-    const [active, setActive] = useState(2)
+    const [active, setActive] = useState(0)
     const [courseInfo, setCourseInfo] = useState({
         name: "",
         description: "",
@@ -84,7 +84,7 @@ const CreateCourse = (props: Props) => {
             totalVideos: courseContentData.length,
             benefits: formattedBenefit,
             prerequisites: formattedPrerequisite,
-            CourseContent: formattedCourseContentData
+            CourseData: formattedCourseContentData
             
     
         }

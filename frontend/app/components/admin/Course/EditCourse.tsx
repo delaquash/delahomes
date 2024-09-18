@@ -17,7 +17,7 @@ interface Course {
     benefits: { title: string; description: string }[];  // Assuming benefits are objects with title and description
     courseData: { sectionTitle: string; content: string }[]; // Assuming courseData are objects
     demoUrl: string;
-    description: string;
+    description: any;
     estimatedPrice: number;
     level: string;
     name: string;
@@ -55,7 +55,25 @@ const EditCourse = ({ id }: Props) => {
     //             }          
     //         }
     // }, [isLoading, isSuccess, error])
-    const [active, setActive] = useState(2)
+
+    useEffect(()=>{
+        if(editCourseData) {
+            setCourseInfo({
+                name: editCourseData.name,
+                description: editCourseData.description,
+                price: editCourseData.price,
+                estimatedPrice: editCourseData.estimatedPrice,
+                level: editCourseData.level,
+                tags: editCourseData.tags,
+                demoUrl: editCourseData.demoUrl,
+                thumbnail: editCourseData.thumbnail,
+            }),
+            setBenefits( editCourseData.benefits)
+            setPrerequisites( editCourseData.setPrerequisites)
+            setCourseContentData( editCourseData.purchased)
+        }
+    }, [])
+    const [active, setActive] = useState(0)
     const [courseInfo, setCourseInfo] = useState({
         name: "",
         description: "",
@@ -66,6 +84,8 @@ const EditCourse = ({ id }: Props) => {
         demoUrl: "",
         thumbnail:""
     });
+
+    
     const [benefits, setBenefits] = useState([{ title: ""}]);
     const [prerequisites, setPrerequisites] = useState([{title: ""}]);
     const [courseContentData, setCourseContentData] = useState([
@@ -86,7 +106,7 @@ const EditCourse = ({ id }: Props) => {
     const [courseData, setCourseData] = useState({});
     const handleSubmit= async() => {
         const formattedBenefit = benefits.map((benefit)=>({ title: benefit.title }))
-        const formattedPrerequisite = prerequisites.map((prerequisite)=>({title: prerequisite.title}))
+        const formattedPrerequisite = prerequisites?.map((prerequisite)=>({title: prerequisite.title}))
 
         // format course content array
         const formattedCourseContentData = courseContentData.map((courseContent)=> ({
