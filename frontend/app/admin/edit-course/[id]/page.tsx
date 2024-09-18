@@ -8,7 +8,8 @@ import EditCourse from '@/app/components/admin/Course/EditCourse';
 
 type Props = {}
 
-const page = (props: Props) => {
+const page = ({params}: any) => {
+  const id = params.id
   return (
     <div>
         <Heading
@@ -20,9 +21,9 @@ const page = (props: Props) => {
             <div className="1500px:w-[16%] w-1/5">
                 <AdminSideBar />
             </div>
-            <div className="w-[]85%">
+            <div className="w-[85%]">
                 <DashboardHeader />
-                <EditCourse />
+                <EditCourse id={id}/>
             </div>
         </div>
     </div>

@@ -9,9 +9,12 @@ import { useCreateCourseMutation } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
 
-type Props = {}
+type Props = {
+    id: string
+}
 
-const CreateCourse = (props: Props) => {
+const EditCourse = ({ id }: Props) => {
+    
     const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
 
     useEffect(() => {
@@ -148,4 +151,4 @@ const CreateCourse = (props: Props) => {
   )
 }
 
-export default CreateCourse;
+export default EditCourse;
