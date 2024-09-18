@@ -5,7 +5,7 @@ import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
 import CoursePreview from './CoursePreview'
-import { useCreateCourseMutation } from '@/redux/features/course/coursesApi'
+import { useCreateCourseMutation, useGetCoursesQuery } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
 
@@ -13,22 +13,48 @@ type Props = {
     id: string
 }
 
-const EditCourse = ({ id }: Props) => {
-    
-    const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
+interface Course {
+    benefits: { title: string; description: string }[];  // Assuming benefits are objects with title and description
+    courseData: { sectionTitle: string; content: string }[]; // Assuming courseData are objects
+    demoUrl: string;
+    description: string;
+    estimatedPrice: number;
+    level: string;
+    name: string;
+    prerequisites: { title: string }[]; // Assuming prerequisites are objects with title
+    price: number;
+    purchased: number;
+    ratings: number;
+    reviews: { author: string; comment: string }[]; // Assuming reviews are objects with author and comment
+    tags?: string;
+    _id: string;
+    __v: number;
+  }
 
-    useEffect(() => {
-        if (isSuccess) {
-            toast.success("Courses created successfully...")
-            redirect("/admin/all-courses")
-            }
-            if(error){
-                if("data" in error){
-                    const errorMessage = error as any  
-                    toast.error(errorMessage.data.message)     
-                }          
-            }
-    }, [isLoading, isSuccess, error])
+  interface DataProps {
+    success: boolean;
+    course: Course[];
+  }
+
+const EditCourse = ({ id }: Props) => {
+    const { isLoading, data, refetch } = useGetCoursesQuery({}, {refetchOnMountOrArgChange: true})
+    
+    const editCourseData = data && data.course.find((editCourse: Course)=>editCourse._id === id )
+  
+    // const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
+
+    // useEffect(() => {
+    //     if (isSuccess) {
+    //         toast.success("Courses created successfully...")
+    //         redirect("/admin/all-courses")
+    //         }
+    //         if(error){
+    //             if("data" in error){
+    //                 const errorMessage = error as any  
+    //                 toast.error(errorMessage.data.message)     
+    //             }          
+    //         }
+    // }, [isLoading, isSuccess, error])
     const [active, setActive] = useState(2)
     const [courseInfo, setCourseInfo] = useState({
         name: "",
@@ -95,9 +121,9 @@ const EditCourse = ({ id }: Props) => {
 
     const handleCourseCreate =async (e: any) => {
         const data = courseData;
-        if(!isLoading){
-            await createCourse(data)
-        }
+        // if(!isLoading){
+        //     await createCourse(data)
+        // }
     }
     
   return (
