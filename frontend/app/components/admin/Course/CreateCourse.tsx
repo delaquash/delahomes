@@ -123,6 +123,11 @@ const CreateCourse = (props: Props) => {
                 <CourseData
                     benefits={benefits}
                     setBenefits={setBenefits}
+                    /* The expression `prerequisites={prerequisites || [{ title:"" }]}` in the
+                    `CourseData` component is setting the `prerequisites` prop with the value of the
+                    `prerequisites` state if it is truthy. If `prerequisites` is falsy (e.g., `null`
+                    or `undefined`), it will default to an array containing a single object with a
+                    `title` property set to an empty string (`[{ title: "" }]`). Meaning, I forced it to be an array with a default value*/
                     prerequisites={prerequisites || [{ title:"" }]} 
                     setPrerequisites={setPrerequisites}
                     active={active}

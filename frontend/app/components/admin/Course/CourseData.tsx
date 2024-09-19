@@ -16,6 +16,11 @@ type Props = {
 const CourseData = ({
         benefits, 
         setBenefits, 
+        /* The line `prerequisites = [{ title: "" }]` in the function parameters of the `CourseData`
+        component is providing a default value for the `prerequisites` prop in case it is not passed
+        when the component is used. 
+        Still forced it to be an array here also.
+        */
         prerequisites = [{ title: "" }], 
         setPrerequisites, 
         active, 
@@ -32,19 +37,12 @@ const CourseData = ({
 
         const handlePrerequisiteChange = (index: number, value: any) => {
             // Ensure prerequisites is an array before making changes
-    if (!Array.isArray(prerequisites)) {
-        console.error("Prerequisites is not an array");
-        return;
-    }           
-    const updatedPrerequisite = [...prerequisites];
-    
-    if (updatedPrerequisite[index]) {
-        updatedPrerequisite[index].title = value;
-        setPrerequisites(updatedPrerequisite);
-    } else {
-        console.error("Invalid index: No prerequisite at this index");
-    }
-            // const updatedPrerequisite= [...prerequisites]
+            if (!Array.isArray(prerequisites)) {
+                console.error("Prerequisites is not an array");
+                return;
+            }          
+            
+              // const updatedPrerequisite= [...prerequisites]
 
             /* `updatedPrerequisite[index].title = value` is updating the title of a prerequisite at a
             specific index in the `updatedPrerequisite` array with the new value passed as `value`.
@@ -58,6 +56,15 @@ const CourseData = ({
             at a particular index. This allows the React component to re-render and reflect the
             updated prerequisites data in the UI based on the user input or changes made. */
             // setPrerequisites(updatedPrerequisite)
+            const updatedPrerequisite = [...prerequisites];
+            
+            if (updatedPrerequisite[index]) {
+                updatedPrerequisite[index].title = value;
+                setPrerequisites(updatedPrerequisite);
+            } else {
+                console.error("Invalid index: No prerequisite at this index");
+            }
+          
         }
         const handlePrerequisite = () => {
             /* `setPrerequisites([...prerequisites, {title: ""}])` is a function call that updates the
