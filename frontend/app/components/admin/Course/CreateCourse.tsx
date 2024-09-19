@@ -12,6 +12,14 @@ import { CourseInfo } from '@/types/createCourse'
 
 type Props = {}
 
+export interface Benefit {
+    title: string;
+}
+
+interface Prerequisite {
+    title: string;
+}[]
+
 const CreateCourse = (props: Props) => {
     const [active, setActive] = useState<number>(0)
     const [courseInfo, setCourseInfo] = useState<CourseInfo>({
@@ -24,8 +32,8 @@ const CreateCourse = (props: Props) => {
         demoUrl: "",
         thumbnail:""
     });
-    const [benefits, setBenefits] = useState([{ title: "" }]);
-    const [prerequisites, setPrerequisites] = useState([{ title: ""}]);
+    const [benefits, setBenefits] = useState<Benefit[]>([{ title: "" }]);
+    const [prerequisites, setPrerequisites] = useState<Prerequisite[]>([{ title: ""}]);
     const [courseContentData, setCourseContentData] = useState([
         {
             videoUrl: "",
@@ -115,7 +123,7 @@ const CreateCourse = (props: Props) => {
                 <CourseData
                     benefits={benefits}
                     setBenefits={setBenefits}
-                    prerequisites={prerequisites}
+                    prerequisites={prerequisites || [{ title:"" }]} 
                     setPrerequisites={setPrerequisites}
                     active={active}
                     setActive={setActive}

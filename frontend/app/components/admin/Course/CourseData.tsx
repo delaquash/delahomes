@@ -2,6 +2,7 @@ import { styles } from '@/app/styles/style';
 import React from 'react'
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import toast from 'react-hot-toast';
+import { Benefit } from './CreateCourse';
 
 type Props = {
     benefits:{title: string}[];
@@ -15,12 +16,12 @@ type Props = {
 const CourseData = ({
         benefits, 
         setBenefits, 
-        prerequisites, 
+        prerequisites = [{ title: "" }], 
         setPrerequisites, 
         active, 
         setActive
     }: Props) => {
-        const handleBenefitChange= (index: number, value: any) => {
+        const handleBenefitChange= (index: number, value: string) => {
             const updatedBenefits = [...benefits];
             updatedBenefits[index].title = value;
             setBenefits(updatedBenefits)
@@ -30,19 +31,33 @@ const CourseData = ({
         }
 
         const handlePrerequisiteChange = (index: number, value: any) => {
-            const updatedPrerequisite= [...prerequisites]
+            // Ensure prerequisites is an array before making changes
+    if (!Array.isArray(prerequisites)) {
+        console.error("Prerequisites is not an array");
+        return;
+    }           
+    const updatedPrerequisite = [...prerequisites];
+    
+    if (updatedPrerequisite[index]) {
+        updatedPrerequisite[index].title = value;
+        setPrerequisites(updatedPrerequisite);
+    } else {
+        console.error("Invalid index: No prerequisite at this index");
+    }
+            // const updatedPrerequisite= [...prerequisites]
+
             /* `updatedPrerequisite[index].title = value` is updating the title of a prerequisite at a
             specific index in the `updatedPrerequisite` array with the new value passed as `value`.
             This line of code is used in the `handlePrerequisiteChange` function to update the title
             of a prerequisite based on the user input in the input field. */
-            updatedPrerequisite[index].title = value
+            // updatedPrerequisite[index].title = value
             /* `setPrerequisites(updatedPrerequisite)` is a function call that updates the state of the
             prerequisites in the parent component with the new array `updatedPrerequisite`. By
             calling `setPrerequisites(updatedPrerequisite)`, you are updating the prerequisites
             state with the modified array that includes the changes made to a specific prerequisite
             at a particular index. This allows the React component to re-render and reflect the
             updated prerequisites data in the UI based on the user input or changes made. */
-            setPrerequisites(updatedPrerequisite)
+            // setPrerequisites(updatedPrerequisite)
         }
         const handlePrerequisite = () => {
             /* `setPrerequisites([...prerequisites, {title: ""}])` is a function call that updates the
@@ -62,6 +77,10 @@ const CourseData = ({
        */
       const handleOptions = () => {
         // Ensure that benefits and prerequisites are arrays with at least one element
+        if (!Array.isArray(benefits) || !Array.isArray(prerequisites)) {
+            toast.error("Benefits or prerequisites are missing");
+            return;
+        }
         const lastBenefit = benefits.length > 0 ? benefits[benefits.length - 1] : null;
         const lastPrerequisite = prerequisites.length > 0 ? prerequisites[prerequisites.length - 1] : null;
     
@@ -70,6 +89,11 @@ const CourseData = ({
         } else {
             toast.error("Please fill the field before you can proceed");
         }
+        // if(benefits[benefits.length -1]?.title !== "" && prerequisites[prerequisites.length - 1]?.title !== ""){
+        //     setActive(active + 1)
+        // } else {
+        //     toast.error("Please fill the field before you can proceed")
+        // }
     };
 
   return (
@@ -79,7 +103,7 @@ const CourseData = ({
                 What do students stand to gain from this course?
             </label>
             <br />
-            {benefits.map((benefit:any, index: number)=> (
+            {benefits?.map((benefit, index: number)=> (
                 <input 
                     type="text" 
                     key={index}

@@ -47,12 +47,12 @@ const CourseInformation = ({
         reader.readAsDataURL(file)
     }
   }
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
      const file = e.target.files?.[0];
      if(file) {
         const reader = new FileReader();
 
-        reader.onload= (e: ProgressEvent<FileReader>) => {
+        reader.onload = (e: ProgressEvent<FileReader>) => {
             if(reader.readyState === 2) {
                 setCourseInfo({...courseInfo, thumbnail: reader.result})
             }
@@ -173,14 +173,15 @@ const CourseInformation = ({
             />
           </div>
          
-          </div> <br />
+          </div> 
+          <br />
           <div className="w-full">
             <input 
                 type="file"
                 accept="image/*"
                 id="file"
                 className="hidden"
-                onChange={handleChange}
+                onChange={handleFileChange}
             />
             <label
                 htmlFor="file"
