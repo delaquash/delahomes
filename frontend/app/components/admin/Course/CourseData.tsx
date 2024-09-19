@@ -2,6 +2,7 @@ import { styles } from '@/app/styles/style';
 import React from 'react'
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import toast from 'react-hot-toast';
+
 type Props = {
     benefits:{title: string}[];
     setBenefits:(benefits:{title: string}[]) => void;
@@ -119,7 +120,7 @@ const CourseData = ({
         </div>
         <div className="w-full flex items-center justify-between">
             <div className="w-full 800px:w-[100px] flex items-center 
-                h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
+                h-[40px] bg-[#37a39a] justify-center text-center text-[#fff] rounded mt-4 cursor-pointer"
                 onClick={()=> prevButton()}
             >
                 Prev

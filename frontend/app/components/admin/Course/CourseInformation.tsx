@@ -1,11 +1,12 @@
 "use client";
 import { styles } from "@/app/styles/style";
+import { CourseInfo } from "@/types/createCourse";
 import React, { useState } from "react";
 
 // Props from courseInfo Component
 type Props = {
-  courseInfo: any;
-  setCourseInfo: (course: any) => void;
+  courseInfo: CourseInfo;
+  setCourseInfo: (courseInfo: CourseInfo) => void;
   active: number;
   setActive: (active: number) => void;
 };

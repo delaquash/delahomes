@@ -8,6 +8,7 @@ import CoursePreview from './CoursePreview'
 import { useCreateCourseMutation, useGetCoursesQuery } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
+import { CourseInfo } from '@/types/createCourse'
 
 type Props = {
     id: string
@@ -74,7 +75,7 @@ const EditCourse = ({ id }: Props) => {
         }
     }, [])
     const [active, setActive] = useState(0)
-    const [courseInfo, setCourseInfo] = useState({
+    const [courseInfo, setCourseInfo] = useState<CourseInfo>({
         name: "",
         description: "",
         price: "",

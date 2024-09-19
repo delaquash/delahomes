@@ -8,26 +8,13 @@ import CoursePreview from './CoursePreview'
 import { useCreateCourseMutation } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
+import { CourseInfo } from '@/types/createCourse'
 
 type Props = {}
 
 const CreateCourse = (props: Props) => {
-    const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
-
-    useEffect(() => {
-        if (isSuccess) {
-            toast.success("Courses created successfully...")
-            redirect("/admin/all-courses")
-            }
-            if(error){
-                if("data" in error){
-                    const errorMessage = error as any  
-                    toast.error(errorMessage.data.message)     
-                }          
-            }
-    }, [isLoading, isSuccess, error])
-    const [active, setActive] = useState(0)
-    const [courseInfo, setCourseInfo] = useState({
+    const [active, setActive] = useState<number>(0)
+    const [courseInfo, setCourseInfo] = useState<CourseInfo>({
         name: "",
         description: "",
         price: "",
@@ -38,7 +25,7 @@ const CreateCourse = (props: Props) => {
         thumbnail:""
     });
     const [benefits, setBenefits] = useState([{ title: "" }]);
-    const [prerequisites, setPrerequisites] = useState([{title: ""}]);
+    const [prerequisites, setPrerequisites] = useState([{ title: ""}]);
     const [courseContentData, setCourseContentData] = useState([
         {
             videoUrl: "",
@@ -55,6 +42,21 @@ const CreateCourse = (props: Props) => {
         }
     ])
     const [courseData, setCourseData] = useState({});
+    const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Courses created successfully...")
+            redirect("/admin/all-courses")
+            }
+            if(error){
+                if("data" in error){
+                    const errorMessage = error as any  
+                    toast.error(errorMessage.data.message)     
+                }          
+            }
+    }, [isLoading, isSuccess, error])
+
     const handleSubmit= async() => {
         const formattedBenefit = benefits.map((benefit)=>({ title: benefit.title }))
         const formattedPrerequisite = prerequisites.map((prerequisite)=>({title: prerequisite.title}))
