@@ -14,10 +14,11 @@ export interface CourseContentDataProps {
     title: string;
     description: string;
     videoSection: string;
+    suggestion?: string;
     links:
         {
             title: string;
             url: string;
         }[];
-    suggestion: string;
+    
 }

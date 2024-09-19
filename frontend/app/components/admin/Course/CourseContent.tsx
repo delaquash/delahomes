@@ -1,4 +1,5 @@
 import { styles } from "@/app/styles/style";
+import { CourseContentDataProps } from "@/types/createCourse";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
@@ -8,8 +9,8 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 type Props = {
   active: number;
   setActive: (index: number) => void;
-  courseContentData: any;
-  setCourseContentData: (courseContentData: any) => void;
+  courseContentData: CourseContentDataProps[];
+  setCourseContentData: (courseContentData: CourseContentDataProps[]) => void;
   handleSubmit: any;
 };
 
@@ -73,10 +74,10 @@ const CourseContent = ({
         title: "",
         description: "",
         videoSection: newVideoSection,
-        links: { title: "", url: "" },
+        links: [{ title: "", url: "" }],
       };
 
-      setCourseContentData({ ...courseContentData, newContent });
+      setCourseContentData([...courseContentData, newContent ]);
     }
   };
 
@@ -96,9 +97,10 @@ const CourseContent = ({
         title: "",
         description: "",
         videoSection: `Untitled Section ${activeSection}`,
-        links: { title: "", url: "" },
+        links: [{ title: "", url: "" }],
+        suggestion: ""
       };
-      setCourseContentData({ ...courseContentData, newContent });
+      setCourseContentData([...courseContentData, newContent ]);
     }
   };
 
@@ -123,7 +125,7 @@ const CourseContent = ({
   return (
     <div className="w-[80%] m-auto mt-24 p-3">
       <form onSubmit={handleSubmit}>
-        {courseContentData.map((item: any, index: number) => {
+        {Array.isArray(courseContentData) && courseContentData.map((item: any, index: number) => {
           /* The line `const showSectionInput = index === 0 || item.videosSection !==
          courseContentData[index - 1].videoSection;` is determining whether to show a section input
          based on the current item's `videosSection` value compared to the previous item's
