@@ -103,7 +103,6 @@ export const getAllCourse = CatchAsyncError(
         const course = await CourseModel.find().select(
           "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
         );
-    
         res.status(200).json({
           success: true,
           course,

@@ -37,7 +37,7 @@ const CreateCourse = (props: Props) => {
         demoUrl: "",
         thumbnail:""
     });
-    const [benefits, setBenefits] = useState([{ title: ""}]);
+    const [benefits, setBenefits] = useState([{ title: "" }]);
     const [prerequisites, setPrerequisites] = useState([{title: ""}]);
     const [courseContentData, setCourseContentData] = useState([
         {

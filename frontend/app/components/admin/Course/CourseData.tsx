@@ -59,13 +59,18 @@ const CourseData = ({
        * arrays have titles filled before allowing the user to proceed to the next step, displaying an
        * error message if they are empty.
        */
-        const handleOptions = () => {
-            if(benefits[benefits?.length - 1]?.title !== "" && prerequisites[prerequisites.length - 1]?.title !== "") {
-                setActive(active + 1)
-            } else {
-                toast.error("Please fill the filed before you can proceed")
-            }
+      const handleOptions = () => {
+        // Ensure that benefits and prerequisites are arrays with at least one element
+        const lastBenefit = benefits.length > 0 ? benefits[benefits.length - 1] : null;
+        const lastPrerequisite = prerequisites.length > 0 ? prerequisites[prerequisites.length - 1] : null;
+    
+        if (lastBenefit?.title !== "" && lastPrerequisite?.title !== "") {
+            setActive(active + 1);
+        } else {
+            toast.error("Please fill the field before you can proceed");
         }
+    };
+    
   return (
     <div className='w-[80%] m-auto mt-24 block'>
         <div>
