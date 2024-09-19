@@ -8,3 +8,16 @@ export interface CourseInfo {
   demoUrl: string;
   thumbnail: any;
 }
+
+export interface CourseContentDataProps {
+    videoUrl: string;
+    title: string;
+    description: string;
+    videoSection: string;
+    links:
+        {
+            title: string;
+            url: string;
+        }[];
+    suggestion: string;
+}

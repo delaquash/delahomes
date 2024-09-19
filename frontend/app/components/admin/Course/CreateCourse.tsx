@@ -8,7 +8,7 @@ import CoursePreview from './CoursePreview'
 import { useCreateCourseMutation } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
-import { CourseInfo } from '@/types/createCourse'
+import { CourseContentDataProps, CourseInfo } from '@/types/createCourse'
 
 type Props = {}
 
@@ -34,7 +34,7 @@ const CreateCourse = (props: Props) => {
     });
     const [benefits, setBenefits] = useState<Benefit[]>([{ title: "" }]);
     const [prerequisites, setPrerequisites] = useState<Prerequisite[]>([{ title: ""}]);
-    const [courseContentData, setCourseContentData] = useState([
+    const [courseContentData, setCourseContentData] = useState<CourseContentDataProps[]>([
         {
             videoUrl: "",
             title: "",
