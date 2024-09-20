@@ -1,6 +1,6 @@
 import { styles } from "@/app/styles/style";
 import { CourseContentDataProps } from "@/types/createCourse";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 import { BsLink45Deg, BsPencil } from "react-icons/bs";
@@ -25,6 +25,10 @@ const CourseContent = ({
     Array(courseContentData.length).fill(false)
   );
   const [activeSection, setActiveSection] = useState(1);
+
+  useEffect(() => {
+    console.log("courseContentData updated:", courseContentData);
+  },[courseContentData])
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -82,6 +86,10 @@ const CourseContent = ({
   };
 
   const addNewSection = () => {
+    if (!Array.isArray(courseContentData) || courseContentData.length === 0) {
+      console.error("courseContentData is not an array or is empty");
+      return;
+    } 
     if (
       courseContentData[courseContentData.length - 1].videoUrl === "" ||
       courseContentData[courseContentData.length - 1].title === "" ||
@@ -89,7 +97,7 @@ const CourseContent = ({
       courseContentData[courseContentData.length - 1].links[0].title === "" ||
       courseContentData[courseContentData.length - 1].links[0].url === ""
     ) {
-      toast.error("Please fill all missing fields...");
+      toast.error("Please fill all missing fields");
     } else {
       setActiveSection(activeSection + 1);
       const newContent = {
@@ -116,12 +124,14 @@ const CourseContent = ({
       courseContentData[courseContentData.length - 1].links[0].title === "" ||
       courseContentData[courseContentData.length - 1].links[0].url === ""
     ) {
-      toast.error("Please fill all missing fields...");
+      toast.error("Please fill all missing field");
     } else {
       setActive(active + 1);
       handleCourseSubmit();
     }
   };
+
+
   return (
     <div className="w-[80%] m-auto mt-24 p-3">
       <form onSubmit={handleSubmit}>
@@ -168,7 +178,7 @@ const CourseContent = ({
                     <>
                       {item.title ? (
                         <p className="font-Poppins dark:text-white text-black">
-                          {index + 1} .{item.title}
+                          {index + 1}. {item.title}
                         </p>
                       ) : (
                         <></>
