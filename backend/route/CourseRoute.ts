@@ -44,7 +44,7 @@ router.put(
   addReplyToReview
 );
 router.get(
-  "/get-all-courses",
+  "/get-admin-all-courses",
   isUserAuthenticated,
   authorization("admin"),
   getAllCoursesByAdmin
