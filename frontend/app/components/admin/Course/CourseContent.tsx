@@ -26,9 +26,9 @@ const CourseContent = ({
   );
   const [activeSection, setActiveSection] = useState(1);
 
-  useEffect(() => {
-    console.log("courseContentData updated:", courseContentData);
-  },[courseContentData])
+  // useEffect(() => {
+  //   console.log("courseContentData updated:", courseContentData);
+  // },[courseContentData])
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -116,6 +116,10 @@ const CourseContent = ({
   };
 
   const handleOptions = () => {
+    if (!Array.isArray(courseContentData) || courseContentData.length === 0) {
+      console.error("courseContentData is not an array or is empty");
+      return;
+    } 
     if (
       courseContentData[courseContentData.length - 1].videoUrl === "" ||
       courseContentData[courseContentData.length - 1].title === "" ||
@@ -123,7 +127,7 @@ const CourseContent = ({
       courseContentData[courseContentData.length - 1].links[0].title === "" ||
       courseContentData[courseContentData.length - 1].links[0].url === ""
     ) {
-      toast.error("Please fill all missing field");
+      toast.error("Section cannot be empty");
     } else {
       setActive(active + 1);
       handleCourseSubmit();
@@ -288,7 +292,7 @@ const CourseContent = ({
                         />
                         <input
                           type="text"
-                          value={link.title}
+                          value={link.url}
                           placeholder="Source Code ... (Link title)"
                           className={`${styles.input}`}
                           onChange={(e) => {

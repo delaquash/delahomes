@@ -14,7 +14,6 @@ import orderRoute from "./route/OrderRoute";
 import notificationRoute from "./route/NotificationRoute";
 import analyticsRoute from "./route/analyticsRouter";
 import layoutRoute from "./route/layoutRoute";
-import ErrorHandler from "./utils/errorHandler";
 import cors from "cors";
 
 // middlewares

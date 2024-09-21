@@ -8,7 +8,7 @@ import CoursePreview from './CoursePreview'
 import { useCreateCourseMutation, useGetCoursesQuery } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
-import { CourseInfo } from '@/types/createCourse'
+import { CourseContentDataProps, CourseInfo } from '@/types/createCourse'
 
 type Props = {
     id: string
@@ -89,7 +89,7 @@ const EditCourse = ({ id }: Props) => {
     
     const [benefits, setBenefits] = useState([{ title: ""}]);
     const [prerequisites, setPrerequisites] = useState([{title: ""}]);
-    const [courseContentData, setCourseContentData] = useState([
+    const [courseContentData, setCourseContentData] = useState<CourseContentDataProps[]>([
         {
             videoUrl: "",
             title: "",
@@ -115,7 +115,7 @@ const EditCourse = ({ id }: Props) => {
             title: courseContent.title,
             description: courseContent.description,
             videoSection: courseContent.videoSection,
-            links: courseContent.links.map((link)=>({
+            links: courseContent.links.map((link: any)=>({
                 title: link.title, 
                 url: link.url
                 })),
