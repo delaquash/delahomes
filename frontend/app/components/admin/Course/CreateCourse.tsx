@@ -21,7 +21,7 @@ interface Prerequisite {
 }[]
 
 const CreateCourse = (props: Props) => {
-    const [active, setActive] = useState<number>(3)
+    const [active, setActive] = useState<number>(0)
     const [courseInfo, setCourseInfo] = useState<CourseInfo>({
         name: "",
         description: "",
@@ -50,7 +50,6 @@ const CreateCourse = (props: Props) => {
         }
     ])
     const [courseData, setCourseData] = useState({});
-    console.log(courseData)
     const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
 
     useEffect(() => {

@@ -93,7 +93,7 @@ const AllCourses = ({isTeam}: Props) => {
 
   const rows: any = []
 
-  {data && data.course.forEach((item:any)=> {
+  {data && data.courses.forEach((item:any)=> {
     rows.push({
       id: item._id,
       title: item.name ,

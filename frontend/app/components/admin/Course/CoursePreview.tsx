@@ -20,7 +20,7 @@ const CoursePreview = ({
     ((courseData?.estimatedPrice - courseData?.price) /
       courseData?.estimatedPrice) *
     100;
-    console.log(courseData)
+
   // console.log(discountedPrice)
   const discountPricePercentage = discountedPrice.toFixed(0);
 
