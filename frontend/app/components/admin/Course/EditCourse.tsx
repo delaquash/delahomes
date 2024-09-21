@@ -134,7 +134,7 @@ const EditCourse = ({ id }: Props) => {
             totalVideos: courseContentData.length,
             benefits: formattedBenefit,
             prerequisites: formattedPrerequisite,
-            CourseContent: formattedCourseContentData
+            courseData: formattedCourseContentData
             
     
         }

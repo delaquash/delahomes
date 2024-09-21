@@ -106,7 +106,6 @@ const CourseContent = ({
         description: "",
         videoSection: `Untitled Section ${activeSection}`,
         links: [{ title: "", url: "" }],
-        suggestion: ""
       };
       setCourseContentData([...courseContentData, newContent ]);
     }
@@ -155,6 +154,7 @@ const CourseContent = ({
                     <div className="flex w-full items-center">
                       <input
                         type="text"
+                        placeholder=""
                         className={`text-[20px] ${
                           item.videoSection === "Untitled Section"
                             ? "w-[170px]"

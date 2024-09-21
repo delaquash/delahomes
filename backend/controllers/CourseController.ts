@@ -398,7 +398,7 @@ export const addReplyToReview = CatchAsyncError(async(req: Request, res:Response
 })
 
 // get all users ---only for admin
-export const getAllCourses = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
+export const getAllCoursesByAdmin = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
   try {
     getAllCourseServices(res)
   } catch (error: any) {

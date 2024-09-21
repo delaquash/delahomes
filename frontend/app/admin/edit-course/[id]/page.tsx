@@ -9,7 +9,7 @@ import EditCourse from '@/app/components/admin/Course/EditCourse';
 type Props = {}
 
 const page = ({params}: any) => {
-  const id = params.id
+  const id = params?.id
   return (
     <div>
         <Heading

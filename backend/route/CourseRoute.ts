@@ -2,7 +2,6 @@ import express from "express";
 import {
   uploadCourse,
   editCourse,
-  getAllCourses,
   getSingleCourse,
   getAllCourse,
   getCourseByUser,
@@ -12,6 +11,7 @@ import {
   addReplyToReview,
   deleteCourse,
   generateVideoUrl,
+  getAllCoursesByAdmin,
 } from "../controllers/CourseController";
 import { validateMyCourseRequest } from "../middleware/validation";
 import { isUserAuthenticated, authorization } from "../middleware/auth";
@@ -47,7 +47,7 @@ router.get(
   "/get-all-courses",
   isUserAuthenticated,
   authorization("admin"),
-  getAllCourses
+  getAllCoursesByAdmin
 );
 router.delete(
   "/delete-course/:id",
