@@ -40,22 +40,8 @@ interface Course {
 const EditCourse = ({ id }: Props) => {
     const { isLoading, data, refetch } = useGetCoursesQuery({}, {refetchOnMountOrArgChange: true})
     
-    const editCourseData = data && data.course.find((editCourse: Course)=>editCourse._id === id )
+    const editCourseData = data && data.courses.find((editCourse: Course)=>editCourse._id === id )
   
-    // const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
-
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         toast.success("Courses created successfully...")
-    //         redirect("/admin/all-courses")
-    //         }
-    //         if(error){
-    //             if("data" in error){
-    //                 const errorMessage = error as any  
-    //                 toast.error(errorMessage.data.message)     
-    //             }          
-    //         }
-    // }, [isLoading, isSuccess, error])
 
     useEffect(()=>{
         if(editCourseData) {

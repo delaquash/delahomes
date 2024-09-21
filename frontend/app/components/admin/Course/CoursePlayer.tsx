@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
@@ -11,23 +12,6 @@ const CoursePlayer = ({title, videoUrl}: Props) => {
         otp:"",
         playbackInfo: ""
     })
-    // useEffect(()=> {
-    //     axios.post("http://localhost:5000/api/v1/course/get-video-otp", {
-    //         videoId: videoUrl
-    //     },
-    //     {
-    //         headers: {
-    //             Accept: "application/json",
-    //             "Content-Type": "application/json",
-    //             Authorization: `Apisecret ${process.env.VCIPHER_API_KEY}`
-    //           }
-    //     }
-    
-    // ).then((res)=>{
-    //         setVideoData(res.data)
-    //     })
-    // }, [ videoUrl])
-
 
     useEffect(() => {
         if (videoUrl) {
