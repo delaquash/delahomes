@@ -144,6 +144,7 @@ const CreateCourse = (props: Props) => {
             )}
             {active === 3 && (
                 <CoursePreview 
+                    isEdit={true}                
                     active={active}
                     setActive={setActive}
                     courseData={courseData}
