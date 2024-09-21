@@ -5,7 +5,7 @@ import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
 import CoursePreview from './CoursePreview'
-import { useCreateCourseMutation, useGetCoursesQuery } from '@/redux/features/course/coursesApi'
+import { useGetCoursesQuery } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
 import { CourseContentDataProps, CourseInfo } from '@/types/createCourse'
@@ -170,14 +170,15 @@ const EditCourse = ({ id }: Props) => {
                     setActive={setActive}
                     courseData={courseData}
                     handleCourseCreate = {handleCourseCreate}
-                
+                    isEdit={true} 
                 />
             )}
         </div>
         <div className="w-[20%] mt-[100px] h-screen fixed z-[-1] top-18 right-0">
             <CourseOptions 
                 active={active} 
-                setActive={setActive} 
+                setActive={setActive}
+                
             />
         </div>
     </div>

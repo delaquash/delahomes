@@ -8,6 +8,7 @@ type Props = {
   setActive: (active: number) => void;
   courseData: any;
   handleCourseCreate: any;
+  isEdit: boolean
 };
 
 const CoursePreview = ({
@@ -15,6 +16,7 @@ const CoursePreview = ({
   courseData,
   handleCourseCreate,
   setActive,
+  isEdit
 }: Props) => {
   const discountedPrice =
     ((courseData?.estimatedPrice - courseData?.price) /
@@ -143,7 +145,7 @@ const CoursePreview = ({
                 h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-4 cursor-pointer"
                 onClick={()=> createCourse()}
             >
-                Next
+                {isEdit ? "Update Course": "Create Course"}
             </div>
         </div>
       </div>
