@@ -58,7 +58,6 @@ router.delete(
 
 router.post(
   "/get-video-otp",
-  isUserAuthenticated,
   generateVideoUrl
 )
 

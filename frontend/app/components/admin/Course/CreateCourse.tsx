@@ -21,7 +21,7 @@ interface Prerequisite {
 }[]
 
 const CreateCourse = (props: Props) => {
-    const [active, setActive] = useState<number>(0)
+    const [active, setActive] = useState<number>(3)
     const [courseInfo, setCourseInfo] = useState<CourseInfo>({
         name: "",
         description: "",
@@ -50,6 +50,7 @@ const CreateCourse = (props: Props) => {
         }
     ])
     const [courseData, setCourseData] = useState({});
+    console.log(courseData)
     const [createCourse, {isSuccess, error, isLoading}] = useCreateCourseMutation()
 
     useEffect(() => {
@@ -94,10 +95,9 @@ const CreateCourse = (props: Props) => {
             totalVideos: courseContentData.length,
             benefits: formattedBenefit,
             prerequisites: formattedPrerequisite,
-            CourseData: formattedCourseContentData
-            
-    
+            courseContentData: formattedCourseContentData
         }
+        setCourseData(data)
     }
 
     const handleCourseCreate =async (e: any) => {
@@ -163,4 +163,4 @@ const CreateCourse = (props: Props) => {
   )
 }
 
-export default CreateCourse
+export default CreateCourse;

@@ -11,14 +11,42 @@ const CoursePlayer = ({title, videoUrl}: Props) => {
         otp:"",
         playbackInfo: ""
     })
-    useEffect(()=> {
-        axios.post("http://localhost:5000/api/v1/course/generateVideoUrl", {
-            videoId: videoUrl
-        }).then((res)=>{
-            setVideoData(res.data)
-        })
-    }, [ videoUrl])
+    // useEffect(()=> {
+    //     axios.post("http://localhost:5000/api/v1/course/get-video-otp", {
+    //         videoId: videoUrl
+    //     },
+    //     {
+    //         headers: {
+    //             Accept: "application/json",
+    //             "Content-Type": "application/json",
+    //             Authorization: `Apisecret ${process.env.VCIPHER_API_KEY}`
+    //           }
+    //     }
+    
+    // ).then((res)=>{
+    //         setVideoData(res.data)
+    //     })
+    // }, [ videoUrl])
 
+
+    useEffect(() => {
+        if (videoUrl) {
+          axios.post("http://localhost:5000/api/v1/course/get-video-otp", {
+            videoId: videoUrl
+          },  {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Apisecret ${process.env.VCIPHER_API_KEY}`
+              }
+        }).then((res) => {
+            setVideoData(res.data);
+          }).catch((err) => {
+            console.error("Error fetching OTP:", err);
+          });
+        }
+    }, [videoUrl]);
+    
   return (
     <div style={{ paddingTop: "41%", position: "relative"}}>
         {videoData.otp && videoData.playbackInfo !== "" && (
