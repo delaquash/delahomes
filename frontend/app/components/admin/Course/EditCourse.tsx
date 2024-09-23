@@ -5,7 +5,7 @@ import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
 import CoursePreview from './CoursePreview'
-import { useGetCoursesQuery } from '@/redux/features/course/coursesApi'
+import { useEditCourseMutation, useGetCoursesQuery } from '@/redux/features/course/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
 import { CourseContentDataProps, CourseInfo } from '@/types/createCourse'
@@ -38,9 +38,25 @@ interface Course {
   }
 
 const EditCourse = ({ id }: Props) => {
+    const [editCourse,{ isSuccess, error }] = useEditCourseMutation();
     const { isLoading, data, refetch } = useGetCoursesQuery({}, {refetchOnMountOrArgChange: true})
     
     const editCourseData = data && data.courses.find((editCourse: Course)=>editCourse._id === id )
+
+    useEffect(()=> {
+        if(isSuccess){
+            const message = "Course updated successfully."
+            toast.success(message);     
+            redirect('/admin/all-courses')
+        }
+        if(error) {
+            if("data" in error){
+                const errorMessage = error as any;
+                const message = errorMessage.data.message;
+                toast.error(message)
+            }
+        }
+    })
   
 
     useEffect(()=>{
@@ -128,9 +144,7 @@ const EditCourse = ({ id }: Props) => {
 
     const handleCourseCreate =async (e: any) => {
         const data = courseData;
-        // if(!isLoading){
-        //     await createCourse(data)
-        // }
+        await editCourse(data)
     }
     
   return (
