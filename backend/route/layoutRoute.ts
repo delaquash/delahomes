@@ -6,6 +6,6 @@ import { updateAccessToken } from "../controllers/userController";
 const router = express.Router();
 router.post("/create-layout", isUserAuthenticated, authorization("admin"), createLayout);
 router.put("/edit-layout", isUserAuthenticated, authorization("admin"), editLayout);
-router.get("/get-layout", getLayout);
+router.get("/get-layout/:type", getLayout);
 router.delete("/delete-layout",isUserAuthenticated, deleteLayout)
 export default router;
