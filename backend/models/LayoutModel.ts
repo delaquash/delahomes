@@ -65,6 +65,11 @@ const layoutSchema = new Schema<Layout>({
       type: String,
     },
   },
-});
+},
+{
+  timestamps: true,
+}
+
+);
 
 export const LayoutModel = model<Layout>("Layout", layoutSchema);

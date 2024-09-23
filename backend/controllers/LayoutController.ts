@@ -9,18 +9,21 @@ export const createLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { type } = req.body;
-      
+        
       const isAnyTypeExist = await LayoutModel.findOne({ type });
+      
       if (isAnyTypeExist) {
         return next(new ErrorHandler(`${type} already exist`, 400));
       }
 
       if (type === "Banner") {
         const { title, image, subTitle } = req.body;
+  
         const myCloud = await cloudinary.v2.uploader.upload(image, {
           folder: "layout",
         });
         const banner = {
+          type: "Banner",
           image: {
             public_id: myCloud.public_id,
             url: myCloud.secure_url,
@@ -33,6 +36,9 @@ export const createLayout = CatchAsyncError(
 
       if (type === "FAQ") {
         const { faq } = req.body;
+        if(!faq) {
+          return next(new ErrorHandler("FAQ is required for FAQ type", 400))
+          }
         const faqItems = await Promise.all(
           faq.map(async (item: any) => {
             return {
