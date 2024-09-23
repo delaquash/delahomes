@@ -4,7 +4,7 @@ import { CatchAsyncError } from "../middleware/CatchAsyncError";
 import ErrorHandler from "../utils/errorHandler";
 import { LayoutModel } from "../models/LayoutModel";
 import cloudinary from "cloudinary";
-import { title } from "process";
+
 
 export const createLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
