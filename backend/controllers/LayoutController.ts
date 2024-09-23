@@ -4,6 +4,7 @@ import { CatchAsyncError } from "../middleware/CatchAsyncError";
 import ErrorHandler from "../utils/errorHandler";
 import { LayoutModel } from "../models/LayoutModel";
 import cloudinary from "cloudinary";
+import { title } from "process";
 
 export const createLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -119,7 +120,22 @@ export const editLayout = CatchAsyncError(
             type: "FAQ",
           });
         }
-              
+        
+        if(type === "Categories") {
+          const { categories } = req.body;
+          const categoriesItem = await LayoutModel.findOne({ type: "Categories" });
+          const categoriesItems = await Promise.all(
+            categories.map(async (item: any) => {
+              return {
+                title: item.title
+              }
+            })
+          )
+          await LayoutModel.findByIdAndUpdate(categoriesItem?._id, {
+            categories: categoriesItems,
+            type: "Categories"
+          })
+        }
     
         res.status(200).json({
         status: "success",
@@ -136,9 +152,17 @@ export const editLayout = CatchAsyncError(
 export const getLayout = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
     try {
         const { type } = req.body;
+
+        if (!type) {
+          return next(new ErrorHandler("Type is required", 400));
+        }
+
         const layout = await LayoutModel.findOne({type})
+        if (!layout) {
+          return next(new ErrorHandler(`Layout of type ${type} not found`, 404));
+        }
     
-        res.status(201).json({
+        res.status(200).json({
             status: "success",
              layout
         })
