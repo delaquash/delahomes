@@ -144,7 +144,7 @@ const EditCourse = ({ id }: Props) => {
 
     const handleCourseCreate =async (e: any) => {
         const data = courseData;
-        await editCourse(data)
+        await editCourse({ id:editCourse?._id, data })
     }
     
   return (
