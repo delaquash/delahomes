@@ -153,7 +153,7 @@ export const editLayout = CatchAsyncError(
 
 export const getLayout = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
     try {
-        const { type } = req.body;
+        const { type } = req.params;
 
         if (!type) {
           return next(new ErrorHandler("Type is required", 400));
