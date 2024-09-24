@@ -12,7 +12,9 @@ const EditHero = (props: Props) => {
   const [subTitle, setSubTitle] = useState("");
   const [editHeroData, { error,isSuccess }] = useEditHeroDataMutation()
 
-  const { data } = useGetHeroDataQuery("Banner");
+  const { data, refetch } = useGetHeroDataQuery("Banner", {
+    refetchOnMountOrArgChange: true
+  });
 
   useEffect(() => {
     if (data) {
@@ -22,6 +24,7 @@ const EditHero = (props: Props) => {
     }
 
     if(isSuccess){
+      refetch();
       toast.success("Hero Updated Successfully...")
     }
 
@@ -31,7 +34,27 @@ const EditHero = (props: Props) => {
     }
   }, [ data, isSuccess, error ]);
 
-  const handleEdit = () => {};
+  const handleUpdate = (e: any) => {
+    const file = e.target.file?.[0];
+    if(file) {
+      const reader = new FileReader()
+
+      reader.onload= (e: any) => {
+        if(reader.readyState === 2) {
+          setImage(e.target.result as string)
+        }
+      };
+      reader.readAsDataURL(file)
+    }
+  }
+  const handleEdit = async () => {
+    await editHeroData({
+      type: "Banner",
+      image, 
+      title,
+      subTitle
+    })
+  };
   return (
     <>
       <div className="w-full 100px:flex items-center">
