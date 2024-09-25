@@ -71,7 +71,7 @@ const EditHero = (props: Props) => {
               id="banner"
               accept="image/*"
               className="hidden"
-              // onChange={}
+              onChange={handleUpdate}
             />
             <label htmlFor="banner" className="absolute bottom-0 right-0 z-20">
               <AiOutlineCamera className="dark:text-white text-black text-[18px] cursor-pointer" />
