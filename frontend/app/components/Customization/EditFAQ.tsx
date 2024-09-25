@@ -1,9 +1,11 @@
 import { styles } from '@/app/styles/style'
-import { useGetHeroDataQuery } from '@/redux/features/layout/layout'
+import { useEditHeroDataMutation, useGetHeroDataQuery } from '@/redux/features/layout/layout'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { HiMinus, HiPlus } from 'react-icons/hi'
 import { IoMdAddCircleOutline } from 'react-icons/io'
+import Loader from '../Loader/Loader'
 
 type Props = {}
 
@@ -11,13 +13,25 @@ const EditFAQ = (props: Props) => {
     const { data, isLoading, refetch } = useGetHeroDataQuery("FAQ", {
         refetchOnMountOrArgChange: true
     })
-    const [questions, setQuestions] = useState<string[]>([]);
+    const [editHeroData,{ isSuccess:LayoutSuccess, error }] =useEditHeroDataMutation()
+    const [questions, setQuestions] = useState<any[]>([]);
 
     useEffect(()=> {
         if(data){
             setQuestions(data.layout.faq)
         }
-    })
+
+        if(LayoutSuccess) {
+            toast.success("FAQ updated successfully.")
+        }
+
+        if(error) {
+            if("data" in error) {
+                const errorData = error as any;
+                toast.error(errorData?.data?.message)
+            }
+        }
+    }, [data, error, LayoutSuccess])
  
     const handleQuestionChange = (id: any, value: string) => {
         setQuestions((prevQuestions)=> 
@@ -49,9 +63,34 @@ const EditFAQ = (props: Props) => {
         ]);
     };
 
-    
+    // Function to check if the FAQ arrays are unchanged
+    const areQuestionsUnchanged = (
+        originalQuestions: any[] ,
+        newQuestions: any[]
+     ) => {
+        return JSON.stringify(originalQuestions) === JSON.stringify(newQuestions)
+    }
+
+    const isAnyQuestionEmpty = (questions: any[]) => {
+        return questions.some((question)=> question.question === "" || question.answer === "")
+    }
+
+    const handleEdit = async () => {
+        if(!areQuestionsUnchanged(data.layout.faq, questions) && !isAnyQuestionEmpty(questions)) {
+            await editHeroData({
+                type: "FAQ",
+                faq: questions
+            })
+        }
+    }
+
+
   return (
-    <div className="w-[90%} 800px:w-[80%] m-auto mt-[120px]">
+   <>
+    {isLoading ? (
+        <Loader /> 
+    ) : (
+        <div className="w-[90%} 800px:w-[80%] m-auto mt-[120px]">
         <div className="mt-12">
             <dl className='space-y-8'>
                 {questions.map((question: any)=> (
@@ -118,6 +157,8 @@ const EditFAQ = (props: Props) => {
                 Save
         </div>
     </div>
+    )}
+   </>
   )
 }
 
