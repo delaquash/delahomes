@@ -15,7 +15,7 @@ export interface CourseContentDataProps {
     title: string;
     description: string;
     videoSection: string;
-    videoLength: number |  string;
+    videoLength?: number |  string;
     suggestion?: string;
     links:
         {
