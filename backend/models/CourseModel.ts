@@ -24,7 +24,7 @@ interface ICourseData extends Document {
   title: string;
   description: string;
   videoUrl: string;
-  // videoThumbnail: object;
+  videoThumbnail: object;
   videoSection: string;
   videoLength: number;
   videoPlayers: string;
@@ -40,6 +40,7 @@ interface ICourse extends Document {
   estimatedPrice?: number;
   thumbnail: object;
   tags: string;
+  categories: string;
   level: string;
   demoUrl: string;
   benefits: { title: string }[];
@@ -71,11 +72,11 @@ const commentSchema = new Schema<IComment>({
 });
 
 const courseDataSchema = new Schema<ICourseData>({
+  videoUrl: String,
   title: String,
   description: String,
   links: [linkSchema],
-  videoUrl: String,
-  // videoThumbnail: Object,
+  videoThumbnail: Object,
   videoSection: String,
   videoLength: Number,
   videoPlayers: String,
@@ -99,6 +100,10 @@ const courseSchema = new Schema<ICourse>(
     },
     estimatedPrice: {
       type: Number,
+    },
+    categories: {
+      type: String,
+      required: true
     },
     thumbnail: {
       public_id: {

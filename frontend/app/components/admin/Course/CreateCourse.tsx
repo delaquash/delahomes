@@ -28,6 +28,7 @@ const CreateCourse = (props: Props) => {
         price: "",
         estimatedPrice: "",
         tags: "",
+        categories: "",
         level: "",
         demoUrl: "",
         thumbnail:""
@@ -38,6 +39,7 @@ const CreateCourse = (props: Props) => {
         {
             videoUrl: "",
             title: "",
+            videoLength: "",
             description: "",
             videoSection: "Untitled Section",
             links: [
@@ -143,8 +145,7 @@ const CreateCourse = (props: Props) => {
                 />
             )}
             {active === 3 && (
-                <CoursePreview 
-                    isEdit={true}                
+                <CoursePreview              
                     active={active}
                     setActive={setActive}
                     courseData={courseData}

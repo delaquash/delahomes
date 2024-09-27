@@ -5,6 +5,7 @@ export interface CourseInfo {
   estimatedPrice: string | number;
   tags: string;
   level: string;
+  categories: string;
   demoUrl: string;
   thumbnail: any;
 }
@@ -14,6 +15,7 @@ export interface CourseContentDataProps {
     title: string;
     description: string;
     videoSection: string;
+    videoLength: number |  string;
     suggestion?: string;
     links:
         {

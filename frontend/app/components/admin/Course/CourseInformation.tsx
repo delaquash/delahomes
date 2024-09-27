@@ -1,5 +1,6 @@
 "use client";
 import { styles } from "@/app/styles/style";
+import { useGetHeroDataQuery } from "@/redux/features/layout/layout";
 import { CourseInfo } from "@/types/createCourse";
 import React, { useState } from "react";
 
@@ -18,6 +19,8 @@ const CourseInformation = ({
   setActive,
 }: Props) => {
   const [dragging, setDragging] = useState(false);
+  const [categories, setCategories] = useState([])
+  const { data } = useGetHeroDataQuery("Categories")
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -126,8 +129,43 @@ const CourseInformation = ({
             />
           </div>
         </div>
-        <div>
-        <label className={`${styles.label}`} htmlFor="email">Course Tags</label>
+        <br />
+              <div className="w-full flex justify-between">
+          <div className="w-[45%]">
+            <label className={`${styles.label}`}>Course level</label>
+            <input
+              type="text"
+              required
+              value={courseInfo.level}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, level: e.target.value })
+              }
+              id="level"
+              placeholder="beginner/intermediate/expert"
+              className={`${styles.input} rounded-full`}
+            />
+          </div>
+          <div className="w-[50%]">
+            <label className={`${styles.label} w-[50%]`}>Demo Url</label>
+            <input
+              type="text"
+              required
+              // name=""
+              value={courseInfo.demoUrl}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
+              }
+              placeholder=""
+              className={`${styles.input} rounded-full`}
+              id="demoUrl"
+            />
+          </div>
+         
+          </div> 
+          <br />
+          <div className="w-full flex justify-between">
+          <div className="w-[45%]">
+         <label className={`${styles.label}`} htmlFor="email">Course Tags</label>
         <input
               type="text"
               required
@@ -139,8 +177,22 @@ const CourseInformation = ({
               placeholder="Software Dev, MERN, Tailwind, CSS, Web, ReactJS, React Native"
               className={`${styles.input} rounded-full`}
               id="tags"
-            />
-        </div>
+            /> 
+          </div>
+          <div className="w-[50%]">
+            <label className={`${styles.label} w-[50%]`}>Course Category</label>
+            <select id="" name="">
+              <option value="">Select Category</option>
+              {categories.map((category: any)=> (
+                <option value={category._id} key={category._id}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
+          </div>
+         
+          </div> 
+        
         <br />
         <div className="w-full flex justify-between">
           <div className="w-[45%]">
