@@ -2,7 +2,9 @@ import { styles } from '@/app/styles/style';
 import { useGetOrderAnalysisQuery } from '@/redux/features/analytics/analyticsApi';
 import React, { useEffect } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';import Loader from '../Loader/Loader';
-const data = [
+
+// mock data
+const analyticsData = [
     {
         name: "Page A",
         count: 9000
@@ -42,15 +44,15 @@ type Props = {
 }
 
 const OrderAnalytics = ({isDashboard}: Props) => {
-    const {isLoading} = useGetOrderAnalysisQuery({});
+    const {data , isLoading} = useGetOrderAnalysisQuery({});
+    
+    console.log(data)
 
-    useEffect(()=>{}, [])
+    // const analyticsData: any = []
 
-    const analyticsData: any = []
-
-    data && data.forEach((analysis: any)=> {
-        analyticsData.push({ name: analysis.month, uv: analysis.count })
-    });
+    // data && data.last12Months.forEach((analysis: any)=> {
+    //     analyticsData.push({ name: analysis.month, count: analysis.count })
+    // });
 
   return (
     <>
@@ -67,6 +69,31 @@ const OrderAnalytics = ({isDashboard}: Props) => {
                         Last 12 months Analytics data
                     </p>
                 )}
+            </div>
+            <div className={`w-full ${!isDashboard ? "h-[90%]" : "h-full"} flex items-center justify-center`}>
+                <ResponsiveContainer
+                    width={isDashboard ? "100px": "90px"}
+                    height={isDashboard ? "100px": "50px"}
+                >
+                    <LineChart
+                        width={500}
+                        height={300}
+                        data={analyticsData}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        {!isDashboard && <Legend />}
+                        <Line type="monotone" dataKey="count" stroke='#82ca9d' />
+                    </LineChart>
+                </ResponsiveContainer>
             </div>
         </div>
      )}
