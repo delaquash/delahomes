@@ -46,7 +46,12 @@ const OrderAnalytics = ({isDashboard}: Props) => {
 
     useEffect(()=>{}, [])
 
-    
+    const analyticsData: any = []
+
+    data && data.forEach((analysis: any)=> {
+        analyticsData.push({ name: analysis.month, uv: analysis.count })
+    });
+
   return (
     <div>OrderAnalytics</div>
   )
