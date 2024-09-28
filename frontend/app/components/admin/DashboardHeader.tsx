@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import  ThemeSwitcher  from "@/app/utils/ThemeSwitcher";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
-type Props = {}
+type Props = {
+    open: boolean,
+    setOpen: (open: boolean) => void;
+}
 
-const DashboardHeader = (props: Props) => {
-    const [open, setOpen] = useState(false);
+const DashboardHeader = ({ open, setOpen }: Props) => {
+    
 
   return (
     <div className="w-full flex items-center justify-end p-6 fixed top-5 right-6">
