@@ -22,7 +22,7 @@ const page = (props: Props) => {
         </div>
         <div className="w-[85%]">
           <DashboardHero />
-          <OrderAnalytics />
+          <OrderAnalytics isDashboard={true} />
         </div>
       </div>
       </AdminProtected>
