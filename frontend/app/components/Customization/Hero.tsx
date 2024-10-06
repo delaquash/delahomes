@@ -15,7 +15,7 @@ const EditHero = (props: Props) => {
   const { data, refetch } = useGetHeroDataQuery("Banner", {
     refetchOnMountOrArgChange: true
   });
-
+console.log(data)
   useEffect(() => {
     if (data) {
       setTitle(data?.layout?.banner.title);

@@ -20,7 +20,7 @@ interface Prerequisite {
     title: string;
 }[]
 
-const CreateCourse = (props: Props) => {
+const CreateCourse = () => {
     const [active, setActive] = useState<number>(0)
     const [courseInfo, setCourseInfo] = useState<CourseInfo>({
         name: "",
