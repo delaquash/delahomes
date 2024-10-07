@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { View } from 'react-native';
 import Onboarding from './(routes)/onboarding';
+import React from 'react';
 
 export {
   // Catch any errors thrown by the Layout component.
