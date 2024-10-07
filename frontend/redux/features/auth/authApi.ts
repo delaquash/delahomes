@@ -13,7 +13,7 @@ export const authApi = apiSlice.injectEndpoints({
     // endpoints here
     register: builder.mutation<RegistrationResponse, RegistrationData>({
       query: (data) => ({
-        url: "http://localhost:5000/api/v1/auth/registeruser",
+        url: "http://localhost:7000/api/v1/auth/registeruser",
         method: "POST",
         body: data,
         credentials: "include" as const,
@@ -33,7 +33,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     activation: builder.mutation({
       query: ({ activation_token, activation_code }) => ({
-        url: "http://localhost:5000/api/v1/auth/activate-user",
+        url: "http://localhost:7000/api/v1/auth/activate-user",
         method: "POST",
         body: {
           activation_token,
@@ -43,7 +43,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     login: builder.mutation({
       query: ({ email, password }) => ({
-        url: "http://localhost:5000/api/v1/auth/signin",
+        url: "http://localhost:7000/api/v1/auth/signin",
         method: "POST",
         body: {
           email,
@@ -67,7 +67,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     logout: builder.query({
       query: () => ({
-        url: "http://localhost:5000/api/v1/auth/signout",
+        url: "http://localhost:7000/api/v1/auth/signout",
         method: "GET",
         credentials: "include" as const
       }),
@@ -84,7 +84,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     socialAuth: builder.mutation({
       query: ({ email, name, avatar }) => ({
-        url: "http://localhost:5000/api/v1/auth/social-auth",
+        url: "http://localhost:7000/api/v1/auth/social-auth",
         method: "POST",
         body: {
           email,

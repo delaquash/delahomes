@@ -4,7 +4,7 @@ export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     updateAvatar: builder.mutation({
       query: (avatar) => ({
-        url: "http://localhost:5000/api/v1/user/update-profile-avatar",
+        url: "http://localhost:7000/api/v1/user/update-profile-avatar",
         method: "PUT",
         body: { avatar },
         credentials: "include" as const,
@@ -12,7 +12,7 @@ export const userApi = apiSlice.injectEndpoints({
     }),
     editProfile: builder.mutation({
       query: ({ name, email }) => ({
-        url: "http://localhost:5000/api/v1/user/update-user-info",
+        url: "http://localhost:7000/api/v1/user/update-user-info",
         method: "PUT",
         body: JSON.stringify({ name, email }), // Ensure JSON.stringify is used
         headers: {
@@ -23,7 +23,7 @@ export const userApi = apiSlice.injectEndpoints({
     }),
     updatePassword: builder.mutation({
       query: ({ newPassword, oldPassword }) => ({
-        url: "http://localhost:5000/api/v1/user/update-user-password",
+        url: "http://localhost:7000/api/v1/user/update-user-password",
         method: "PUT",
         body: JSON.stringify({ newPassword, oldPassword }),
         headers: {
@@ -34,14 +34,14 @@ export const userApi = apiSlice.injectEndpoints({
     }),
     getAllUser: builder.query({
       query: () => ({
-        url: "http://localhost:5000/api/v1/user/get-all-User",
+        url: "http://localhost:7000/api/v1/user/get-all-User",
         method: "GET",
         credentials: "include" as const,
       }),
     }),
     updateUserRole: builder.mutation({
       query: ({  role, id }) => ({
-        url: "http://localhost:5000/api/v1/user/admin-update-user",
+        url: "http://localhost:7000/api/v1/user/admin-update-user",
         method: "PUT",
         body: JSON.stringify({ role, id }),
         headers: {
@@ -53,7 +53,7 @@ export const userApi = apiSlice.injectEndpoints({
     }),
     deleteUser: builder.mutation({
       query: ({ id }) => ({
-        url: `http://localhost:5000/api/v1/user/delete-user/${id}`,
+        url: `http://localhost:7000/api/v1/user/delete-user/${id}`,
         method: "DELETE",
         credentials: "include" as const,
       }),
