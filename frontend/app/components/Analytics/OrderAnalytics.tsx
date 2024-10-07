@@ -23,7 +23,7 @@ const analyticsData = [
     },
     {
         name: "Page E",
-        count: 5000
+        count: 7000
     },
     {
         name: "Page F",
