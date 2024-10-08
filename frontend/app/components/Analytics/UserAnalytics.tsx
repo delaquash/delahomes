@@ -39,6 +39,7 @@ const UserAnalytics = ({isDashboard}: Props) => {
     // data && data.courses.last12Months.forEach((analysis: any)=> {
     //     analyticsData.push({ name: analysis.name, uv: analysis.count })
     // });
+    
   return (
     <>
         {isLoading ? (

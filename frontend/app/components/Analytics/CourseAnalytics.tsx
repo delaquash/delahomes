@@ -16,20 +16,22 @@ type Props = {}
 
 const CourseAnalytics = (props: Props) => {
     const {data, isLoading, error} = useGetCourseAnalyticsQuery({});
+    // console.log(data)
 
-    // const analyticsData = [
-    //     {name: "Jan 2023", uv: 2},
-    //     {name: "Feb 2023", uv: 4},
-    //     {name: "March 2023", uv: 6},
-    //     {name: "April 2023", uv: 8},
-    //     {name: "May 2023", uv: 1},
-    //     {name: "Jun 2023", uv: 5},
-    //     {name: "July 2023", uv: 7},
-    // ]
+    const analyticsData = [
+        {name: "Jan 2023", uv: 2},
+        {name: "Feb 2023", uv: 4},
+        {name: "March 2023", uv: 6},
+        {name: "April 2023", uv: 8},
+        {name: "May 2023", uv: 1},
+        {name: "Jun 2023", uv: 5},
+        {name: "July 2023", uv: 7},
+    ]
 
-    const analyticsData: any = []
+    // const analyticsData: any = []
 
-    data && data.courses.last12Months.forEach((analysis: any)=> {
+    // data && data?.courses?.last12Months?
+    analyticsData.forEach((analysis: any)=> {
         analyticsData.push({ name: analysis.month, uv: analysis.count })
     });
 

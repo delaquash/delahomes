@@ -10,13 +10,13 @@ type Props = {};
 const page = (props: Props) => {
   return (
     <div>
-      <AdminProtected>
+      {/* <AdminProtected> */}
       <Heading
         description="An online platform where student can learn and interact with a teachers and get real time solution"
         title="ELearning -- Admin"
         keywords="Programming, Software Engineering, Machine Learning, JavaScript, Python"
       />
-      <div className="flex h-[200vh]">
+      <div className="flex">
         <div className="1500px:w-[16%] w-1/5">
           <AdminSideBar />
         </div>
@@ -25,7 +25,7 @@ const page = (props: Props) => {
           <CourseAnalytics />
         </div>
       </div>
-      </AdminProtected>
+      {/* </AdminProtected> */}
     </div>
   );
 };
