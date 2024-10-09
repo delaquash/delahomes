@@ -1,3 +1,4 @@
+"use client"
 import { styles } from '@/app/styles/style';
 import { useGetUserAnalyticsQuery } from '@/redux/features/analytics/analyticsApi';
 import React from 'react';
@@ -18,28 +19,28 @@ type Props = {
 const UserAnalytics = ({isDashboard}: Props) => {
     const {data, isLoading } = useGetUserAnalyticsQuery({})
 
-        const analyticsData = [
-        {name: "Jan 2023", count: 2001},
-        {name: "Feb 2023", count: 4001},
-        {name: "March 2023", count: 6001},
-        {name: "April 2023", count: 8001},
-        {name: "May 2023", count: 1001},
-        {name: "Jun 2023", count: 5001},
-        {name: "July 2023", count: 7001},
-        {name: "Aug 2023", count: 7001},
-        {name: "Sept 2023", count: 7001},
-        {name: "Oct 2023", count: 7001},
-        {name: "Nov 2023", count: 7001},
-        {name: "December 2023", count: 7001},
-    ]
+    //     const analyticsData = [
+    //     {name: "Jan 2023", count: 2001},
+    //     {name: "Feb 2023", count: 4001},
+    //     {name: "March 2023", count: 6001},
+    //     {name: "April 2023", count: 8001},
+    //     {name: "May 2023", count: 1001},
+    //     {name: "Jun 2023", count: 5001},
+    //     {name: "July 2023", count: 7001},
+    //     {name: "Aug 2023", count: 7001},
+    //     {name: "Sept 2023", count: 7001},
+    //     {name: "Oct 2023", count: 7001},
+    //     {name: "Nov 2023", count: 7001},
+    //     {name: "December 2023", count: 7001},
+    // ]
 
     // This is the actual data from api, the one above is just hardcoded
-    // const analyticsData: any = []
+    const analyticsData: any = []
 
-    // data && data.courses.last12Months.forEach((analysis: any)=> {
-    //     analyticsData.push({ name: analysis.name, uv: analysis.count })
-    // });
-    
+    data && data?.courses?.last12Months?.forEach((analysis: any)=> {
+        analyticsData.push({ name: analysis.name, uv: analysis.count })
+    });
+
   return (
     <>
         {isLoading ? (

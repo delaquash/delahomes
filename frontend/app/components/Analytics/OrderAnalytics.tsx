@@ -48,11 +48,11 @@ const OrderAnalytics = ({isDashboard}: Props) => {
     
     console.log(data)
 
-    // const analyticsData: any = []
+    const analyticsData: any = []
 
-    // data && data.last12Months.forEach((analysis: any)=> {
-    //     analyticsData.push({ name: analysis.month, count: analysis.count })
-    // });
+    data && data.last12Months.forEach((analysis: any)=> {
+        analyticsData.push({ name: analysis.month, count: analysis.count })
+    });
 
   return (
     <>

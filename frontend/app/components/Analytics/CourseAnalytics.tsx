@@ -30,8 +30,7 @@ const CourseAnalytics = (props: Props) => {
 
     // const analyticsData: any = []
 
-    // data && data?.courses?.last12Months?
-    analyticsData.forEach((analysis: any)=> {
+    data && data?.courses?.last12Months?.forEach((analysis: any)=> {
         analyticsData.push({ name: analysis.month, uv: analysis.count })
     });
 

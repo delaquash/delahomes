@@ -8,13 +8,13 @@ import User from "../models/userModel";
 import { getAllOrderServices } from "../services/Order.services";
 import ejs from "ejs";
 import path from "path";
-import { redis } from "../utils/redis";
+import { IOrder } from "../models/OrderModel";
 
 
 export const createOrder = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { courseId, payment_info } = req.body;
+      const { courseId, payment_info } = req.body as IOrder;
 
       /* The line `const user = await User.findById(req.user?._id);` 
     is querying the database to find a user based on the `_id` 
