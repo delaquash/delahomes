@@ -4,7 +4,7 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 export interface IOrder extends Document {
   courseId: string;
   userId: string;
-  payment_info: object;
+  payment_info?: object;
 }
 
 const orderSchema = new Schema<IOrder>(

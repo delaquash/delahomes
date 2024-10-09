@@ -20,7 +20,7 @@ export const createOrder = CatchAsyncError(
     is querying the database to find a user based on the `_id` 
     property of the `req.user` object. */
       const user = await User.findById(req.user?._id);
-    //   console.log(user, "this is user ID")
+      // console.log(user, "this is user ID")
 
       // if (!user) return next(new ErrorHandler("User not found", 404));
 
@@ -31,18 +31,22 @@ export const createOrder = CatchAsyncError(
         (course: any) => course._id.toString() === courseId
       );
       // console.log(courseExistInUser, "this is existing user")
-      if (courseExistInUser)
+      if (courseExistInUser){
         return next(new ErrorHandler("You have already purchased this course", 400));
+      }
+        
 
       const course = await CourseModel.findById(courseId);
+      console.log(course, "this is course ID")
       if (!course) return next(new ErrorHandler("Course not found", 404));
 
 
       const data: any = {
         userId: user?._id,
-        courseId: course._id,
+        courseId: course?._id,
         payment_info
       };
+      // console.log(data, "this is data")
 
       const mailData = {
         order: {
@@ -80,7 +84,7 @@ export const createOrder = CatchAsyncError(
       await user?.save()
 
       await NotificationModel.create({
-        userID: user?._id,
+        userId: user?._id,
         title: "New Order",
         message: `You have a new order for ${course.name} course`,
       });
