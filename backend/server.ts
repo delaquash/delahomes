@@ -1,5 +1,4 @@
 require("dotenv").config();
-import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
@@ -17,17 +16,14 @@ import layoutRoute from "./route/layoutRoute";
 import cors from "cors";
 
 const app = express();
-
-// Parse incoming JSON requests (with a body size limit)
 app.use(express.json({ limit: "50mb" }));
-
-// Parse URL-encoded data and extended JSON bodies (body-parser is now built into Express, so no need to import separately)
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(cookieParser());
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body, "this is server file");  // Debug the request body
-  next();
-});
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   console.log(req.body, "this is server file");  // Debug the request body
+//   next();
+// });
 
 // CORS configuration
 const corsOptions = {
@@ -36,9 +32,6 @@ const corsOptions = {
   optionSuccessStatus: 200
 };
 app.use(cors(corsOptions));
-
-// Cookie parsing middleware
-app.use(cookieParser());
 
 // cloudinary config
 cloudinary.config({
@@ -79,7 +72,12 @@ app.use(RouteError);
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || "Something went wrong";
-  return res.status(status).json({ message, status, success: false });
+  return res.status(status).json({ 
+    message, 
+    status, 
+    success: false 
+  });
+  
 });
 
 // DB Connection
