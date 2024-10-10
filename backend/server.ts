@@ -24,6 +24,11 @@ app.use(express.json({ limit: "50mb" }));
 // Parse URL-encoded data and extended JSON bodies (body-parser is now built into Express, so no need to import separately)
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body, "this is server file");  // Debug the request body
+  next();
+});
+
 // CORS configuration
 const corsOptions = {
   origin: 'http://localhost:3000', 
@@ -43,18 +48,18 @@ cloudinary.config({
 });
 
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Preload"
-  );
-  next();
-});
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, PATCH, DELETE"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, Preload"
+//   );
+//   next();
+// });
 
 app.get("/", (req: Request, res: Response) => {
   res.send("API IS RUNNING...");

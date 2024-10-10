@@ -13,9 +13,10 @@ import { IOrder } from "../models/OrderModel";
 
 export const createOrder = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
+
     try {
       const { courseId, payment_info } = req.body as IOrder;
-
+     
       /* The line `const user = await User.findById(req.user?._id);` 
     is querying the database to find a user based on the `_id` 
     property of the `req.user` object. */
@@ -37,13 +38,13 @@ export const createOrder = CatchAsyncError(
         
 
       const course = await CourseModel.findById(courseId);
-      console.log(course, "this is course ID")
+      // console.log(course, "this is course ID")
       if (!course) return next(new ErrorHandler("Course not found", 404));
 
 
       const data: any = {
         userId: user?._id,
-        courseId: course?._id,
+        courseId: course._id,
         payment_info
       };
       // console.log(data, "this is data")

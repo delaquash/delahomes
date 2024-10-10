@@ -1,13 +1,7 @@
 import express from "express";
 import { createOrder,getAllOrders } from "../controllers/OrderController";
 import { isUserAuthenticated, authorization } from "../middleware/auth";
-import bodyParser from "body-parser";
-import { updateAccessToken } from "../controllers/userController";
 
-const app = express();
-
-app.use(bodyParser.json()) // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true }))
 
 const router =express.Router();
 
