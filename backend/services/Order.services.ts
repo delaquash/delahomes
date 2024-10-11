@@ -1,14 +1,20 @@
 import { NextFunction, Response } from "express";
 import OrderModel from "../models/OrderModel";
 import { CatchAsyncError } from "../middleware/CatchAsyncError";
+import ErrorHandler from "../utils/errorHandler";
 
-export const createOrder = CatchAsyncError(async(data: any,res: Response)=> {
+export const createOrder = CatchAsyncError(async(data: any,res: Response, next: NextFunction)=> {
+  try {
     const order = await OrderModel.create(data);
-    res.status(201).json({
+    res.status(200).json({
         success: true,
-        order
-      })
-})
+        order,
+    });
+
+} catch (error: any) {
+    return next(new ErrorHandler(error.message, 400));
+}
+});
 
 // get all users ---only for admin
 

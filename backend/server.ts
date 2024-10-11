@@ -1,9 +1,10 @@
 require("dotenv").config();
+import bodyParser from "body-parser";
 import express, { NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
 import { v2 as cloudinary } from "cloudinary";
-import { RouteError } from "./middleware/error";
+import { ErrorMiddleware } from "./middleware/error";
 
 // imported route
 import authRoute from "./route/authRoute";
@@ -16,22 +17,18 @@ import layoutRoute from "./route/layoutRoute";
 import cors from "cors";
 
 const app = express();
+
+/// body parser
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+
+// cookie-parser
 app.use(cookieParser());
 
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   console.log(req.body, "this is server file");  // Debug the request body
-//   next();
-// });
-
-// CORS configuration
-const corsOptions = {
-  origin: 'http://localhost:3000', 
-  credentials: true,            // access-control-allow-credentials:true
-  optionSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+//cors
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    credentials:true,
+}));
 
 // cloudinary config
 cloudinary.config({
@@ -67,17 +64,11 @@ app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/analytics", analyticsRoute);
 app.use("/api/v1/layout", layoutRoute);
 
-// error
-app.use(RouteError);
+
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || "Something went wrong";
-  return res.status(status).json({ 
-    message, 
-    status, 
-    success: false 
-  });
-  
+  return res.status(status).json({ message, status, success: false });
 });
 
 // DB Connection
@@ -89,3 +80,6 @@ const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
   console.log(`Server running on mode on port ${PORT}`);
 });
+
+// error
+app.use(ErrorMiddleware);
