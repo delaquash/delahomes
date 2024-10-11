@@ -6,15 +6,6 @@ import { redis } from '../utils/redis';
 import { IUser } from '../types/ModelTypes/UserModel';
 import { updateAccessToken } from '../controllers/userController';
 
-// Extend the Express Request interface to include the user property
-declare global {
-  namespace Express {
-      interface Request {
-          user?: IUser;
-      }
-  }
-}
-
 
 export const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Response, next:NextFunction)=> {
   const access_token = req.cookies.access_token;
