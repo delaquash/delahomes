@@ -1,11 +1,18 @@
+"use client"
+import { useGetHeroDataQuery } from "@/redux/features/layout/layout";
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
 import { BiSearch } from "react-icons/bi";
+// import CustomParticles from "../utils/CustomParticles";
 
 type Props = {};
 
 const Hero: FC<Props> = (props) => {
+  const {data, refetch} = useGetHeroDataQuery("Banner", {
+    refetchOnMountOrArgChange: true 
+  })
+
   return (
     <div className="w-full 1000px:flex items-center">
       {/* css not finished */}
@@ -13,7 +20,7 @@ const Hero: FC<Props> = (props) => {
       <div className="1000px:w-[40%] flex 1000px:min-h-screen items-center justify-end pt-[70px] 1000px:pt-[0] z-10">
         <Image
           // image not added
-          src={require("../../public/images/images.jpg")}
+          src={data?.layout?.banner?.image?.url}
           width={500}
           height={500}
           priority
@@ -25,12 +32,15 @@ const Hero: FC<Props> = (props) => {
       <div className="1000px:w-[60%] flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px]">
         {/* css not finished */}
         <h2 className="dark:text-white text-[#000000c7] text-[30px] px-3 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[58%]">
-          Improve Your online Learning Experience better Instantly.
+          {/* Improve Your online Learning Experience better Instantly.
+           */}
+           {data?.layout?.banner?.title}
         </h2>
         <br />
         <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[55%] 1100px:!w-[78%]">
-          We have 40k+ Online courses & 500k+ Online registered student. Find
-          your desired courses from them
+          {/* We have 40k+ Online courses & 500k+ Online registered student. Find
+          your desired courses from them */}
+          {data?.layout?.banner?.subTitle}
         </p>
         <br />
         <br />
@@ -81,6 +91,8 @@ const Hero: FC<Props> = (props) => {
         <br />
       </div>
     </div>
+
+
   );
 };
 

@@ -20,7 +20,7 @@ console.log(data)
     if (data) {
       setTitle(data?.layout?.banner.title);
       setSubTitle(data?.layout?.banner.subTitle);
-      setImage(data?.layout?.banner);
+      setImage(data?.layout?.banner?.image?.url);
     }
 
     if(isSuccess){

@@ -4,7 +4,7 @@ import Heading from "../../utils/Heading";
 import AdminSideBar from "../../components/admin/sidebar/AdminSideBar";
 import DashboardHero from "../../components/admin/DashboardHero";
 import AdminProtected from "../../hooks/useAdminProtected";
-import EditHero from "../../components/Customization/Hero"
+import EditHero from "../../components/Customization/EditHero"
 type Props = {};
 
 const page = (props: Props) => {
