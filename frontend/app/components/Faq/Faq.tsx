@@ -6,7 +6,7 @@ import { HiMinus, HiPlus } from 'react-icons/hi';
 type Props = {}
 
 const Faq = (props: Props) => {
-    const { data, isLoading } = useGetHeroDataQuery("FAQ")
+    const { data } = useGetHeroDataQuery("FAQ")
     const [activateQuestion, setActivateQuestion] = useState(null);
     const [questions, setQuestions] = useState<any[]>([])
 
