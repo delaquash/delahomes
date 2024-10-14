@@ -15,6 +15,12 @@
       {
         "frame-title": "off"
       }
+    ],
+    "axe/structure": [
+      "default",
+      {
+        "definition-list": "off"
+      }
     ]
   }
 }
