@@ -1,12 +1,51 @@
-import React from 'react'
+import { useGetSingleCourseDetailsQuery } from '@/redux/features/course/coursesApi';
+import React, { useState } from 'react';
+import Loader from '../Loader/Loader';
+import Heading from '@/app/utils/Heading';
+import Header from '../Header';
+import Footer from '../Footer';
+import CourseDetails from './CourseDetails';
 
 type Props = {
     id: string
 }
 
 const CourseDetailsPage = ({id}: Props) => {
+    const [route, setRoute] = useState("Login");
+    const [open, setOpen] = useState(false);
+    const { data, isLoading, error } = useGetSingleCourseDetailsQuery(id);
   return (
-    <div>CourseDetailsPage</div>
+    <>
+    {
+        isLoading ? (
+            <Loader />
+        ) : (
+            <div>
+                <Heading
+                    title={data.course.name + " - Sapphire"}
+                    description={"Saphire Sync is a platform for students to learn and get help from teachers"}
+                    keywords={data?.course?.tags}/>
+                <Header 
+                    route={route} 
+                    setRoute={setRoute} 
+                    open={open} 
+                    setOpen={setOpen} 
+                    activeItem={1}
+                />
+                {/* {stripePromise && ( */}
+                    <CourseDetails 
+                        data={data.course} 
+                        // stripePromise={stripePromise} 
+                        // clientSecret={clientSecret} 
+                        // setRoute={setRoute} 
+                        // setOpen={setOpen}
+                    />
+                {/* )} */}
+                <Footer/>
+          </div>
+        )
+    }
+    </>
   )
 }
 
