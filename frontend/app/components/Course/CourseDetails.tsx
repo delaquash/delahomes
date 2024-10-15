@@ -1,3 +1,4 @@
+import { RootState } from '@reduxjs/toolkit/query'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
@@ -10,7 +11,7 @@ type Props = {
 }
 
 const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: openAuthModal}: Props) => {
-    const { user } = useSelector((state)=> state.auth)
+    const { user } = useSelector((state: RootState)=> state.auth)
       // Course Discount Percentage
   const dicountPercentenge = ((data?.estimatedPrice - data.price) / data?.estimatedPrice) * 100;
 

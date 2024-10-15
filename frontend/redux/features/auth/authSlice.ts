@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Define the structure of the authentication state
+export interface AuthState {
+    token: string;
+    user: string;
+}
 
-const initialState = {
+// Initial state for authentication
+const initialState: AuthState = {
     token: "",
     user: ""
 }
-
 
 const authSlice = createSlice({
     name: "auth",
