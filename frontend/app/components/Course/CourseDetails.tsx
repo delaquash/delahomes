@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux'
 import CoursePlayer from '../admin/Course/CoursePlayer'
 import { VscVerifiedFilled } from 'react-icons/vsc'
 import { format } from 'timeago.js'
+import Image  from "next/image"
+import CourseContentList from './CourseContentList'
 
 type Props = {
     data: any
@@ -17,13 +19,14 @@ type Props = {
 }
 
 const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: openAuthModal}: Props) => {
-    const { user } = useSelector((state: RootState)=> state.auth)
+    const { user } = useSelector((state: any)=> state.auth)
       // Course Discount Percentage
   const dicountPercentenge = ((data?.estimatedPrice - data.price) / data?.estimatedPrice) * 100;
 
   const discountPercentengePrice = dicountPercentenge.toFixed(0);
 
   const isPurchased = user && user?.courses?.find((item: any) => item._id === data._id);
+
   return (
     <div>
          <div className="w-[90%] 800px:w-[90%] m-auto py-5">
@@ -74,7 +77,10 @@ const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: op
               <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
                 Course Overview
               </h1>
-              {/* <CourseContentList data={data?.courseData} isDemo={true} /> */}
+              <CourseContentList 
+                    data={data?.courseData} 
+                    isDemo={true} 
+                />
             </div>
             <br />
             <br />
@@ -104,10 +110,10 @@ const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: op
                   <div className="w-full pb-4" key={index}>
                     <div className="flex">
                       <div className="w-[50px] h-[50px]">
-                        {/* <Image src={item.user.avatar ? item.user.avatar.url
+                        <Image src={item.user.avatar ? item.user.avatar.url
                         : "/profile.jpg"}
                           width={50} height={50} alt="" className="w-[50px] h-[50px] rounded-full object-cover"
-                        /> */}
+                        />
                       </div>
                       <div className="hidden 800px:block pl-2">
                         <div className="flex items-center">
