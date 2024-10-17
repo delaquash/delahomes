@@ -6,8 +6,8 @@ import React, { useEffect, useState } from "react";
 
 // Props from courseInfo Component
 type Props = {
-  courseInfo: CourseInfo;
-  setCourseInfo: (courseInfo: CourseInfo) => void;
+  courseInfo: any;
+  setCourseInfo: (courseInfo: any) => void;
   active: number;
   setActive: (active: number) => void;
 };

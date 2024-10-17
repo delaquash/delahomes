@@ -18,7 +18,7 @@ const initializeApp = async() => {
 }
 
 // Define RootState to reflect the overall state structure
-export type RootState = ReturnType<typeof store.getState>;
+// export type RootState = ReturnType<typeof store.getState>;
 
 // Define AppDispatch if needed for typing dispatch
 export type AppDispatch = typeof store.dispatch;

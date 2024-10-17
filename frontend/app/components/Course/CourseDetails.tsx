@@ -1,6 +1,6 @@
 
 import Ratings from '@/app/utils/Ratings'
-import { RootState } from '@/redux/store'
+// import { RootState } from '@/redux/store'
 import React from 'react'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'

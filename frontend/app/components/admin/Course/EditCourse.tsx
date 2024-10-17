@@ -77,7 +77,7 @@ const EditCourse = ({ id }: Props) => {
         }
     }, [])
     const [active, setActive] = useState(0)
-    const [courseInfo, setCourseInfo] = useState<CourseInfo>({
+    const [courseInfo, setCourseInfo] = useState({
         name: "",
         description: "",
         price: "",

@@ -7,7 +7,7 @@ export interface AuthState {
 }
 
 // Initial state for authentication
-const initialState: AuthState = {
+const initialState = {
     token: "",
     user: ""
 }
