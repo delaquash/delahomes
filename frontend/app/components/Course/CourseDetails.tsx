@@ -1,7 +1,7 @@
 
 import Ratings from '@/app/utils/Ratings'
 // import { RootState } from '@/redux/store'
-import React from 'react'
+import React, { useState } from 'react'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import CoursePlayer from '../admin/Course/CoursePlayer'
@@ -9,6 +9,8 @@ import { VscVerifiedFilled } from 'react-icons/vsc'
 import { format } from 'timeago.js'
 import Image  from "next/image"
 import CourseContentList from './CourseContentList'
+import Link from 'next/link'
+import { styles } from '@/app/styles/style'
 
 type Props = {
     data: any
@@ -20,6 +22,7 @@ type Props = {
 
 const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: openAuthModal}: Props) => {
     const { user } = useSelector((state: any)=> state.auth)
+    const [open, setOpen] = useState(false)
       // Course Discount Percentage
   const dicountPercentenge = ((data?.estimatedPrice - data.price) / data?.estimatedPrice) * 100;
 
@@ -27,6 +30,9 @@ const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: op
 
   const isPurchased = user && user?.courses?.find((item: any) => item._id === data._id);
 
+  const handleOrder = (e: any) => {
+    setOpen(true)
+  }
   return (
     <div>
          <div className="w-[90%] 800px:w-[90%] m-auto py-5">
@@ -176,7 +182,7 @@ const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: op
                 </h4>
              </div>
              <div className="flex items-center">
-                {/* {isPurchased ? (
+                {isPurchased ? (
                   <Link
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                     href={`/course-access/${data._id}`}
@@ -184,13 +190,15 @@ const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: op
                     Enter to Course
                   </Link>
                 ) : (
-                  <Button
+                  // <Button
+                  <div
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer `}
                     onClick={handleOrder}
                   >
                     Buy Now {data.price}$
-                  </Button>
-                )} */}
+                    </div>
+                  /* </Button> */
+                )}
               </div>
               <br />
               <p className="pb-1 text-black dark:text-white">
