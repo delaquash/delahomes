@@ -1,10 +1,12 @@
 import { useGetSingleCourseDetailsQuery } from '@/redux/features/course/coursesApi';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Loader from '../Loader/Loader';
 import Heading from '@/app/utils/Heading';
 import Header from '../Header';
 import Footer from '../Footer';
 import CourseDetails from './CourseDetails';
+import {loadStripe }from "@stripe/stripe-js"
+import { useCreatePaymentIntentMutation, useGetStripePublishablekeyQuery } from '@/redux/features/payment/paymentApi';
 
 type Props = {
     id: string
@@ -14,6 +16,27 @@ const CourseDetailsPage = ({id}: Props) => {
     const [route, setRoute] = useState("Login");
     const [open, setOpen] = useState(false);
     const { data, isLoading, error } = useGetSingleCourseDetailsQuery(id);
+    const { data:config } = useGetStripePublishablekeyQuery({})
+    const [createPaymentIntent, {data: paymentIntentData }] = useCreatePaymentIntentMutation();
+    const [stripePromise, setStripePromise] = useState<null>(null)
+    const [clientSecret, setClientSecret] = useState("")
+
+    useEffect(()=> {
+        if(config) {
+            const publishableKey = config?.publishableKey;
+            createPaymentIntent(loadStripe(publishableKey))
+        }
+        if(data){
+            const amount = Math.round(data.course.price * 100)
+            createPaymentIntent(amount)
+        }
+    }, [config, data])
+
+    useEffect(()=> {
+        if(paymentIntentData){
+            setClientSecret(paymentIntentData.clientSecret)
+        }
+    },[paymentIntentData])
   return (
     <>
     {
@@ -32,15 +55,15 @@ const CourseDetailsPage = ({id}: Props) => {
                     setOpen={setOpen} 
                     activeItem={1}
                 />
-                {/* {stripePromise && ( */}
+                {stripePromise && (
                     <CourseDetails 
                         data={data.course} 
-                        // stripePromise={stripePromise} 
-                        // clientSecret={clientSecret} 
-                        // setRoute={setRoute} 
-                        // setOpen={setOpen}
+                        stripePromise={stripePromise} 
+                        clientSecret={clientSecret} 
+                        setRoute={setRoute} 
+                        setOpen={setOpen}
                     />
-                {/* )} */}
+                )}
                 <Footer/>
           </div>
         )
@@ -50,3 +73,4 @@ const CourseDetailsPage = ({id}: Props) => {
 }
 
 export default CourseDetailsPage
+
