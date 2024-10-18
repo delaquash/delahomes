@@ -14,6 +14,7 @@ import orderRoute from "./route/OrderRoute";
 import notificationRoute from "./route/NotificationRoute";
 import analyticsRoute from "./route/analyticsRouter";
 import layoutRoute from "./route/layoutRoute";
+import paymentRoute from "./route/PaymentRoute";
 import cors from "cors";
 
 const app = express();
@@ -63,6 +64,7 @@ app.use("/api/v1/notifications", notificationRoute);
 app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/analytics", analyticsRoute);
 app.use("/api/v1/layout", layoutRoute);
+app.use("/api/v1/payment", paymentRoute);
 
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
