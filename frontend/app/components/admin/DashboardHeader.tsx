@@ -4,11 +4,12 @@ import  ThemeSwitcher  from "@/app/utils/ThemeSwitcher";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
 type Props = {
-    open: boolean,
+    open?: boolean,
     setOpen: (open: boolean) => void;
 }
 
-const DashboardHeader = ({ open, setOpen }: Props) => {
+const DashboardHeader = () => {
+    const [open ,setOpen ] = useState(false)
     
 
   return (

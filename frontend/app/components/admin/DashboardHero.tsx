@@ -11,8 +11,8 @@ const DashboardHero = ({isDashboard}: Props) => {
   return (
     <div>
       <DashboardHeader
-        open={open}
-        setOpen={setOpen}
+        // open={open}
+        // setOpen={setOpen}
       />
       {open && (
         <DashboardWidget open={open} />

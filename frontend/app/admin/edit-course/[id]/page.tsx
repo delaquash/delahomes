@@ -2,7 +2,7 @@
 import React from 'react';
 import AdminSideBar from "@/app/components/admin/sidebar/AdminSideBar"
 import Heading from '@/app/utils/Heading';
-import CreateCourse from "@/app/components/admin/Course/CreateCourse";
+
 import DashboardHeader from '@/app/components/admin/DashboardHeader';
 import EditCourse from '@/app/components/admin/Course/EditCourse';
 
