@@ -12,10 +12,26 @@ import ejs from "ejs";
 import path from "path";
 import { IOrder } from "../models/OrderModel";
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export const createOrder = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
   try{
     const {courseId, payment_info} = req.body as IOrder;
+
+    // Validate Payment Info
+    if(payment_info) {
+        if("id" in payment_info) {
+            const paymentIntentId = payment_info.id;
+            const paymentIntent = await stripe.paymentIntents.retrieve(
+                paymentIntentId
+            )
+
+            if(paymentIntent.status !== "succeeded") {
+                return next(new ErrorHandler("Payment not authorized!", 400));
+            
+            }
+        }
+    }
 
     const user = await User.findById(req.user?._id);
 
