@@ -2,7 +2,7 @@
 import Ratings from '@/app/utils/Ratings'
 // import { RootState } from '@/redux/store'
 import React, { useState } from 'react'
-import { IoCheckmarkDoneOutline } from 'react-icons/io5'
+import { IoCheckmarkDoneOutline, IoCloseOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import CoursePlayer from '../admin/Course/CoursePlayer'
 import { VscVerifiedFilled } from 'react-icons/vsc'
@@ -11,6 +11,9 @@ import Image  from "next/image"
 import CourseContentList from './CourseContentList'
 import Link from 'next/link'
 import { styles } from '@/app/styles/style'
+import { Elements } from "@stripe/react-stripe-js";
+import CheckOutForm from '../CheckOutForm/Payment'
+import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
 
 type Props = {
     data: any
@@ -22,6 +25,7 @@ type Props = {
 
 const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: openAuthModal}: Props) => {
     const { user } = useSelector((state: any)=> state.auth)
+    const { data: userData, refetch } = useLoadUserQuery(undefined, {});
     const [open, setOpen] = useState(false)
       // Course Discount Percentage
   const dicountPercentenge = ((data?.estimatedPrice - data.price) / data?.estimatedPrice) * 100;
@@ -219,7 +223,7 @@ const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: op
          </div>
       {/* STRIPE MODAL */}
       <>
-        {/* {open && (
+        {open && (
           <div className="w-full h-screen bg-[#00000036]  fixed top-0 left-0 z-50 flex items-center justify-center">
             <div className="w-[500px] min-h-[500px] bg-white  rounded-xl shadow p-3">
               <div className="w-full flex justify-end ">
@@ -232,13 +236,18 @@ const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: op
               <div className="w-full">
                 {stripePromise && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckOutForm setOpen={setOpen} data={data} user={user} refetch={refetch} />
+                    <CheckOutForm 
+                      setOpen={setOpen} 
+                      data={data} 
+                      user={user} 
+                      refetch={refetch} 
+                    />
                   </Elements>
                 )}
               </div>
             </div>
           </div>
-        )} */}
+        )}
       </>
       </div>
   )
