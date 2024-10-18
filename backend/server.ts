@@ -1,5 +1,5 @@
 require("dotenv").config();
-import bodyParser from "body-parser";
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db";
@@ -15,7 +15,7 @@ import notificationRoute from "./route/NotificationRoute";
 import analyticsRoute from "./route/analyticsRouter";
 import layoutRoute from "./route/layoutRoute";
 import paymentRoute from "./route/PaymentRoute";
-import cors from "cors";
+
 
 const app = express();
 
