@@ -7,7 +7,9 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import { redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { BiLoaderAlt } from "react-icons/bi";
 
 type Props = {
@@ -50,6 +52,17 @@ const CheckOutForm = ({ data, user, refetch, setOpen }: Props) => {
       createOrder({ courseId: data._id, payment_info: paymentIntent });
     }
   };
+
+  useEffect(()=> {
+    if (orderData) {
+        setLoadUser(true)
+        redirect(`/course-access/${data._id}`)
+    }
+    if(error) {
+        const errorMessage = error as any;
+        toast.error(errorMessage.data.message)
+    }
+  }, [orderData, error])
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
