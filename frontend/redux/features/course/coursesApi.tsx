@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { apiSlice } from "../api/apiSlice";
 
 export const courseApi = apiSlice.injectEndpoints({
@@ -46,8 +45,15 @@ export const courseApi = apiSlice.injectEndpoints({
                 method: "GET",
                 credentials: "include" as const
             })
+        }),
+        getCourseContent: builder.query({
+            query: (id) => ({
+                url: `http://localhost:7000/api/v1/course/user-course-content/${id}`,
+                method: "GET",
+                credentials: "include" as const
+            })
         })
     })
 })
 
-export const {useCreateCourseMutation, useGetSingleCourseDetailsQuery, useGetAllCourseQuery, useGetCoursesQuery, useDeleteCoursesMutation, useEditCourseMutation} = courseApi
+export const {useGetCourseContentQuery, useCreateCourseMutation, useGetSingleCourseDetailsQuery, useGetAllCourseQuery, useGetCoursesQuery, useDeleteCoursesMutation, useEditCourseMutation} = courseApi

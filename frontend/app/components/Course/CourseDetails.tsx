@@ -1,4 +1,5 @@
 
+"use client"
 import Ratings from '@/app/utils/Ratings'
 // import { RootState } from '@/redux/store'
 import React, { useState } from 'react'
@@ -24,8 +25,7 @@ type Props = {
 }
 
 const CourseDetails = ({data, clientSecret, stripePromise, setRoute, setOpen: openAuthModal}: Props) => {
-    const { user } = useSelector((state: any)=> state.auth)
-    const { data: userData, refetch } = useLoadUserQuery(undefined, {});
+    const { data: user, refetch } = useLoadUserQuery(undefined, {});
     const [open, setOpen] = useState(false)
       // Course Discount Percentage
   const dicountPercentenge = ((data?.estimatedPrice - data.price) / data?.estimatedPrice) * 100;
