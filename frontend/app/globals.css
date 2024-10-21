@@ -22,6 +22,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+<<<<<<< HEAD
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -38,6 +39,8 @@ input::-webkit-inner-spin-button {
 ::-webkit-scrollbar-thumb: hover {
   background: #32ae7e;
 }
+=======
+>>>>>>> origin/frontend
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield

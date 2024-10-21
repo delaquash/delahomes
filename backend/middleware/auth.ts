@@ -16,6 +16,7 @@ export const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Respon
   if(!decoded) {
     return next(new ErrorHandler("access token not valid", 400))
   }
+<<<<<<< HEAD
 
   // check if the access token is expired
   if(decoded.exp && decoded.exp <= Date.now() / 1000) {
@@ -32,6 +33,12 @@ export const isUserAuthenticated= CatchAsyncError(async(req:Request, res: Respon
     }
     req.user = JSON.parse(user);
     next();
+=======
+  const user = await redis.get(decoded.id);
+  // console.log(user, "this user is from redis")
+  if(!user) {
+    return next(new ErrorHandler("User not found! Please sign up to access this resources", 400))
+>>>>>>> origin/frontend
   }
 })
 

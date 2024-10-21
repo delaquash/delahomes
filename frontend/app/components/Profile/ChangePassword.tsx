@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { styles } from "@/app/styles/style";
 import { useUpdatePasswordMutation } from "@/redux/features/user/userApi";
 import React, { useEffect, useState } from "react";
@@ -97,3 +98,16 @@ const ChangePassword = (props: Props) => {
 };
 
 export default ChangePassword;
+=======
+import React from 'react';
+
+type Props = {}
+
+const ChangePassword = (props: Props) => {
+  return (
+    <div>ChangePassword</div>
+  )
+}
+
+export default ChangePassword
+>>>>>>> origin/frontend

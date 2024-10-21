@@ -13,6 +13,7 @@ export const store = configureStore({
 })
 
 const initializeApp = async() => {
+<<<<<<< HEAD
     // await store.dispatch(apiSlice.endpoints.refreshToken.initiate({}, {forceRefetch: true}));
     await store.dispatch(apiSlice.endpoints.loadUser.initiate({}, {forceRefetch: true}))
 }
@@ -24,4 +25,10 @@ const initializeApp = async() => {
 export type AppDispatch = typeof store.dispatch;
 
 
+=======
+    await store.dispatch(apiSlice.endpoints.refreshToken.initiate({}, {forceRefetch: true}));
+    await store.dispatch(apiSlice.endpoints.loadUser.initiate({}, {forceRefetch: true}))
+}
+
+>>>>>>> origin/frontend
 initializeApp();

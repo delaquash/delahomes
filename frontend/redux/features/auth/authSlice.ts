@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+<<<<<<< HEAD
 // Define the structure of the authentication state
 export interface AuthState {
     token: string;
@@ -7,11 +8,18 @@ export interface AuthState {
 }
 
 // Initial state for authentication
+=======
+
+>>>>>>> origin/frontend
 const initialState = {
     token: "",
     user: ""
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/frontend
 const authSlice = createSlice({
     name: "auth",
     initialState,

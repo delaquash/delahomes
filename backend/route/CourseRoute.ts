@@ -2,6 +2,10 @@ import express from "express";
 import {
   uploadCourse,
   editCourse,
+<<<<<<< HEAD
+=======
+  getAllCourses,
+>>>>>>> origin/frontend
   getSingleCourse,
   getAllCourse,
   getCourseByUser,
@@ -10,13 +14,19 @@ import {
   addReview,
   addReplyToReview,
   deleteCourse,
+<<<<<<< HEAD
   generateVideoUrl,
   getAllCoursesByAdmin,
+=======
+>>>>>>> origin/frontend
 } from "../controllers/CourseController";
 import { validateMyCourseRequest } from "../middleware/validation";
 import { isUserAuthenticated, authorization } from "../middleware/auth";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/frontend
 
 const router = express.Router();
 router.post(
@@ -44,10 +54,17 @@ router.put(
   addReplyToReview
 );
 router.get(
+<<<<<<< HEAD
   "/get-admin-all-courses",
   isUserAuthenticated,
   authorization("admin"),
   getAllCoursesByAdmin
+=======
+  "/get-all-courses",
+  isUserAuthenticated,
+  authorization("admin"),
+  getAllCourses
+>>>>>>> origin/frontend
 );
 router.delete(
   "/delete-course/:id",
@@ -55,6 +72,7 @@ router.delete(
   authorization("admin"),
   deleteCourse
 );
+<<<<<<< HEAD
 
 router.post(
   "/get-video-otp",
@@ -63,3 +81,8 @@ router.post(
 
 export default router;
 
+=======
+export default router;
+
+//
+>>>>>>> origin/frontend
