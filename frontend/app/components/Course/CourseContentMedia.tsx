@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import CoursePlayer from '../admin/Course/CoursePlayer';
 import { styles } from '@/app/styles/style';
 import Image from "next/image";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+import { AiFillStar, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineStar } from 'react-icons/ai';
 
 type Props = {
     data:any
@@ -23,6 +23,9 @@ const CourseContentMedia = ({data, activeVideo, setActiveVideo, user, refetch}: 
     const [reply, setReply] = useState("");
     const [reviewId, setReviewId] = useState("");
     const [isReviewReply, setIsReviewReply] = useState(false);
+
+    const isReviewExist = data?.reviews?.find((review: any)=>review.user._id === user._id)
+
   return (
     <div className='w-[95%] 800px:w-[96%] py-4 m-auto'>
         <CoursePlayer 
@@ -84,7 +87,7 @@ const CourseContentMedia = ({data, activeVideo, setActiveVideo, user, refetch}: 
     {activeBar === 2 && (
         <>
           <div className="flex w-full">
-            <Image src={user.avatar ? user.avatar.url : "/profile.jpg"} width={50} height={50} alt="" className="w-[50px] h-[50px] rounded-full object-cover"/>
+            <Image src={user.avatar ? user.avatar.url : "/avatarImage.png"} width={50} height={50} alt="" className="w-[50px] h-[50px] rounded-full object-cover"/>
             <textarea name="" value={question} onChange={(e) => setQuestion(e.target.value)} id="" cols={40} rows={5} placeholder="Write your question..."
              className="outline-none bg-transparent ml-3 border dark:text-white text-black border-[#0000001d] dark:border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins"
             ></textarea>
@@ -101,9 +104,54 @@ const CourseContentMedia = ({data, activeVideo, setActiveVideo, user, refetch}: 
           </div>
         </>
     )}
-    </div>
+
+    {activeBar === 3 && (
+            <div className="w-full">
+              <div>
+                {!isReviewExist && (
+                  <>
+                    <div className="flex w-full">
+                      <Image src={user.avatar? user.avatar.url : "/avatarImage.png"} width={50} height={50} alt="" className="w-[50px] h-[50px] rounded-full object-cover"/>
+                      <div className="w-full">
+                        <h5 className="pl-3 text-[20px] font-[500] dark:text-white text-black ">
+                          Give a Rating <span className="text-red-500">*</span>
+                        </h5>
+                        <div className="flex w-full ml-2 pb-3">
+                          {[1, 2, 3, 4, 5].map((i) => rating >= i ? (
+                              <AiFillStar key={i} className="mr-1 cursor-pointer" color="rgb(246,186,0)" size={25} onClick={() => setRating(i)}/>
+                            ) : (
+                              <AiOutlineStar key={i} className="mr-1 cursor-pointer" color="rgb(246,186,0)" size={25} onClick={() => setRating(i)}/>
+                            )
+                          )}
+                        </div>
+                        <textarea
+                          name="" value={review} onChange={(e) => setReview(e.target.value)} id="" cols={40} rows={5} placeholder="Write your comment..."
+                          className="outline-none bg-transparent 800px:ml-3 dark:text-white text-black border border-[#00000027] dark:border-[#ffffff57] w-[95%] 800px:w-full p-2 rounded text-[18px] font-Poppins"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="w-full flex justify-end">
+                      <div
+                        className={`${
+                          styles.button
+                        } !w-[120px] !h-[40px] text-[18px] mt-5 800px:mr-0 mr-2 ${reviewCreationLoading && "cursor-no-drop"}`}
+                        // onClick={reviewCreationLoading ? () => {} : handleReviewSubmit}
+                        >
+                        Submit
+                      </div>
+                    </div>
+                  </>
+                )}
+                <br />
+                </div>
+        </div>
+      )
+    }
+  </div>
   )
+
 }
+
 
 export default CourseContentMedia
 
