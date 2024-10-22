@@ -52,8 +52,16 @@ export const courseApi = apiSlice.injectEndpoints({
                 method: "GET",
                 credentials: "include" as const
             })
+        }),
+        addNewQuestion: builder.mutation({
+            query: ({ contentID, courseID, question })=> ({
+                url: "http://localhost:7000/api/v1/course/add-question",
+                method: "POST",
+                data: ({ contentID, courseID, question }),
+                credentials: "include" as const
+            })
         })
     })
 })
 
-export const {useGetCourseContentQuery, useCreateCourseMutation, useGetSingleCourseDetailsQuery, useGetAllCourseQuery, useGetCoursesQuery, useDeleteCoursesMutation, useEditCourseMutation} = courseApi
+export const {useGetCourseContentQuery,useAddNewQuestionMutation, useCreateCourseMutation, useGetSingleCourseDetailsQuery, useGetAllCourseQuery, useGetCoursesQuery, useDeleteCoursesMutation, useEditCourseMutation} = courseApi
