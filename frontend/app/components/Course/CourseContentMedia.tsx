@@ -3,7 +3,7 @@ import CoursePlayer from '../admin/Course/CoursePlayer';
 import { styles } from '@/app/styles/style';
 import Image from "next/image";
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineStar } from 'react-icons/ai';
-import { useAddNewQuestionMutation } from '@/redux/features/course/coursesApi';
+import { useAddNewAnswerMutation, useAddNewQuestionMutation, useAddReplyToReviewMutation, useAddReviewInCourseMutation } from '@/redux/features/course/coursesApi';
 import toast from 'react-hot-toast';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import { format } from 'timeago.js';
@@ -28,7 +28,14 @@ const CourseContentMedia = ({data, activeVideo, setActiveVideo, user, refetch, i
     const [reply, setReply] = useState("");
     const [reviewId, setReviewId] = useState("");
     const [isReviewReply, setIsReviewReply] = useState(false);
-    const [addNewQuestion, { isSuccess, error, isLoading: questionCreationLoading }] = useAddNewQuestionMutation()
+    const [addNewQuestion, { isSuccess, error, isLoading: questionCreationLoading }] = useAddNewQuestionMutation();
+    const [addNewAnswer, {isSuccess: answerSuccess, error: answerError,isLoading: answerCreationLoading}]=useAddNewAnswerMutation();
+    // Get Add Review In Question Mutation
+    const [addReviewInCourse, {isSuccess: reviewSuccess, error: reviewError, isLoading: reviewCreationLoading}] = useAddReviewInCourseMutation();
+
+    // Get Add Reply In Review Mutation
+    const [addReplyToReview, {isSuccess: replySuccess, error: replyError, isLoading: replyCreationLoading}] = useAddReplyToReviewMutation();
+
 
     const isReviewExist = data?.reviews?.find((review: any)=>review.user._id === user._id);
 
@@ -45,12 +52,47 @@ const CourseContentMedia = ({data, activeVideo, setActiveVideo, user, refetch, i
         }
       };
 
+      // Create Answer
+      const handleAnswerSubmit = () => {
+        addNewQuestion({
+          answer,
+          courseId: id,
+          contentId: data[activeVideo]._id,
+          questionId: questionId,
+        });
+      };
+
+            // Create Review
+            const handleReviewSubmit = async () => {
+              if (review.length === 0) {
+                toast.error("Review can't be empty");
+              } else {
+                addReviewInCourse({ review, rating, courseId: id });
+              }
+            };
+          
+            // Create Review Reply
+            const handleReviewReplySubmit = () => {
+              if (!replyCreationLoading) {
+                if (reply === "") {
+                  toast.error("Reply can't be empty");
+                } else {
+                  addReplyToReview({ comment: reply, courseId: id, reviewId });
+                }
+              }
+            };
+          
       // Handle Errors And Success
       useEffect(() => {
         if (isSuccess) {
           setQuestion("");
           refetch();
           toast.success("Question added successfully...")
+        }
+        if (answerSuccess){
+          setAnswer("");
+          refetch();
+          toast.success("Answer added successfully...")
         }
 
         if(error) {
@@ -59,7 +101,13 @@ const CourseContentMedia = ({data, activeVideo, setActiveVideo, user, refetch, i
             toast.error(errorMessage.data.message)
           }
         }
-      },[isSuccess, error])
+        if(answerError){
+          if("data" in answerError){
+            const errorMessage = error as any
+            toast.error(errorMessage.data.message)
+          }
+        }
+      },[isSuccess, error, answerSuccess,answerError])
 
   return (
     <div className='w-[95%] 800px:w-[96%] py-4 m-auto'>
@@ -170,7 +218,7 @@ const CourseContentMedia = ({data, activeVideo, setActiveVideo, user, refetch, i
                         className={`${
                           styles.button
                         } !w-[120px] !h-[40px] text-[18px] mt-5 800px:mr-0 mr-2 ${reviewCreationLoading && "cursor-no-drop"}`}
-                        // onClick={reviewCreationLoading ? () => {} : handleReviewSubmit}
+                        onClick={reviewCreationLoading ? () => {} : handleReviewSubmit}
                         >
                         Submit
                       </div>
