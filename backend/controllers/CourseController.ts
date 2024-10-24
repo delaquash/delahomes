@@ -255,6 +255,8 @@ export const addAnswer = CatchAsyncError(
       const newAnswer: any = {
         user: req.user,
         answer,
+        createdAt:new Date().toISOString(),
+        updatedAt:new Date().toISOString()
       };
       // add answer to the course content
       question.questionReplies?.push(newAnswer);
@@ -360,6 +362,11 @@ export const addReview = CatchAsyncError(
       };
 
       // create notification
+      await NotificationModel.create({
+        userID: req.user?._id,
+        title: "New Review Received",
+        message: `${req.user?.name} has given a review in ${courses?.name}`,
+      });
 
       res.status(200).json({
         success: true,
@@ -396,6 +403,8 @@ export const addReplyToReview = CatchAsyncError(
       const reviewData: any = {
         user: req.user,
         comment,
+        createdAt:new Date().toISOString(),
+        updatedAt:new Date().toISOString()
       };
 
       if (!review.commentReplies) {
