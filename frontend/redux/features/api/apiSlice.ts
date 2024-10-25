@@ -9,14 +9,22 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     refreshToken: builder.query({
       query: (data) => ({
+<<<<<<< HEAD
+        url: "http://localhost:7000/api/v1/user/refresh_token",
+=======
         url: "http://localhost:5000/api/v1/user/refresh_token",
+>>>>>>> origin/frontend
         method: "GET",
         credentials: "include" as const,
       }),
     }),
     loadUser: builder.query({
       query: (data) => ({
+<<<<<<< HEAD
+        url: "http://localhost:7000/api/v1/user/me",
+=======
         url: "http://localhost:5000/api/v1/user/me",
+>>>>>>> origin/frontend
         method: "GET",
         credentials: "include" as const,
       }),

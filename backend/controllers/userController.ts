@@ -31,7 +31,11 @@ export const createActivationToken = (user: any): IActivationToken => {
 };
 
 
+<<<<<<< HEAD
+// this is a middleware to update access token and not a route, reason for next()
+=======
 
+>>>>>>> origin/frontend
 const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next:NextFunction)=>{
   try {
     const refresh_token = req.cookies.refresh_token as string;
@@ -60,10 +64,14 @@ const updateAccessToken =CatchAsyncError(async(req: Request, res: Response, next
       res.cookie("refresh-token", refreshToken, refreshTokenOptions);
 
       await redis.set(user._id, JSON.stringify(user), "EX", 604800)
+<<<<<<< HEAD
+     return next()
+=======
       res.status(200).json({
         success: "true",
         accessToken
       })
+>>>>>>> origin/frontend
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 500))
   }
@@ -91,8 +99,9 @@ const updateUserInfo = CatchAsyncError(async(req: Request, res:Response, next:Ne
     const user = await User.findById(userID)
     if(user && email) {
       const isEmailExist = await User.findOne({ email});
-      if(isEmailExist) {
-        return next(new ErrorHandler("Email already exist", 400))
+      if(isEmailExist  && isEmailExist._id.toString() !== userID) {
+
+        return next(new ErrorHandler("Email already exist...", 400))
       }
       user.email = email;
     }
@@ -109,7 +118,8 @@ const updateUserInfo = CatchAsyncError(async(req: Request, res:Response, next:Ne
       user
     })
   } catch (error: any) {
-    return next(new ErrorHandler(error.message, 400))
+    console.error("Error updating user info:", error);
+    return next(new ErrorHandler(error.message, 500))
   }
 });
 
@@ -142,6 +152,7 @@ const updatePassword = CatchAsyncError(async(req: Request, res: Response, next: 
           user
         })
   } catch (error: any) {
+    console.log(error)
     return next(new ErrorHandler(error.message, 400))  
   }
 })
@@ -202,8 +213,22 @@ const updateProfilePicture = CatchAsyncError(async(req: Request, res: Response, 
 // update user --- only for admin
 const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, next: NextFunction)=>{
   try {
+<<<<<<< HEAD
+    const { id, email, role } = req.body
+    const isUserExist = await User.findOne({ email })
+    if(isUserExist) {
+      const id = isUserExist._id;
+      updateUserRoleServices(res, id, role)
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "User not found"
+      })
+    } 
+=======
     const { id, role } = req.body
     updateUserRoleServices(res, id, role)
+>>>>>>> origin/frontend
   } catch (error: any) {
     return next(new ErrorHandler(error.message, 400))
   }
@@ -219,9 +244,16 @@ const updateUserByAdmin =  CatchAsyncError(async( req: Request, res: Response, n
         return next(new ErrorHandler("User not found", 404));
       }
       // delete from MongoDB
+<<<<<<< HEAD
+      await User.findByIdAndDelete(id);
+      // delete from redis
+      await redis.del(id);
+      // response
+=======
       await User.deleteOne({ id });
       // delete from redis
       await redis.del(id);
+>>>>>>> origin/frontend
       res.status(200).json({
         success: true,
         message: "User deleted successfully",
@@ -241,9 +273,12 @@ export {
   getAllUsers,
   updateUserByAdmin,
   deleteUser
+<<<<<<< HEAD
+=======
 //     getCurrentUser,
 //     createCurrentUser,
 //     updateUser,
 //     getUser,
 //     getUserList ED35D4D
+>>>>>>> origin/frontend
 };

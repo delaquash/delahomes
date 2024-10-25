@@ -3,6 +3,13 @@ import React, {FC, useState} from 'react';
 import Heading from './utils/Heading';
 import Header from './components/Header';
 import Hero from './components/Hero';
+<<<<<<< HEAD
+import Courses from './components/Routes/Courses';
+import Reviews from './components/Routes/Reviews';
+import Faq from './components/Faq/Faq';
+import Footer from './components/Footer';
+=======
+>>>>>>> origin/frontend
 
 interface Props {}
 
@@ -25,6 +32,13 @@ const Page: FC<Props> = () => {
         route={route}
       />
       <Hero />
+<<<<<<< HEAD
+      <Courses />
+      <Reviews />
+      <Faq />
+      <Footer />
+=======
+>>>>>>> origin/frontend
     </div>
   )
 }

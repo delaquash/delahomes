@@ -12,6 +12,60 @@ import path from "path";
 import sendEmail from "../utils/SendMail";
 import { IUser } from "../types/ModelTypes/UserModel";
 
+<<<<<<< HEAD
+
+
+interface IRegistrationBody {
+  name: string;
+  email: string;
+  password: string;
+  avatar?: string;
+}
+
+export const RegisterUser = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { name, email, password } = req.body;
+      const isEmailExist = await User.findOne({ email });
+      if (isEmailExist) {
+        return next(new ErrorHandler("Email already exist", 400));
+      }
+      const user: IRegistrationBody = {
+        name,
+        email,
+        password,
+      };
+
+      const activationToken = createActivationToken(user);
+
+      const activationCode = activationToken.activationCode;
+
+      const data = { user: { name: user.name }, activationCode };
+
+      const html = await ejs.renderFile(
+        path.join(__dirname, "../mail/activation-mail.ejs"),
+        data
+      );
+      console.log("This is html");
+      try {
+        await sendEmail({
+          email: user.email,
+          subject: "Account Activation",
+          template: "activation-mail.ejs",
+          data,
+        });
+        console.log(user.email);
+        res.status(201).json({
+          success: true,
+          message: `User created successfully! Please check your mail: ${user.email} to activate`,
+          activationToken: activationToken.token,
+        });
+      } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+=======
 const isUserAuthenticated = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     const access_token = req.cookies.access_token;
@@ -19,10 +73,13 @@ const isUserAuthenticated = CatchAsyncError(
       return next(
         new ErrorHandler("Please login to access this resources", 400)
       );
+>>>>>>> origin/frontend
     }
   }
 );
 
+<<<<<<< HEAD
+=======
 interface IRegistrationBody {
   name: string;
   email: string;
@@ -77,6 +134,7 @@ export const RegisterUser = CatchAsyncError(
   }
 );
 
+>>>>>>> origin/frontend
 // Activate user
 interface IActivationRequest {
   activation_token: string;
@@ -175,6 +233,8 @@ declare module "express" {
   }
 }
 
+<<<<<<< HEAD
+=======
 //   try {
 //     const user = await User.findOne({ email: req.body.email });
 //     if (user) {
@@ -228,6 +288,7 @@ declare module "express" {
 //   }
 // };
 
+>>>>>>> origin/frontend
 interface ISocialAuth {
   name: string;
   email: string;

@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+"use client"
+import { useGetHeroDataQuery } from "@/redux/features/layout/layout";
+=======
+>>>>>>> origin/frontend
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
@@ -6,6 +11,13 @@ import { BiSearch } from "react-icons/bi";
 type Props = {};
 
 const Hero: FC<Props> = (props) => {
+<<<<<<< HEAD
+  const {data, refetch} = useGetHeroDataQuery("Banner", {
+    refetchOnMountOrArgChange: true 
+  })
+
+=======
+>>>>>>> origin/frontend
   return (
     <div className="w-full 1000px:flex items-center">
       {/* css not finished */}
@@ -13,7 +25,11 @@ const Hero: FC<Props> = (props) => {
       <div className="1000px:w-[40%] flex 1000px:min-h-screen items-center justify-end pt-[70px] 1000px:pt-[0] z-10">
         <Image
           // image not added
+<<<<<<< HEAD
+          src={data?.layout?.banner?.image?.url}
+=======
           src={require("../../public/images/images.jpg")}
+>>>>>>> origin/frontend
           width={500}
           height={500}
           priority
@@ -24,6 +40,18 @@ const Hero: FC<Props> = (props) => {
 
       <div className="1000px:w-[60%] flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px]">
         {/* css not finished */}
+<<<<<<< HEAD
+        <h2 className="dark:text-white text-[#000000c7] text-[30px] px-3 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[58%]">
+          {/* Improve Your online Learning Experience better Instantly.
+           */}
+           {data?.layout?.banner?.title}
+        </h2>
+        <br />
+        <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[55%] 1100px:!w-[78%]">
+          {/* We have 40k+ Online courses & 500k+ Online registered student. Find
+          your desired courses from them */}
+          {data?.layout?.banner?.subTitle}
+=======
         <h2 className="dark:text-white text:-[#000000c7] text-[30px] px-3 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[58%]">
           Improve Your online Learning Experience better Instantly.
         </h2>
@@ -31,6 +59,7 @@ const Hero: FC<Props> = (props) => {
         <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[55%] 1100px:!w-[78%]">
           We have 40k+ Online courses & 500k+ Online registered student. Find
           your desired courses from them
+>>>>>>> origin/frontend
         </p>
         <br />
         <br />
@@ -68,7 +97,11 @@ const Hero: FC<Props> = (props) => {
                 src={require("../../public/images/headshot 3.jpg")}
                 className="rounded-full ml-[-20px]"
             />      
+<<<<<<< HEAD
+          <p className="font-Josefin dark:text-[#edfff4] text-[#000000c7] 1000px:pl-3 text-[20px] font-[600]">
+=======
           <p className="font-Josefin dark:text-[#edfff4] text-[#00000b3] 1000px:pl-3 text-[20px] font-[600]">
+>>>>>>> origin/frontend
             500k+ People already trusted us.{" "}
             <Link
               href="/courses"
@@ -81,6 +114,11 @@ const Hero: FC<Props> = (props) => {
         <br />
       </div>
     </div>
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> origin/frontend
   );
 };
 
