@@ -65,6 +65,15 @@ const layoutSchema = new Schema<Layout>({
       type: String,
     },
   },
+<<<<<<< HEAD
+},
+{
+  timestamps: true,
+}
+
+);
+=======
 });
+>>>>>>> origin/frontend
 
 export const LayoutModel = model<Layout>("Layout", layoutSchema);
