@@ -52,8 +52,51 @@ export const courseApi = apiSlice.injectEndpoints({
                 method: "GET",
                 credentials: "include" as const
             })
+        }),
+        addNewQuestion: builder.mutation({
+            query: ({ contentID, courseID, question })=> ({
+                url: "http://localhost:7000/api/v1/course/add-question",
+                method: "POST",
+                data: ({ contentID, courseID, question }),
+                credentials: "include" as const
+            })
+        }),
+        addNewAnswer: builder.mutation({
+            query: ({ answer, contentID, courseID, questionID }) => ({
+                url: "http://localhost:7000/api/v1/course/add-answer",
+                method: "POST",
+                data: ({ answer, contentID, courseID, questionID }),
+                credentials: "include" as const
+            })
+        }),
+        addReviewInCourse: builder.mutation({
+            query: ({ review, rating, courseId }) => ({
+                url: `http://localhost:7000/api/v1/course/add-review/${courseId}`,
+                method: "PUT",
+                data: ({ review, rating, courseId }),
+                credentials: "include" as const
+            })
+        }),
+        addReplyToReview: builder.mutation({
+            query: ({ comment, courseID, reviewID }) => ({
+                url: "http://localhost:7000/api/v1/course/add-reply",
+                method: "POST",
+                data: ({ comment, courseID, reviewID }),
+                credentials: "include" as const
+            })
         })
     })
 })
 
-export const {useGetCourseContentQuery, useCreateCourseMutation, useGetSingleCourseDetailsQuery, useGetAllCourseQuery, useGetCoursesQuery, useDeleteCoursesMutation, useEditCourseMutation} = courseApi
+export const {useAddNewAnswerMutation,
+    useAddReplyToReviewMutation,
+    useAddReviewInCourseMutation,
+    useGetCourseContentQuery,
+    useAddNewQuestionMutation, 
+    useCreateCourseMutation, 
+    useGetSingleCourseDetailsQuery, 
+    useGetAllCourseQuery,
+     useGetCoursesQuery,
+      useDeleteCoursesMutation,
+       useEditCourseMutation
+    } = courseApi

@@ -24,11 +24,7 @@ interface ICourseData extends Document {
   title: string;
   description: string;
   videoUrl: string;
-<<<<<<< HEAD
   videoThumbnail: object;
-=======
-  // videoThumbnail: object;
->>>>>>> origin/frontend
   videoSection: string;
   videoLength: number;
   videoPlayers: string;
@@ -44,10 +40,7 @@ interface ICourse extends Document {
   estimatedPrice?: number;
   thumbnail: object;
   tags: string;
-<<<<<<< HEAD
   categories: string;
-=======
->>>>>>> origin/frontend
   level: string;
   demoUrl: string;
   benefits: { title: string }[];
@@ -65,7 +58,7 @@ const reviewSchema = new Schema<IReview>({
   },
   comment: String,
   commentReplies: [Object],
-});
+}, { timestamps: true });
 
 const linkSchema = new Schema<ILink>({
   title: String,
@@ -76,22 +69,14 @@ const commentSchema = new Schema<IComment>({
   user: Object,
   question: String,
   questionReplies: [Object],
-});
+}, { timestamps: true });
 
 const courseDataSchema = new Schema<ICourseData>({
-<<<<<<< HEAD
   videoUrl: String,
   title: String,
   description: String,
   links: [linkSchema],
   videoThumbnail: Object,
-=======
-  title: String,
-  description: String,
-  links: [linkSchema],
-  videoUrl: String,
-  // videoThumbnail: Object,
->>>>>>> origin/frontend
   videoSection: String,
   videoLength: Number,
   videoPlayers: String,
@@ -116,13 +101,10 @@ const courseSchema = new Schema<ICourse>(
     estimatedPrice: {
       type: Number,
     },
-<<<<<<< HEAD
     categories: {
       type: String,
       required: true
     },
-=======
->>>>>>> origin/frontend
     thumbnail: {
       public_id: {
         type: String,

@@ -12,74 +12,8 @@ import path from "path";
 import sendEmail from "../utils/SendMail";
 import { IUser } from "../types/ModelTypes/UserModel";
 
-<<<<<<< HEAD
 
 
-interface IRegistrationBody {
-  name: string;
-  email: string;
-  password: string;
-  avatar?: string;
-}
-
-export const RegisterUser = CatchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { name, email, password } = req.body;
-      const isEmailExist = await User.findOne({ email });
-      if (isEmailExist) {
-        return next(new ErrorHandler("Email already exist", 400));
-      }
-      const user: IRegistrationBody = {
-        name,
-        email,
-        password,
-      };
-
-      const activationToken = createActivationToken(user);
-
-      const activationCode = activationToken.activationCode;
-
-      const data = { user: { name: user.name }, activationCode };
-
-      const html = await ejs.renderFile(
-        path.join(__dirname, "../mail/activation-mail.ejs"),
-        data
-      );
-      console.log("This is html");
-      try {
-        await sendEmail({
-          email: user.email,
-          subject: "Account Activation",
-          template: "activation-mail.ejs",
-          data,
-        });
-        console.log(user.email);
-        res.status(201).json({
-          success: true,
-          message: `User created successfully! Please check your mail: ${user.email} to activate`,
-          activationToken: activationToken.token,
-        });
-      } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400));
-      }
-    } catch (error: any) {
-      return next(new ErrorHandler(error.message, 500));
-=======
-const isUserAuthenticated = CatchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const access_token = req.cookies.access_token;
-    if (!access_token) {
-      return next(
-        new ErrorHandler("Please login to access this resources", 400)
-      );
->>>>>>> origin/frontend
-    }
-  }
-);
-
-<<<<<<< HEAD
-=======
 interface IRegistrationBody {
   name: string;
   email: string;
@@ -134,7 +68,6 @@ export const RegisterUser = CatchAsyncError(
   }
 );
 
->>>>>>> origin/frontend
 // Activate user
 interface IActivationRequest {
   activation_token: string;
@@ -233,62 +166,6 @@ declare module "express" {
   }
 }
 
-<<<<<<< HEAD
-=======
-//   try {
-//     const user = await User.findOne({ email: req.body.email });
-//     if (user) {
-//       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string);
-//       // destructured password from the other attribute so we wont be seein password in DB
-//       const { password: pass, ...rest } = user._doc;
-//       res
-//         .cookie("access_token", token, { httpOnly: true })
-//         .status(200)
-//         .json(rest);
-//     } else {
-//       const generatedPassword =
-//         /* `Math.random().toString(36).slice(-8)` is generating a random string of 8 characters. */
-//         Math.random() /* The `toString(36)` method is converting a number to a string representation
-//         using base 36. In base 36, the digits range from 0 to 9 and then from A to Z.
-//         This method is commonly used to generate random alphanumeric strings. */
-//           .toString(
-//             36
-//           ) /* The `slice(-8)` method is used to extract the last 8 characters from a string.
-//         In the given code, it is used to generate a random alphanumeric string of
-//         length 8. The `Math.random().toString(36)` generates a random number between 0
-//         and 1 and converts it to a string representation using base 36. The `slice(-8)`
-//         then extracts the last 8 characters from this string, resulting in a random
-//         string of length 8. */
-//           .slice(-8) + Math.random().toString(36).slice(-8);
-//       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
-//       const newUserPassword = new User({
-//         /* The code `username: req.body.name.split(" ").join("").toLowerCase() +
-//         Math.random().toString(36).slice(-4)` is generating a unique username for the user based on
-//         their name. */
-//         username:
-//           req.body.name.split(" ").join("").toLowerCase() +
-//           Math.random().toString(36).slice(-4),
-//         email: req.body.email,
-//         password: hashedPassword,
-//         avatar: req.body.imageUrl,
-//       });
-//       await newUserPassword.save();
-//       const token = jwt.sign(
-//         { id: newUserPassword._id },
-//         process.env.JWT_SECRET
-//       );
-//       const { password: pass, ...rest } = newUserPassword._doc;
-//       res
-//         .cookie("access_token", token, { httpOnly: true })
-//         .status(200)
-//         .json(rest);
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
->>>>>>> origin/frontend
 interface ISocialAuth {
   name: string;
   email: string;

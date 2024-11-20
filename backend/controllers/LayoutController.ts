@@ -5,64 +5,42 @@ import ErrorHandler from "../utils/errorHandler";
 import { LayoutModel } from "../models/LayoutModel";
 import cloudinary from "cloudinary";
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/frontend
 export const createLayout = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { type } = req.body;
-<<<<<<< HEAD
         
       const isAnyTypeExist = await LayoutModel.findOne({ type });
       
-=======
-      
-      const isAnyTypeExist = await LayoutModel.findOne({ type });
->>>>>>> origin/frontend
       if (isAnyTypeExist) {
         return next(new ErrorHandler(`${type} already exist`, 400));
       }
 
       if (type === "Banner") {
         const { title, image, subTitle } = req.body;
-<<<<<<< HEAD
   
-=======
->>>>>>> origin/frontend
         const myCloud = await cloudinary.v2.uploader.upload(image, {
           folder: "layout",
         });
         const banner = {
-<<<<<<< HEAD
           type: "Banner",
           banner: {
             image: {
-=======
-          image: {
->>>>>>> origin/frontend
             public_id: myCloud.public_id,
             url: myCloud.secure_url,
           },
           title,
           subTitle,
-<<<<<<< HEAD
           }
-=======
->>>>>>> origin/frontend
         };
         await LayoutModel.create(banner);
       }
 
       if (type === "FAQ") {
         const { faq } = req.body;
-<<<<<<< HEAD
         if(!faq) {
           return next(new ErrorHandler("FAQ is required for FAQ type", 400))
           }
-=======
->>>>>>> origin/frontend
         const faqItems = await Promise.all(
           faq.map(async (item: any) => {
             return {
@@ -109,40 +87,23 @@ export const editLayout = CatchAsyncError(
             if (type === "Banner") {
                 const bannerData: any = await LayoutModel.findOne({ type: "Banner" });
                 const { image, title, subTitle } = req.body;
-<<<<<<< HEAD
 
                 const data = image.startsWith("https") ? bannerData : await cloudinary.v2.uploader.upload(image, {
                   folder: "layouts",
                 })
-=======
-                if (bannerData) {
-                        await cloudinary.v2.uploader.destroy(bannerData.image.public_id);
-                        const myCloud = await cloudinary.v2.uploader.upload(image, {
-                            folder: "layout",
-                        });
->>>>>>> origin/frontend
 
                             const banner = {
                                 type: "Banner",
                                 image: {
-<<<<<<< HEAD
                                 public_id: image.startsWith("https") ? bannerData.banner.image.public_id: data?.public_id,
                                 url: image.startsWith("https") ? bannerData.banner.image.url : data?.secure_url
-=======
-                                public_id: myCloud.public_id,
-                                url: myCloud.secure_url,
->>>>>>> origin/frontend
                                 },
                                 title,
                                 subTitle,
                             };
                             await LayoutModel.findByIdAndUpdate(bannerData._id, { banner });
                 }
-<<<<<<< HEAD
       
-=======
-            }
->>>>>>> origin/frontend
         if (type === "FAQ") {
           const { faq } = req.body;
           const FaqItem = await LayoutModel.findOne({ type: "FAQ" });
@@ -159,7 +120,6 @@ export const editLayout = CatchAsyncError(
             type: "FAQ",
           });
         }
-<<<<<<< HEAD
         
         if(type === "Categories") {
           const { categories } = req.body;
@@ -176,9 +136,6 @@ export const editLayout = CatchAsyncError(
             type: "Categories"
           })
         }
-=======
-              
->>>>>>> origin/frontend
     
         res.status(200).json({
         status: "success",
@@ -194,7 +151,6 @@ export const editLayout = CatchAsyncError(
 
 export const getLayout = CatchAsyncError(async(req: Request, res: Response, next: NextFunction)=> {
     try {
-<<<<<<< HEAD
         const { type } = req.params;
 
         if (!type) {
@@ -207,12 +163,6 @@ export const getLayout = CatchAsyncError(async(req: Request, res: Response, next
         }
     
         res.status(200).json({
-=======
-        const { type } = req.body;
-        const layout = await LayoutModel.findOne({type})
-    
-        res.status(201).json({
->>>>>>> origin/frontend
             status: "success",
              layout
         })
