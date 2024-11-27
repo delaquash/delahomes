@@ -92,7 +92,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
 connectDB();
 
 // Port
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on mode on port ${PORT}`);
